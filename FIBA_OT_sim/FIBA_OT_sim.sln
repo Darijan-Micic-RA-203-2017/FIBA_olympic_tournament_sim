@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35219.272
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FIBA_OT_sim", "FIBA_OT_sim\FIBA_OT_sim.csproj", "{854DF100-F7C1-4080-BE53-C40BD204A8A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{854DF100-F7C1-4080-BE53-C40BD204A8A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{854DF100-F7C1-4080-BE53-C40BD204A8A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{854DF100-F7C1-4080-BE53-C40BD204A8A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{854DF100-F7C1-4080-BE53-C40BD204A8A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {42B904E8-5827-4B4A-B504-4DCD76723245}
+	EndGlobalSection
+EndGlobal
