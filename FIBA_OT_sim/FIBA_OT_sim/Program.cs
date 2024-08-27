@@ -7,7 +7,7 @@ namespace FIBA_OT_sim
         public static void Main(string[] args)
         {
             GroupPhaseRepository groupPhaseRepository = new GroupPhaseRepository();
-            groupPhaseRepository.LoadGroupPhaseFromFileSystem();
+            groupPhaseRepository.LoadGroupPhaseFromFileSystem("../../../../Resources/groups.json");
 
             Console.WriteLine(groupPhaseRepository.GroupPhase.Groups[1].Teams[2].Name);
         }
