@@ -8,7 +8,7 @@
         public Group()
         {
             name = "";
-            teams = [];
+            teams = new List<NationalTeam>();
         }
 
         public Group(string name, IList<NationalTeam> teams)

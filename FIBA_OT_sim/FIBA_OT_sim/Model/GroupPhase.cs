@@ -6,7 +6,7 @@
 
         public GroupPhase()
         {
-            groups = [];
+            groups = new List<Group>();
         }
 
         public GroupPhase(IList<Group> groups)
