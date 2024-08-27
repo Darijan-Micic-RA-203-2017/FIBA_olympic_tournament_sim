@@ -5,12 +5,9 @@ namespace FIBA_OT_sim.Repositories
 {
     public class GroupPhaseRepository
     {
-        private static GroupPhase groupPhase;
+        private static GroupPhase? groupPhase;
 
-        public GroupPhaseRepository()
-        {
-            groupPhase = new GroupPhase();
-        }
+        public GroupPhaseRepository() { }
 
         public GroupPhase GroupPhase
         {
@@ -40,32 +37,33 @@ namespace FIBA_OT_sim.Repositories
 
                 foreach (JsonProperty groupProperty in rootElement.EnumerateObject())
                 {
-                    Group group = new Group(groupProperty.Name, new List<NationalTeam>());
+                    Group group = new Group(groupProperty.Name, new List<NationalTeam>(), new List<Match>());
 
                     foreach (JsonElement nationalTeamElement in groupProperty.Value.EnumerateArray())
                     {
                         string? name = nationalTeamElement.GetProperty("Team").GetString();
                         if (name == null)
                         {
-                            groupPhase = new GroupPhase();
+                            groupPhase = null;
 
                             return;
                         }
                         string? abbreviation = nationalTeamElement.GetProperty("ISOCode").GetString();
                         if (abbreviation == null)
                         {
-                            groupPhase = new GroupPhase();
+                            groupPhase = null;
 
                             return;
                         }
                         int fibaRanking = nationalTeamElement.GetProperty("FIBARanking").GetInt32();
+                        int groupPhaseRanking = 0;
 
-                        NationalTeam nationalTeam = new NationalTeam(name, abbreviation, fibaRanking,
-                            StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE);
+                        NationalTeam nationalTeam = new NationalTeam(name, abbreviation, fibaRanking, 
+                            groupPhaseRanking, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
                         group.Teams.Add(nationalTeam);
                     }
 
-                    groupPhase.Groups.Add(group);
+                    groupPhase?.Groups.Add(group);
                 }
             }
         }

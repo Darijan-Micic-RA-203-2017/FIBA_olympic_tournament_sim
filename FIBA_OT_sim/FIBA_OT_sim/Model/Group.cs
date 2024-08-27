@@ -4,23 +4,27 @@
     {
         private string name;
         private IList<NationalTeam> teams;
+        private IList<Match> matches;
 
         public Group()
         {
             name = "";
             teams = new List<NationalTeam>();
+            matches = new List<Match>();
         }
 
-        public Group(string name, IList<NationalTeam> teams)
+        public Group(string name, IList<NationalTeam> teams, IList<Match> matches)
         {
             this.name = name;
             this.teams = teams;
+            this.matches = matches;
         }
 
         public Group(Group group)
         {
             name = group.name;
             teams = group.teams;
+            matches = group.matches;
         }
 
         public string Name
@@ -33,6 +37,12 @@
         {
             get { return teams; }
             set { teams = value; }
+        }
+
+        public IList<Match> Matches
+        {
+            get { return matches; }
+            set { matches = value; }
         }
     }
 }
