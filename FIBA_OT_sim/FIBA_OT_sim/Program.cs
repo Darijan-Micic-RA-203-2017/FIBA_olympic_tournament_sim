@@ -1,8 +1,8 @@
 ﻿namespace FIBA_OT_sim
 {
-    internal class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
         }
