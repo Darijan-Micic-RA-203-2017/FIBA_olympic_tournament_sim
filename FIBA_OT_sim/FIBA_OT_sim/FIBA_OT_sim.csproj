@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <Resource Include="Resources\exibitions.json" />
+    <Resource Include="Resources\groups.json" />
   </ItemGroup>
 
 </Project>
