@@ -18,12 +18,22 @@ namespace FIBA_OT_sim.Repositories
             set { groupPhase = value; }
         }
 
-        public void LoadGroupPhaseFromFileSystem()
+        /// <summary>
+        /// <para>
+        /// Loads groups and national teams allocated to each group from file on specified <paramref name="filePath" />
+        /// and stores them inside a <see cref="Model.GroupPhase" /> object.
+        /// </para>
+        /// <para>
+        /// REFERENCES:<br />
+        /// <see href="https://learn.microsoft.com/en-us/answers/questions/699941/read-and-process-json-file-with-c" /><br />
+        /// <see href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/deserialization" /><br />
+        /// <see href="https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/use-dom" />
+        /// </para>
+        /// </summary>
+        /// <param name="filePath">Path of JSON file containing groups and national teams.</param>
+        public void LoadGroupPhaseFromFileSystem(string filePath)
         {
-            // REFERENCE: https://learn.microsoft.com/en-us/answers/questions/699941/read-and-process-json-file-with-c
-            // REFERENCE: https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/deserialization
-            // REFERENCE: https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/use-dom
-            string jsonString = File.ReadAllText("../../../../Resources/groups.json");
+            string jsonString = File.ReadAllText(filePath);
             using (JsonDocument document = JsonDocument.Parse(jsonString))
             {
                 JsonElement rootElement = document.RootElement;
