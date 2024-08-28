@@ -1,0 +1,8 @@
+﻿namespace FIBA_OT_sim.Model
+{
+    public enum TournamentPhaseOfMatch
+    {
+        FIRST_ROUND_OF_GROUP_PHASE, SECOND_ROUND_OF_GROUP_PHASE, THIRD_ROUND_OF_GROUP_PHASE, 
+        QUARTERFINALS, SEMIFINALS, THIRD_PLACE_MATCH, FINAL
+    }
+}
