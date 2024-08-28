@@ -1,4 +1,4 @@
-﻿using FIBA_OT_sim.Repositories;
+﻿using FIBA_OT_sim.Services;
 
 namespace FIBA_OT_sim
 {
@@ -6,10 +6,10 @@ namespace FIBA_OT_sim
     {
         public static void Main(string[] args)
         {
-            GroupPhaseRepository groupPhaseRepository = new GroupPhaseRepository();
-            groupPhaseRepository.LoadGroupPhaseFromFileSystem("../../../../Resources/groups.json");
+            GroupPhaseService groupPhaseService = new GroupPhaseService();
+            groupPhaseService.LoadGroupPhaseFromFileSystem("../../../../Resources/groups.json");
 
-            Console.WriteLine(groupPhaseRepository.GroupPhase.Groups[1].Teams[2].Name);
+            Console.WriteLine(groupPhaseService.GroupPhaseRepository.GroupPhase.Groups[1].Teams[2].Name);
         }
     }
 }
