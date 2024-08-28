@@ -5,9 +5,12 @@ namespace FIBA_OT_sim.Repositories
 {
     public class GroupPhaseRepository
     {
-        private static GroupPhase? groupPhase;
+        private GroupPhase groupPhase;
 
-        public GroupPhaseRepository() { }
+        public GroupPhaseRepository()
+        {
+            groupPhase = new GroupPhase();
+        }
 
         public GroupPhase GroupPhase
         {
@@ -44,14 +47,14 @@ namespace FIBA_OT_sim.Repositories
                         string? name = nationalTeamElement.GetProperty("Team").GetString();
                         if (name == null)
                         {
-                            groupPhase = null;
+                            groupPhase = new GroupPhase();
 
                             return;
                         }
                         string? abbreviation = nationalTeamElement.GetProperty("ISOCode").GetString();
                         if (abbreviation == null)
                         {
-                            groupPhase = null;
+                            groupPhase = new GroupPhase();
 
                             return;
                         }
@@ -63,7 +66,7 @@ namespace FIBA_OT_sim.Repositories
                         group.Teams.Add(nationalTeam);
                     }
 
-                    groupPhase?.Groups.Add(group);
+                    groupPhase.Groups.Add(group);
                 }
             }
         }
