@@ -5,8 +5,11 @@
         private string name;
         private string abbreviation;
         private int fibaRanking;
-        private int totalPointsScoredInGroupPhase;
-        private int totalPointsAllowedInGroupPhase;
+        private int winsInGroupPhase;
+        private int lossesInGroupPhase;
+        private int scoredPointsInGroupPhase;
+        private int allowedPointsInGroupPhase;
+        private int pointsDifferentialInGroupPhase;
         private int pointsInGroupPhase;
         private int groupPhaseRanking;
         private StatusOfNationalTeam status;
@@ -17,23 +20,30 @@
             name = "";
             abbreviation = "";
             fibaRanking = 0;
-            totalPointsScoredInGroupPhase = 0;
-            totalPointsAllowedInGroupPhase = 0;
+            winsInGroupPhase = 0;
+            lossesInGroupPhase = 0;
+            scoredPointsInGroupPhase = 0;
+            allowedPointsInGroupPhase = 0;
+            pointsDifferentialInGroupPhase = 0;
             pointsInGroupPhase = 0;
             groupPhaseRanking = 0;
             status = StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE;
             matches = new List<Match>();
         }
 
-        public NationalTeam(string name, string abbreviation, int fibaRanking, 
-            int totalPointsScoredInGroupPhase, int totalPointsAllowedInGroupPhase, int pointsInGroupPhase, 
-            int groupPhaseRanking, StatusOfNationalTeam status, IList<Match> matches)
+        public NationalTeam(string name, string abbreviation, int fibaRanking, int winsInGroupPhase, 
+            int lossesInGroupPhase, int scoredPointsInGroupPhase, int allowedPointsInGroupPhase, 
+            int pointsDifferentialInGroupPhase, int pointsInGroupPhase, int groupPhaseRanking, 
+            StatusOfNationalTeam status, IList<Match> matches)
         {
             this.name = name;
             this.abbreviation = abbreviation;
             this.fibaRanking = fibaRanking;
-            this.totalPointsScoredInGroupPhase = totalPointsScoredInGroupPhase;
-            this.totalPointsAllowedInGroupPhase = totalPointsAllowedInGroupPhase;
+            this.winsInGroupPhase = winsInGroupPhase;
+            this.lossesInGroupPhase = lossesInGroupPhase;
+            this.scoredPointsInGroupPhase = scoredPointsInGroupPhase;
+            this.allowedPointsInGroupPhase = allowedPointsInGroupPhase;
+            this.pointsDifferentialInGroupPhase = pointsDifferentialInGroupPhase;
             this.pointsInGroupPhase = pointsInGroupPhase;
             this.groupPhaseRanking = groupPhaseRanking;
             this.status = status;
@@ -45,8 +55,11 @@
             name = nationalTeam.name;
             abbreviation = nationalTeam.abbreviation;
             fibaRanking = nationalTeam.fibaRanking;
-            totalPointsScoredInGroupPhase = nationalTeam.totalPointsScoredInGroupPhase;
-            totalPointsAllowedInGroupPhase = nationalTeam.totalPointsAllowedInGroupPhase;
+            winsInGroupPhase = nationalTeam.winsInGroupPhase;
+            lossesInGroupPhase = nationalTeam.lossesInGroupPhase;
+            scoredPointsInGroupPhase = nationalTeam.scoredPointsInGroupPhase;
+            allowedPointsInGroupPhase = nationalTeam.allowedPointsInGroupPhase;
+            pointsDifferentialInGroupPhase = nationalTeam.pointsDifferentialInGroupPhase;
             pointsInGroupPhase = nationalTeam.pointsInGroupPhase;
             groupPhaseRanking = nationalTeam.groupPhaseRanking;
             status = nationalTeam.status;
@@ -71,16 +84,34 @@
             set { fibaRanking = value; }
         }
 
-        public int TotalPointsScoredInGroupPhase
+        public int WinsInGroupPhase
         {
-            get { return totalPointsScoredInGroupPhase; }
-            set { totalPointsScoredInGroupPhase = value; }
+            get { return winsInGroupPhase; }
+            set { winsInGroupPhase = value; }
         }
 
-        public int TotalPointsAllowedInGroupPhase
+        public int LossesInGroupPhase
         {
-            get { return totalPointsAllowedInGroupPhase; }
-            set { totalPointsAllowedInGroupPhase = value; }
+            get { return lossesInGroupPhase; }
+            set { lossesInGroupPhase = value; }
+        }
+
+        public int ScoredPointsInGroupPhase
+        {
+            get { return scoredPointsInGroupPhase; }
+            set { scoredPointsInGroupPhase = value; }
+        }
+
+        public int AllowedPointsInGroupPhase
+        {
+            get { return allowedPointsInGroupPhase; }
+            set { allowedPointsInGroupPhase = value; }
+        }
+
+        public int PointsDifferentialInGroupPhase
+        {
+            get { return pointsDifferentialInGroupPhase; }
+            set { pointsDifferentialInGroupPhase = value; }
         }
 
         public int PointsInGroupPhase

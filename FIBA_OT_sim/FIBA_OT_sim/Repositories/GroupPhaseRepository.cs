@@ -59,14 +59,19 @@ namespace FIBA_OT_sim.Repositories
                             return;
                         }
                         int fibaRanking = nationalTeamElement.GetProperty("FIBARanking").GetInt32();
-                        int totalPointsScoredInGroupPhase = 0;
-                        int totalPointsAllowedInGroupPhase = 0;
+                        int winsInGroupPhase = 0;
+                        int lossesInGroupPhase = 0;
+                        int scoredPointsInGroupPhase = 0;
+                        int allowedPointsInGroupPhase = 0;
+                        int pointsDifferentialInGroupPhase = 0;
                         int pointsInGroupPhase = 0;
                         int groupPhaseRanking = 0;
+                        StatusOfNationalTeam status = StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE;
 
                         NationalTeam nationalTeam = new NationalTeam(name, abbreviation, fibaRanking, 
-                            totalPointsScoredInGroupPhase, totalPointsAllowedInGroupPhase, pointsInGroupPhase, 
-                            groupPhaseRanking, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+                            winsInGroupPhase, lossesInGroupPhase, scoredPointsInGroupPhase, 
+                            allowedPointsInGroupPhase, pointsDifferentialInGroupPhase, pointsInGroupPhase, 
+                            groupPhaseRanking, status, new List<Match>());
                         group.Teams.Add(nationalTeam);
                     }
 
