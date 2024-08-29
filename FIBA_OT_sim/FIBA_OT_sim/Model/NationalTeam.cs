@@ -5,12 +5,13 @@
         private string name;
         private string abbreviation;
         private int fibaRanking;
-        private int winsInGroupPhase;
-        private int lossesInGroupPhase;
-        private int scoredPointsInGroupPhase;
-        private int allowedPointsInGroupPhase;
-        private int pointsDifferentialInGroupPhase;
-        private int pointsInGroupPhase;
+        private int winsInGroup;
+        private int lossesInGroup;
+        private int scoredPointsInGroup;
+        private int allowedPointsInGroup;
+        private int pointsDifferentialInGroup;
+        private int pointsInGroup;
+        private int groupRanking;
         private int groupPhaseRanking;
         private StatusOfNationalTeam status;
         private IList<Match> matches;
@@ -20,31 +21,33 @@
             name = "";
             abbreviation = "";
             fibaRanking = 0;
-            winsInGroupPhase = 0;
-            lossesInGroupPhase = 0;
-            scoredPointsInGroupPhase = 0;
-            allowedPointsInGroupPhase = 0;
-            pointsDifferentialInGroupPhase = 0;
-            pointsInGroupPhase = 0;
+            winsInGroup = 0;
+            lossesInGroup = 0;
+            scoredPointsInGroup = 0;
+            allowedPointsInGroup = 0;
+            pointsDifferentialInGroup = 0;
+            pointsInGroup = 0;
+            groupRanking = 0;
             groupPhaseRanking = 0;
             status = StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE;
             matches = new List<Match>();
         }
 
-        public NationalTeam(string name, string abbreviation, int fibaRanking, int winsInGroupPhase, 
-            int lossesInGroupPhase, int scoredPointsInGroupPhase, int allowedPointsInGroupPhase, 
-            int pointsDifferentialInGroupPhase, int pointsInGroupPhase, int groupPhaseRanking, 
-            StatusOfNationalTeam status, IList<Match> matches)
+        public NationalTeam(string name, string abbreviation, int fibaRanking, int winsInGroup, 
+            int lossesInGroup, int scoredPointsInGroup, int allowedPointsInGroup, int pointsDifferentialInGroup, 
+            int pointsInGroup, int groupRanking, int groupPhaseRanking, StatusOfNationalTeam status, 
+            IList<Match> matches)
         {
             this.name = name;
             this.abbreviation = abbreviation;
             this.fibaRanking = fibaRanking;
-            this.winsInGroupPhase = winsInGroupPhase;
-            this.lossesInGroupPhase = lossesInGroupPhase;
-            this.scoredPointsInGroupPhase = scoredPointsInGroupPhase;
-            this.allowedPointsInGroupPhase = allowedPointsInGroupPhase;
-            this.pointsDifferentialInGroupPhase = pointsDifferentialInGroupPhase;
-            this.pointsInGroupPhase = pointsInGroupPhase;
+            this.winsInGroup = winsInGroup;
+            this.lossesInGroup = lossesInGroup;
+            this.scoredPointsInGroup = scoredPointsInGroup;
+            this.allowedPointsInGroup = allowedPointsInGroup;
+            this.pointsDifferentialInGroup = pointsDifferentialInGroup;
+            this.pointsInGroup = pointsInGroup;
+            this.groupRanking = groupRanking;
             this.groupPhaseRanking = groupPhaseRanking;
             this.status = status;
             this.matches = matches;
@@ -55,12 +58,13 @@
             name = nationalTeam.name;
             abbreviation = nationalTeam.abbreviation;
             fibaRanking = nationalTeam.fibaRanking;
-            winsInGroupPhase = nationalTeam.winsInGroupPhase;
-            lossesInGroupPhase = nationalTeam.lossesInGroupPhase;
-            scoredPointsInGroupPhase = nationalTeam.scoredPointsInGroupPhase;
-            allowedPointsInGroupPhase = nationalTeam.allowedPointsInGroupPhase;
-            pointsDifferentialInGroupPhase = nationalTeam.pointsDifferentialInGroupPhase;
-            pointsInGroupPhase = nationalTeam.pointsInGroupPhase;
+            winsInGroup = nationalTeam.winsInGroup;
+            lossesInGroup = nationalTeam.lossesInGroup;
+            scoredPointsInGroup = nationalTeam.scoredPointsInGroup;
+            allowedPointsInGroup = nationalTeam.allowedPointsInGroup;
+            pointsDifferentialInGroup = nationalTeam.pointsDifferentialInGroup;
+            pointsInGroup = nationalTeam.pointsInGroup;
+            groupRanking = nationalTeam.groupRanking;
             groupPhaseRanking = nationalTeam.groupPhaseRanking;
             status = nationalTeam.status;
             matches = nationalTeam.matches;
@@ -84,40 +88,46 @@
             set { fibaRanking = value; }
         }
 
-        public int WinsInGroupPhase
+        public int WinsInGroup
         {
-            get { return winsInGroupPhase; }
-            set { winsInGroupPhase = value; }
+            get { return winsInGroup; }
+            set { winsInGroup = value; }
         }
 
-        public int LossesInGroupPhase
+        public int LossesInGroup
         {
-            get { return lossesInGroupPhase; }
-            set { lossesInGroupPhase = value; }
+            get { return lossesInGroup; }
+            set { lossesInGroup = value; }
         }
 
-        public int ScoredPointsInGroupPhase
+        public int ScoredPointsInGroup
         {
-            get { return scoredPointsInGroupPhase; }
-            set { scoredPointsInGroupPhase = value; }
+            get { return scoredPointsInGroup; }
+            set { scoredPointsInGroup = value; }
         }
 
-        public int AllowedPointsInGroupPhase
+        public int AllowedPointsInGroup
         {
-            get { return allowedPointsInGroupPhase; }
-            set { allowedPointsInGroupPhase = value; }
+            get { return allowedPointsInGroup; }
+            set { allowedPointsInGroup = value; }
         }
 
-        public int PointsDifferentialInGroupPhase
+        public int PointsDifferentialInGroup
         {
-            get { return pointsDifferentialInGroupPhase; }
-            set { pointsDifferentialInGroupPhase = value; }
+            get { return pointsDifferentialInGroup; }
+            set { pointsDifferentialInGroup = value; }
         }
 
-        public int PointsInGroupPhase
+        public int PointsInGroup
         {
-            get { return pointsInGroupPhase; }
-            set { pointsInGroupPhase = value; }
+            get { return pointsInGroup; }
+            set { pointsInGroup = value; }
+        }
+
+        public int GroupRanking
+        {
+            get { return groupRanking; }
+            set { groupRanking = value; }
         }
 
         public int GroupPhaseRanking

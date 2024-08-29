@@ -170,25 +170,25 @@ namespace FIBA_OT_sim.Services
             int pointsDifferentialAdditionForHomeTeam = homeTeamPoints - guestTeamPoints;
             int pointsDifferentialAdditionForGuestTeam = pointsDifferentialAdditionForHomeTeam * -1;
             
-            match.HomeTeam.ScoredPointsInGroupPhase += homeTeamPoints;
-            match.HomeTeam.AllowedPointsInGroupPhase += guestTeamPoints;
-            match.HomeTeam.PointsDifferentialInGroupPhase += pointsDifferentialAdditionForHomeTeam;
-            match.GuestTeam.ScoredPointsInGroupPhase += guestTeamPoints;
-            match.GuestTeam.AllowedPointsInGroupPhase += homeTeamPoints;
-            match.GuestTeam.PointsDifferentialInGroupPhase += pointsDifferentialAdditionForGuestTeam;
+            match.HomeTeam.ScoredPointsInGroup += homeTeamPoints;
+            match.HomeTeam.AllowedPointsInGroup += guestTeamPoints;
+            match.HomeTeam.PointsDifferentialInGroup += pointsDifferentialAdditionForHomeTeam;
+            match.GuestTeam.ScoredPointsInGroup += guestTeamPoints;
+            match.GuestTeam.AllowedPointsInGroup += homeTeamPoints;
+            match.GuestTeam.PointsDifferentialInGroup += pointsDifferentialAdditionForGuestTeam;
             if (pointsDifferentialAdditionForHomeTeam > 0)
             {
-                match.HomeTeam.WinsInGroupPhase += 1;
-                match.HomeTeam.PointsInGroupPhase += 2;
-                match.GuestTeam.LossesInGroupPhase += 1;
-                match.GuestTeam.PointsInGroupPhase += 1;
+                match.HomeTeam.WinsInGroup += 1;
+                match.HomeTeam.PointsInGroup += 2;
+                match.GuestTeam.LossesInGroup += 1;
+                match.GuestTeam.PointsInGroup += 1;
             }
             else
             {
-                match.HomeTeam.LossesInGroupPhase += 1;
-                match.HomeTeam.PointsInGroupPhase += 1;
-                match.GuestTeam.WinsInGroupPhase += 1;
-                match.GuestTeam.PointsInGroupPhase += 2;
+                match.HomeTeam.LossesInGroup += 1;
+                match.HomeTeam.PointsInGroup += 1;
+                match.GuestTeam.WinsInGroup += 1;
+                match.GuestTeam.PointsInGroup += 2;
             }
         }
     }
