@@ -22,6 +22,7 @@ namespace FIBA_OT_sim
             groupPhaseService.LoadGroupPhaseFromFileSystem("Resources/groups.json");
             groupPhaseService.ScheduleGroupPhaseMatches();
             groupPhaseService.SimulateResultsOfGroupPhaseMatches();
+            groupPhaseService.UpdateNationalTeamsPointsDataInGroupPhase();
         }
     }
 }

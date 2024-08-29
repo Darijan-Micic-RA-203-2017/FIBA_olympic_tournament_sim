@@ -161,5 +161,32 @@ namespace FIBA_OT_sim.Services
                 }
             }
         }
+
+        public void UpdateNationalTeamsPointsDataInGroupPhase()
+        {
+            foreach (Group group in groupPhaseRepository.GroupPhase.Groups)
+            {
+                foreach (Match match in group.Matches)
+                {
+                    int homeTeamPoints = match.Result.HomeTeamPoints;
+                    int guestTeamPoints = match.Result.GuestTeamPoints;
+
+                    match.HomeTeam.TotalPointsScoredInGroupPhase += homeTeamPoints;
+                    match.HomeTeam.TotalPointsAllowedInGroupPhase += guestTeamPoints;
+                    match.GuestTeam.TotalPointsScoredInGroupPhase += guestTeamPoints;
+                    match.GuestTeam.TotalPointsAllowedInGroupPhase += homeTeamPoints;
+                    if (homeTeamPoints > guestTeamPoints)
+                    {
+                        match.HomeTeam.PointsInGroupPhase += 2;
+                        match.GuestTeam.PointsInGroupPhase += 1;
+                    }
+                    else
+                    {
+                        match.HomeTeam.PointsInGroupPhase += 1;
+                        match.GuestTeam.PointsInGroupPhase += 2;
+                    }
+                }
+            }
+        }
     }
 }
