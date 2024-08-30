@@ -55,5 +55,11 @@
             get { return result; }
             set { result = value; }
         }
+
+        public bool IsMatchBetweenTeams(NationalTeam team1, NationalTeam team2)
+        {
+            return (homeTeam.Name.Equals(team1.Name) && guestTeam.Name.Equals(team2.Name)) 
+                || (homeTeam.Name.Equals(team2.Name) && guestTeam.Name.Equals(team1.Name));
+        }
     }
 }

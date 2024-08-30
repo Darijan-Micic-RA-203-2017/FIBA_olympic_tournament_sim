@@ -5,14 +5,14 @@ namespace FIBA_OT_sim.Repositories
 {
     public class GroupPhaseRepository
     {
-        private GroupPhase groupPhase;
+        private static GroupPhase groupPhase;
 
         public GroupPhaseRepository()
         {
             groupPhase = new GroupPhase();
         }
 
-        public GroupPhase GroupPhase
+        public static GroupPhase GroupPhase
         {
             get { return groupPhase; }
             set { groupPhase = value; }
