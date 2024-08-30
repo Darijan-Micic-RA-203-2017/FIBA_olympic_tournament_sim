@@ -1,5 +1,6 @@
 ﻿using FIBA_OT_sim.Model;
 using FIBA_OT_sim.Repositories;
+using System.Text;
 
 namespace FIBA_OT_sim.Services
 {
@@ -28,13 +29,17 @@ namespace FIBA_OT_sim.Services
             foreach (Group group in GroupPhaseRepository.GroupPhase.Groups)
             {
                 ScheduleMatchesOfGroup(group);
+
                 foreach (Match match in group.Matches)
                 {
                     DetermineResultOfGroupPhaseMatch(match);
                     UpdateGroupDataOfNationalTeamsAfterMatch(match);
                 }
+
                 RankNationalTeamsInGroup(group);
             }
+
+            PrintGroupPhase();
         }
 
         private void ScheduleMatchesOfGroup(Group group)
@@ -193,10 +198,9 @@ namespace FIBA_OT_sim.Services
             }
         }
 
-        public void RankNationalTeamsInGroup(Group group)
+        private void RankNationalTeamsInGroup(Group group)
         {
-            group.Teams = (IList<NationalTeam>) group.Teams.OrderByDescending(
-                (nationalTeam) => nationalTeam.PointsInGroup);
+            group.Teams = group.Teams.OrderByDescending((nationalTeam) => nationalTeam.PointsInGroup).ToList();
             NationalTeam firstTeam = group.Teams[0];
 
             List<List<NationalTeam>> nationalTeamsWithSameNumberOfPoints = new List<List<NationalTeam>>();
@@ -300,11 +304,10 @@ namespace FIBA_OT_sim.Services
                         }
                     }
 
-                    copiesOfNationalTeamsInCircle = (IList<NationalTeam>) copiesOfNationalTeamsInCircle
+                    copiesOfNationalTeamsInCircle = copiesOfNationalTeamsInCircle
                         .OrderByDescending((copyOfNationalTeam) => copyOfNationalTeam.PointsDifferentialInGroup)
-                        .OrderByDescending(
-                            (copyOfNationalTeam) => copyOfNationalTeam.ScoredPointsInGroup)
-                        .OrderBy((copyOfNationalTeam) => copyOfNationalTeam.FIBARanking);
+                        .OrderByDescending((copyOfNationalTeam) => copyOfNationalTeam.ScoredPointsInGroup)
+                        .OrderBy((copyOfNationalTeam) => copyOfNationalTeam.FIBARanking).ToList();
 
                     foreach (NationalTeam copyOfNationalTeam in copiesOfNationalTeamsInCircle)
                     {
@@ -324,7 +327,63 @@ namespace FIBA_OT_sim.Services
                 }
             }
             
-            group.Teams = (IList<NationalTeam>) group.Teams.OrderBy((nationalTeam) => nationalTeam.GroupRanking);
+            group.Teams = group.Teams.OrderBy((nationalTeam) => nationalTeam.GroupRanking).ToList();
+        }
+
+        private void PrintGroupPhase()
+        {
+            PrintGroupPhaseMatchesByRounds();
+            PrintFinalStandingsInEachGroup();
+        }
+
+        private void PrintGroupPhaseMatchesByRounds()
+        {
+            Console.WriteLine("Rezultati utakmica u grupama:");
+            foreach (Group group in GroupPhaseRepository.GroupPhase.Groups)
+            {
+                StringBuilder groupHeaderBuilder = new StringBuilder("    Grupa ").Append(group.Name).Append(':');
+                Console.WriteLine(groupHeaderBuilder.ToString());
+
+                foreach (Match match in group.Matches)
+                {
+                    StringBuilder matchDataBuilder = new StringBuilder("        ");
+                    matchDataBuilder.Append(match.HomeTeam.Name).Append(" - ");
+                    matchDataBuilder.Append(match.GuestTeam.Name).Append(" (");
+                    matchDataBuilder.Append(match.Result.HomeTeamPoints).Append(':');
+                    matchDataBuilder.Append(match.Result.GuestTeamPoints).Append(')');
+                    Console.WriteLine(matchDataBuilder.ToString());
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+        private void PrintFinalStandingsInEachGroup()
+        {
+            Console.WriteLine("Konačan plasman u grupama:");
+            foreach (Group group in GroupPhaseRepository.GroupPhase.Groups)
+            {
+                StringBuilder groupHeaderBuilder = new StringBuilder("    Grupa ").Append(group.Name);
+                groupHeaderBuilder
+                    .Append(" (Naziv - pobede / porazi / postignuti poeni / primljeni poeni / koš razlika");
+                groupHeaderBuilder.Append(" / bodovi):");
+                Console.WriteLine(groupHeaderBuilder.ToString());
+
+                foreach (NationalTeam nationalTeam in group.Teams)
+                {
+                    StringBuilder nationalTeamDataBuilder = new StringBuilder("        ")
+                        .Append(nationalTeam.GroupRanking).Append(". ").Append(nationalTeam.Name).Append(' ');
+                    nationalTeamDataBuilder.Append(nationalTeam.WinsInGroup).Append(" / ");
+                    nationalTeamDataBuilder.Append(nationalTeam.LossesInGroup).Append(" / ");
+                    nationalTeamDataBuilder.Append(nationalTeam.ScoredPointsInGroup).Append(" / ");
+                    nationalTeamDataBuilder.Append(nationalTeam.AllowedPointsInGroup).Append(" / ");
+                    nationalTeamDataBuilder.Append(nationalTeam.PointsDifferentialInGroup).Append(" / ");
+                    nationalTeamDataBuilder.Append(nationalTeam.PointsInGroup);
+                    Console.WriteLine(nationalTeamDataBuilder.ToString());
+                }
+
+                Console.WriteLine();
+            }
         }
     }
 }
