@@ -245,9 +245,6 @@ namespace FIBA_OT_sim.Services
                         sublist[1].GroupRanking = groupRanking;
                         groupRanking++;
                         sublist[0].GroupRanking = groupRanking;
-
-                        // Remember this!
-                        //sublist = sublist.OrderBy((nationalTeam) => nationalTeam.GroupRanking);
                     }
 
                     groupRanking++;
@@ -326,6 +323,8 @@ namespace FIBA_OT_sim.Services
                     }
                 }
             }
+            
+            group.Teams = (IList<NationalTeam>) group.Teams.OrderBy((nationalTeam) => nationalTeam.GroupRanking);
         }
     }
 }
