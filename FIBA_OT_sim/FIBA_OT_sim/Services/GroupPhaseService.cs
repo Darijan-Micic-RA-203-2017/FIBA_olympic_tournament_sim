@@ -25,7 +25,7 @@ namespace FIBA_OT_sim.Services
 
         public void SimulateGroupPhase()
         {
-            foreach (Group group in groupPhaseRepository.GroupPhase.Groups)
+            foreach (Group group in GroupPhaseRepository.GroupPhase.Groups)
             {
                 ScheduleMatchesOfGroup(group);
                 foreach (Match match in group.Matches)
@@ -222,15 +222,32 @@ namespace FIBA_OT_sim.Services
                 }
             }
 
-            for (int i = 0; i < nationalTeamsWithSameNumberOfPoints.Count; i++)
+            int groupRanking = 1;
+            foreach (List<NationalTeam> sublist in nationalTeamsWithSameNumberOfPoints)
             {
-                if (nationalTeamsWithSameNumberOfPoints[i].Count == 1)
+                if (sublist.Count == 1)
                 {
-                    continue;
+                    sublist[0].GroupRanking = groupRanking;
+                    groupRanking++;
                 }
-
-                if (nationalTeamsWithSameNumberOfPoints[i].Count == 2)
+                else if (sublist.Count == 2)
                 {
+                    Match match = MatchService.FindMatchBetweenTeams(sublist[0], sublist[1]);
+                    NationalTeam nationalTeamThatWonMatch = MatchService.GetNationalTeamThatWonMatch(match);
+                    if (nationalTeamThatWonMatch.Name.Equals(sublist[0].Name))
+                    {
+                        sublist[0].GroupRanking = groupRanking;
+                        groupRanking++;
+                        sublist[1].GroupRanking = groupRanking;
+                    }
+                    else
+                    {
+                        sublist[1].GroupRanking = groupRanking;
+                        groupRanking++;
+                        sublist[0].GroupRanking = groupRanking;
+                    }
+
+                    groupRanking++;
                 }
             }
         }
