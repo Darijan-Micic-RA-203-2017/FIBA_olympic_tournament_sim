@@ -27,16 +27,17 @@ namespace FIBA_OT_sim.Services
         {
             foreach (Group group in groupPhaseRepository.GroupPhase.Groups)
             {
-                ScheduleMatchesIn(group);
+                ScheduleMatchesOfGroup(group);
                 foreach (Match match in group.Matches)
                 {
                     DetermineResultOfGroupPhaseMatch(match);
-                    UpdateNationalTeamsDataInGroupPhase(match);
+                    UpdateGroupDataOfNationalTeamsAfterMatch(match);
                 }
+                RankNationalTeamsInGroup(group);
             }
         }
 
-        private void ScheduleMatchesIn(Group group)
+        private void ScheduleMatchesOfGroup(Group group)
         {
             Match match1 = new Match(TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
                 group.Teams[0], group.Teams[3], new MatchResult());
@@ -78,7 +79,7 @@ namespace FIBA_OT_sim.Services
         private void DetermineResultOfGroupPhaseMatch(Match match)
         {
             int fibaRankingOfHomeTeam = match.HomeTeam.FIBARanking;
-            Console.WriteLine("\nHome team                           FIBA ranking: " + fibaRankingOfHomeTeam);
+            Console.WriteLine("Home team                           FIBA ranking: " + fibaRankingOfHomeTeam);
             int fibaRankingOfGuestTeam = match.GuestTeam.FIBARanking;
             Console.WriteLine("Guest team                          FIBA ranking: " + fibaRankingOfGuestTeam);
             bool homeTeamHigherRanked = false;
@@ -160,10 +161,10 @@ namespace FIBA_OT_sim.Services
                 }
             }
             Console.WriteLine("Match                                     result: " 
-                + match.Result.HomeTeamPoints + ":" + match.Result.GuestTeamPoints);
+                + match.Result.HomeTeamPoints + ":" + match.Result.GuestTeamPoints + "\n");
         }
         
-        private void UpdateNationalTeamsDataInGroupPhase(Match match)
+        private void UpdateGroupDataOfNationalTeamsAfterMatch(Match match)
         {
             int homeTeamPoints = match.Result.HomeTeamPoints;
             int guestTeamPoints = match.Result.GuestTeamPoints;
@@ -189,6 +190,48 @@ namespace FIBA_OT_sim.Services
                 match.HomeTeam.PointsInGroup += 1;
                 match.GuestTeam.WinsInGroup += 1;
                 match.GuestTeam.PointsInGroup += 2;
+            }
+        }
+
+        public void RankNationalTeamsInGroup(Group group)
+        {
+            group.Teams = (IList<NationalTeam>) group.Teams.OrderByDescending(
+                (nationalTeam) => nationalTeam.PointsInGroup);
+            NationalTeam firstTeam = group.Teams[0];
+
+            List<List<NationalTeam>> nationalTeamsWithSameNumberOfPoints = new List<List<NationalTeam>>();
+            nationalTeamsWithSameNumberOfPoints.Add(new List<NationalTeam>());
+            nationalTeamsWithSameNumberOfPoints[0].Add(firstTeam);
+            NationalTeam previousNationalTeam = firstTeam;
+            for (int i = 1; i < group.Teams.Count; i++)
+            {
+                if (group.Teams[i].PointsInGroup == previousNationalTeam.PointsInGroup)
+                {
+                    nationalTeamsWithSameNumberOfPoints[nationalTeamsWithSameNumberOfPoints.Count - 1]
+                        .Add(group.Teams[i]);
+
+                    previousNationalTeam = group.Teams[i];
+                }
+                else
+                {
+                    nationalTeamsWithSameNumberOfPoints.Add(new List<NationalTeam>());
+                    nationalTeamsWithSameNumberOfPoints[nationalTeamsWithSameNumberOfPoints.Count - 1]
+                        .Add(group.Teams[i]);
+
+                    previousNationalTeam = group.Teams[i];
+                }
+            }
+
+            for (int i = 0; i < nationalTeamsWithSameNumberOfPoints.Count; i++)
+            {
+                if (nationalTeamsWithSameNumberOfPoints[i].Count == 1)
+                {
+                    continue;
+                }
+
+                if (nationalTeamsWithSameNumberOfPoints[i].Count == 2)
+                {
+                }
             }
         }
     }
