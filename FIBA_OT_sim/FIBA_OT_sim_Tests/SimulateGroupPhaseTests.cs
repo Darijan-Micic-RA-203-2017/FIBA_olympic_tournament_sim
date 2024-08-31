@@ -18,7 +18,7 @@ namespace FIBA_OT_sim_Tests
         public void Rank_national_teams_in_group_stage_of_FIBA_olympic_tournament_in_Paris_2024()
         {
             GroupPhaseService groupPhaseService = new GroupPhaseService();
-            
+
             Group groupA = new Group("A", new List<NationalTeam>(), new List<Match>());
 
             NationalTeam australia = new NationalTeam("Australija", "AUS", 5, 1, 2, 246, 250, -4, 4, 0, 0, 
@@ -123,7 +123,7 @@ namespace FIBA_OT_sim_Tests
             NationalTeam serbia = new NationalTeam("Srbija", "SRB", 4, 2, 1, 287, 261, 26, 5, 0, 0, 
                 StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
             groupC.Teams.Add(serbia);
-            NationalTeam unitedStatesOfAmerica = new NationalTeam("Sjedinjene Američke države", "USA", 1, 3, 
+            NationalTeam unitedStatesOfAmerica = new NationalTeam("Sjedinjene Američke Države", "USA", 1, 3, 
                 0, 317, 253, 64, 6, 0, 0, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
             groupC.Teams.Add(unitedStatesOfAmerica);
             NationalTeam southSudan = new NationalTeam("Južni Sudan", "SSD", 34, 1, 2, 261, 278, -17, 4, 0, 0, 
