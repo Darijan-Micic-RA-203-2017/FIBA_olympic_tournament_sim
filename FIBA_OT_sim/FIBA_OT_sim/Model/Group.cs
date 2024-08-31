@@ -23,16 +23,8 @@
         public Group(Group group)
         {
             name = group.name;
-            teams = new List<NationalTeam>();
-            foreach (NationalTeam originalNationalTeam in group.teams)
-            {
-                teams.Add(new NationalTeam(originalNationalTeam));
-            }
-            matches = new List<Match>();
-            foreach (Match originalMatch in group.matches)
-            {
-                matches.Add(new Match(originalMatch));
-            }
+            teams = group.teams;
+            matches = group.matches;
         }
 
         public string Name

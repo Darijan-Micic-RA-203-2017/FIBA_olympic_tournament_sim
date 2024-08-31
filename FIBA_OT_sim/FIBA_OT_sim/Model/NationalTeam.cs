@@ -67,11 +67,7 @@
             groupRanking = nationalTeam.groupRanking;
             groupPhaseRanking = nationalTeam.groupPhaseRanking;
             status = nationalTeam.status;
-            matches = new List<Match>();
-            foreach (Match originalMatch in nationalTeam.matches)
-            {
-                matches.Add(new Match(originalMatch));
-            }
+            matches = nationalTeam.matches;
         }
 
         public string Name
