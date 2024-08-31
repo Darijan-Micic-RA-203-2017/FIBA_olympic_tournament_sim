@@ -16,29 +16,43 @@ namespace FIBA_OT_sim.Services
 
         private static void PrintGroupPhaseMatchesByRounds()
         {
-            Console.WriteLine("Rezultati utakmica u grupama:");
-            foreach (Group group in GroupPhaseRepository.GroupPhase.Groups)
+            int numberOfRounds = GroupPhaseRepository.GroupPhase.Groups[0].Teams.Count - 1;
+            int numberOfMatchesInOneRound = GroupPhaseRepository.GroupPhase.Groups[0].Teams.Count / 2;
+            int indexOfCurrentMatch = numberOfMatchesInOneRound;
+            for (int i = 1; i <= numberOfRounds; i++)
             {
-                StringBuilder groupHeaderBuilder = new StringBuilder("    Grupa ").Append(group.Name).Append(':');
-                Console.WriteLine(groupHeaderBuilder.ToString());
+                StringBuilder roundHeaderBuilder = new StringBuilder("Grupna faza - ").Append(i).Append(". kolo:");
+                Console.WriteLine(roundHeaderBuilder.ToString());
 
-                foreach (Match match in group.Matches)
+                foreach (Group group in GroupPhaseRepository.GroupPhase.Groups)
                 {
-                    StringBuilder matchDataBuilder = new StringBuilder("        ");
-                    matchDataBuilder.Append(match.HomeTeam.Name).Append(" - ");
-                    matchDataBuilder.Append(match.GuestTeam.Name).Append(" (");
-                    matchDataBuilder.Append(match.Result.HomeTeamPoints).Append(':');
-                    matchDataBuilder.Append(match.Result.GuestTeamPoints).Append(')');
-                    Console.WriteLine(matchDataBuilder.ToString());
+                    StringBuilder groupHeaderBuilder = new StringBuilder("    Grupa ").Append(group.Name)
+                        .Append(':');
+                    Console.WriteLine(groupHeaderBuilder.ToString());
+
+                    indexOfCurrentMatch -= numberOfMatchesInOneRound;
+                    for (int k = 0; k < numberOfMatchesInOneRound; k++)
+                    {
+                        StringBuilder matchDataBuilder = new StringBuilder("        ");
+                        matchDataBuilder.Append(group.Matches[indexOfCurrentMatch].HomeTeam.Name).Append(" - ");
+                        matchDataBuilder.Append(group.Matches[indexOfCurrentMatch].GuestTeam.Name).Append(" (");
+                        matchDataBuilder.Append(group.Matches[indexOfCurrentMatch].Result.HomeTeamPoints)
+                            .Append(':');
+                        matchDataBuilder.Append(group.Matches[indexOfCurrentMatch].Result.GuestTeamPoints)
+                            .Append(')');
+                        Console.WriteLine(matchDataBuilder.ToString());
+
+                        indexOfCurrentMatch++;
+                    }
                 }
 
-                Console.WriteLine();
+                indexOfCurrentMatch += numberOfMatchesInOneRound;
             }
         }
 
         private static void PrintFinalStandingsInEachGroup()
         {
-            Console.WriteLine("Konačan plasman u grupama:");
+            Console.WriteLine("\nKonačan plasman u grupama:");
             foreach (Group group in GroupPhaseRepository.GroupPhase.Groups)
             {
                 StringBuilder groupHeaderBuilder = new StringBuilder("    Grupa ").Append(group.Name);
