@@ -26,10 +26,18 @@
 
         public EliminationPhase(EliminationPhase eliminationPhase)
         {
-            quarterFinals = eliminationPhase.quarterFinals;
-            semiFinals = eliminationPhase.semiFinals;
-            thirdPlaceMatch = eliminationPhase.thirdPlaceMatch;
-            final = eliminationPhase.final;
+            quarterFinals = new List<Match>();
+            foreach (Match originalQuarterFinalsMatch in eliminationPhase.quarterFinals)
+            {
+                quarterFinals.Add(new Match(originalQuarterFinalsMatch));
+            }
+            semiFinals = new List<Match>();
+            foreach (Match originalSemiFinalsMatch in eliminationPhase.semiFinals)
+            {
+                semiFinals.Add(new Match(originalSemiFinalsMatch));
+            }
+            thirdPlaceMatch = new Match(eliminationPhase.thirdPlaceMatch);
+            final = new Match(eliminationPhase.final);
         }
 
         public IList<Match> QuarterFinals

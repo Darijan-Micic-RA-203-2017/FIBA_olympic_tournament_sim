@@ -16,7 +16,11 @@
 
         public GroupPhase(GroupPhase groupPhase)
         {
-            groups = groupPhase.groups;
+            groups = new List<Group>();
+            foreach (Group originalGroup in groupPhase.groups)
+            {
+                groups.Add(new Group(originalGroup));
+            }
         }
 
         public IList<Group> Groups

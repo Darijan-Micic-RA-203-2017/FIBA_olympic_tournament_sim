@@ -27,9 +27,9 @@
         public Match(Match match)
         {
             tournamentPhase = match.tournamentPhase;
-            homeTeam = match.homeTeam;
-            guestTeam = match.guestTeam;
-            result = match.result;
+            homeTeam = new NationalTeam(match.homeTeam);
+            guestTeam = new NationalTeam(match.guestTeam);
+            result = new MatchResult(match.result);
         }
 
         public TournamentPhaseOfMatch TournamentPhase
