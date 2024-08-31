@@ -32,7 +32,7 @@ namespace FIBA_OT_sim.Services
                 foreach (Match match in group.Matches)
                 {
                     DetermineResultOfGroupPhaseMatch(match);
-                    UpdateGroupDataOfNationalTeamsAfterMatch(match);
+                    NationalTeamService.UpdateStatsOfNationalTeamsWhoPlayedInMatch(match);
                 }
 
                 RankNationalTeamsInGroup(group);
@@ -168,161 +168,155 @@ namespace FIBA_OT_sim.Services
                 + match.Result.HomeTeamPoints + ":" + match.Result.GuestTeamPoints + "\n");
         }
         
-        private void UpdateGroupDataOfNationalTeamsAfterMatch(Match match)
-        {
-            int homeTeamPoints = match.Result.HomeTeamPoints;
-            int guestTeamPoints = match.Result.GuestTeamPoints;
-            int pointsDifferentialAdditionForHomeTeam = homeTeamPoints - guestTeamPoints;
-            int pointsDifferentialAdditionForGuestTeam = pointsDifferentialAdditionForHomeTeam * -1;
-            
-            match.HomeTeam.ScoredPointsInGroup += homeTeamPoints;
-            match.HomeTeam.AllowedPointsInGroup += guestTeamPoints;
-            match.HomeTeam.PointsDifferentialInGroup += pointsDifferentialAdditionForHomeTeam;
-            match.GuestTeam.ScoredPointsInGroup += guestTeamPoints;
-            match.GuestTeam.AllowedPointsInGroup += homeTeamPoints;
-            match.GuestTeam.PointsDifferentialInGroup += pointsDifferentialAdditionForGuestTeam;
-            if (pointsDifferentialAdditionForHomeTeam > 0)
-            {
-                match.HomeTeam.WinsInGroup += 1;
-                match.HomeTeam.PointsInGroup += 2;
-                match.GuestTeam.LossesInGroup += 1;
-                match.GuestTeam.PointsInGroup += 1;
-            }
-            else
-            {
-                match.HomeTeam.LossesInGroup += 1;
-                match.HomeTeam.PointsInGroup += 1;
-                match.GuestTeam.WinsInGroup += 1;
-                match.GuestTeam.PointsInGroup += 2;
-            }
-        }
-
         public void RankNationalTeamsInGroup(Group group)
         {
             group.Teams = group.Teams.OrderByDescending((nationalTeam) => nationalTeam.PointsInGroup).ToList();
-            NationalTeam firstTeam = group.Teams[0];
+            
+            IList<List<NationalTeam>> subgroupsWithSameNumberOfPoints = 
+                SeparateNationalTeamsIntoSubgroupsBasedOnPointsInGroup(group);
+            
+            int groupRanking = 1;
+            foreach (List<NationalTeam> subgroup in subgroupsWithSameNumberOfPoints)
+            {
+                if (subgroup.Count == 1)
+                {
+                    subgroup[0].GroupRanking = groupRanking;
+                    groupRanking++;
+                }
+                else if (subgroup.Count == 2)
+                {
+                    groupRanking = RankNationalTeamsInSubgroupOfTwoTeams(subgroup, groupRanking);
+                }
+                else
+                {
+                    groupRanking = RankNationalTeamsInSubgroupOfMoreThanTwoTeams(subgroup, groupRanking);
+                }
+            }
+            
+            group.Teams = group.Teams.OrderBy((nationalTeam) => nationalTeam.GroupRanking).ToList();
+        }
 
-            List<List<NationalTeam>> nationalTeamsWithSameNumberOfPoints = new List<List<NationalTeam>>();
-            nationalTeamsWithSameNumberOfPoints.Add(new List<NationalTeam>());
-            nationalTeamsWithSameNumberOfPoints[0].Add(firstTeam);
+        private IList<List<NationalTeam>> SeparateNationalTeamsIntoSubgroupsBasedOnPointsInGroup(Group group)
+        {
+            IList<List<NationalTeam>> subgroupsWithSameNumberOfPoints = new List<List<NationalTeam>>();
+            subgroupsWithSameNumberOfPoints.Add(new List<NationalTeam>());
+            NationalTeam firstTeam = group.Teams[0];
+            subgroupsWithSameNumberOfPoints[0].Add(firstTeam);
+
             NationalTeam previousNationalTeam = firstTeam;
             for (int i = 1; i < group.Teams.Count; i++)
             {
                 if (group.Teams[i].PointsInGroup == previousNationalTeam.PointsInGroup)
                 {
-                    nationalTeamsWithSameNumberOfPoints[nationalTeamsWithSameNumberOfPoints.Count - 1]
+                    subgroupsWithSameNumberOfPoints[subgroupsWithSameNumberOfPoints.Count - 1]
                         .Add(group.Teams[i]);
 
                     previousNationalTeam = group.Teams[i];
                 }
                 else
                 {
-                    nationalTeamsWithSameNumberOfPoints.Add(new List<NationalTeam>());
-                    nationalTeamsWithSameNumberOfPoints[nationalTeamsWithSameNumberOfPoints.Count - 1]
+                    subgroupsWithSameNumberOfPoints.Add(new List<NationalTeam>());
+                    subgroupsWithSameNumberOfPoints[subgroupsWithSameNumberOfPoints.Count - 1]
                         .Add(group.Teams[i]);
 
                     previousNationalTeam = group.Teams[i];
                 }
             }
 
-            int groupRanking = 1;
-            foreach (List<NationalTeam> sublist in nationalTeamsWithSameNumberOfPoints)
+            return subgroupsWithSameNumberOfPoints;
+        }
+
+        private int RankNationalTeamsInSubgroupOfTwoTeams(IList<NationalTeam> subgroup, int groupRanking)
+        {
+            Match match = MatchService.FindMatchBetweenTeams(subgroup[0], subgroup[1]);
+            NationalTeam nationalTeamThatWonMatch = MatchService.GetNationalTeamThatWonMatch(match);
+            if (nationalTeamThatWonMatch.Name.Equals(subgroup[0].Name))
             {
-                if (sublist.Count == 1)
+                subgroup[0].GroupRanking = groupRanking;
+                groupRanking++;
+                subgroup[1].GroupRanking = groupRanking;
+            }
+            else
+            {
+                subgroup[1].GroupRanking = groupRanking;
+                groupRanking++;
+                subgroup[0].GroupRanking = groupRanking;
+            }
+
+            groupRanking++;
+
+            return groupRanking;
+        }
+
+        private int RankNationalTeamsInSubgroupOfMoreThanTwoTeams(IList<NationalTeam> subgroup, int groupRanking)
+        {
+            IList<Match> matchesBetweenTeamsInCircle = FindMatchesBetweenTeamsInCircle(subgroup);
+            IList<NationalTeam> copiesOfNationalTeamsInCircle = CreateCopiesOfNationalTeamsInCircle(subgroup);
+            NationalTeamService.UpdateStatsOfNationalTeamsInCircle(matchesBetweenTeamsInCircle, 
+                copiesOfNationalTeamsInCircle);
+            copiesOfNationalTeamsInCircle = NationalTeamService.SortNationalTeamsInCircleByFIBARules(
+                copiesOfNationalTeamsInCircle);
+            groupRanking = AssignGroupRankingsToOriginalNationalTeams(subgroup, copiesOfNationalTeamsInCircle, 
+                groupRanking);
+            
+            return groupRanking;
+        }
+
+        private IList<Match> FindMatchesBetweenTeamsInCircle(IList<NationalTeam> subgroup)
+        {
+            IList<Match> matchesBetweenTeamsInCircle = new List<Match>();
+            for (int i = 0; i < subgroup.Count - 1; i++)
+            {
+                for (int j = i + 1; j < subgroup.Count; j++)
                 {
-                    sublist[0].GroupRanking = groupRanking;
-                    groupRanking++;
+                    Match matchBetweenTwoTeamsInCircle =
+                        MatchService.FindMatchBetweenTeams(subgroup[i], subgroup[j]);
+                    matchesBetweenTeamsInCircle.Add(matchBetweenTwoTeamsInCircle);
                 }
-                else if (sublist.Count == 2)
-                {
-                    Match match = MatchService.FindMatchBetweenTeams(sublist[0], sublist[1]);
-                    NationalTeam nationalTeamThatWonMatch = MatchService.GetNationalTeamThatWonMatch(match);
-                    if (nationalTeamThatWonMatch.Name.Equals(sublist[0].Name))
-                    {
-                        sublist[0].GroupRanking = groupRanking;
-                        groupRanking++;
-                        sublist[1].GroupRanking = groupRanking;
-                    }
-                    else
-                    {
-                        sublist[1].GroupRanking = groupRanking;
-                        groupRanking++;
-                        sublist[0].GroupRanking = groupRanking;
-                    }
+            }
 
-                    groupRanking++;
-                }
-                else
-                {
-                    IList<Match> matchesBetweenTeamsInCircle = new List<Match>();
-                    for (int i = 0; i < sublist.Count - 1; i++)
-                    {
-                        for (int j = i + 1; j < sublist.Count; j++)
-                        {
-                            Match matchBetweenTwoTeamsInCircle = 
-                                MatchService.FindMatchBetweenTeams(sublist[i], sublist[j]);
-                            matchesBetweenTeamsInCircle.Add(matchBetweenTwoTeamsInCircle);
-                        }
-                    }
+            return matchesBetweenTeamsInCircle;
+        }
 
-                    IList<NationalTeam> copiesOfNationalTeamsInCircle = new List<NationalTeam>();
-                    foreach (NationalTeam originalNationalTeam in sublist)
-                    {
-                        NationalTeam copyOfNationalTeam = new NationalTeam(originalNationalTeam);
-                        copyOfNationalTeam.ScoredPointsInGroup = 0;
-                        copyOfNationalTeam.AllowedPointsInGroup = 0;
-                        copyOfNationalTeam.PointsDifferentialInGroup = 0;
-
-                        copiesOfNationalTeamsInCircle.Add(copyOfNationalTeam);
-                    }
-
-                    foreach (Match match in matchesBetweenTeamsInCircle)
-                    {
-                        int homeTeamPoints = match.Result.HomeTeamPoints;
-                        int guestTeamPoints = match.Result.GuestTeamPoints;
-                        int pointsDifferentialAdditionForHomeTeam = homeTeamPoints - guestTeamPoints;
-                        int pointsDifferentialAdditionForGuestTeam = pointsDifferentialAdditionForHomeTeam * -1;
-                        foreach (NationalTeam copyOfNationalTeam in copiesOfNationalTeamsInCircle)
-                        {
-                            if (copyOfNationalTeam.Name.Equals(match.HomeTeam.Name))
-                            {
-                                copyOfNationalTeam.ScoredPointsInGroup += homeTeamPoints;
-                                copyOfNationalTeam.AllowedPointsInGroup += guestTeamPoints;
-                                copyOfNationalTeam.PointsDifferentialInGroup += pointsDifferentialAdditionForHomeTeam;
-                            }
-                            else if (copyOfNationalTeam.Name.Equals(match.GuestTeam.Name))
-                            {
-                                copyOfNationalTeam.ScoredPointsInGroup += guestTeamPoints;
-                                copyOfNationalTeam.AllowedPointsInGroup += homeTeamPoints;
-                                copyOfNationalTeam.PointsDifferentialInGroup += pointsDifferentialAdditionForGuestTeam;
-                            }
-                        }
-                    }
-
-                    copiesOfNationalTeamsInCircle = copiesOfNationalTeamsInCircle
-                        .OrderByDescending((copyOfNationalTeam) => copyOfNationalTeam.PointsDifferentialInGroup)
-                        .ThenByDescending((copyOfNationalTeam) => copyOfNationalTeam.ScoredPointsInGroup)
-                        .ThenBy((copyOfNationalTeam) => copyOfNationalTeam.FIBARanking).ToList();
-
-                    foreach (NationalTeam copyOfNationalTeam in copiesOfNationalTeamsInCircle)
-                    {
-                        copyOfNationalTeam.GroupRanking = groupRanking;
-                        foreach (NationalTeam originalNationalTeam in sublist)
-                        {
-                            if (originalNationalTeam.Name.Equals(copyOfNationalTeam.Name))
-                            {
-                                originalNationalTeam.GroupRanking = copyOfNationalTeam.GroupRanking;
-
-                                break;
-                            }
-                        }
-
-                        groupRanking++;
-                    }
-                }
+        private IList<NationalTeam> CreateCopiesOfNationalTeamsInCircle(IList<NationalTeam> subgroup)
+        {
+            IList<NationalTeam> copiesOfNationalTeamsInCircle = new List<NationalTeam>();
+            foreach (NationalTeam originalNationalTeam in subgroup)
+            {
+                NationalTeam copyOfNationalTeam = new NationalTeam(originalNationalTeam);
+                copyOfNationalTeam.WinsInGroup = 0;
+                copyOfNationalTeam.LossesInGroup = 0;
+                copyOfNationalTeam.ScoredPointsInGroup = 0;
+                copyOfNationalTeam.AllowedPointsInGroup = 0;
+                copyOfNationalTeam.PointsDifferentialInGroup = 0;
+                copyOfNationalTeam.PointsInGroup = 0;
+                
+                copiesOfNationalTeamsInCircle.Add(copyOfNationalTeam);
             }
             
-            group.Teams = group.Teams.OrderBy((nationalTeam) => nationalTeam.GroupRanking).ToList();
+            return copiesOfNationalTeamsInCircle;
+        }
+        
+        private int AssignGroupRankingsToOriginalNationalTeams(IList<NationalTeam> subgroup, 
+            IList<NationalTeam> copiesOfNationalTeamsInCircle, int groupRanking)
+        {
+            foreach (NationalTeam copyOfNationalTeam in copiesOfNationalTeamsInCircle)
+            {
+                copyOfNationalTeam.GroupRanking = groupRanking;
+                foreach (NationalTeam originalNationalTeam in subgroup)
+                {
+                    if (originalNationalTeam.Name.Equals(copyOfNationalTeam.Name))
+                    {
+                        originalNationalTeam.GroupRanking = copyOfNationalTeam.GroupRanking;
+
+                        break;
+                    }
+                }
+
+                groupRanking++;
+            }
+
+            return groupRanking;
         }
     }
 }
