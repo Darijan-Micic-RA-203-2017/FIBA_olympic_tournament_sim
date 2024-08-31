@@ -1,6 +1,5 @@
 ﻿using FIBA_OT_sim.Model;
 using FIBA_OT_sim.Repositories;
-using System.Text;
 
 namespace FIBA_OT_sim.Services
 {
@@ -198,7 +197,7 @@ namespace FIBA_OT_sim.Services
             }
         }
 
-        private void RankNationalTeamsInGroup(Group group)
+        public void RankNationalTeamsInGroup(Group group)
         {
             group.Teams = group.Teams.OrderByDescending((nationalTeam) => nationalTeam.PointsInGroup).ToList();
             NationalTeam firstTeam = group.Teams[0];
@@ -290,24 +289,20 @@ namespace FIBA_OT_sim.Services
                                 copyOfNationalTeam.ScoredPointsInGroup += homeTeamPoints;
                                 copyOfNationalTeam.AllowedPointsInGroup += guestTeamPoints;
                                 copyOfNationalTeam.PointsDifferentialInGroup += pointsDifferentialAdditionForHomeTeam;
-
-                                break;
                             }
                             else if (copyOfNationalTeam.Name.Equals(match.GuestTeam.Name))
                             {
                                 copyOfNationalTeam.ScoredPointsInGroup += guestTeamPoints;
                                 copyOfNationalTeam.AllowedPointsInGroup += homeTeamPoints;
                                 copyOfNationalTeam.PointsDifferentialInGroup += pointsDifferentialAdditionForGuestTeam;
-
-                                break;
                             }
                         }
                     }
 
                     copiesOfNationalTeamsInCircle = copiesOfNationalTeamsInCircle
                         .OrderByDescending((copyOfNationalTeam) => copyOfNationalTeam.PointsDifferentialInGroup)
-                        .OrderByDescending((copyOfNationalTeam) => copyOfNationalTeam.ScoredPointsInGroup)
-                        .OrderBy((copyOfNationalTeam) => copyOfNationalTeam.FIBARanking).ToList();
+                        .ThenByDescending((copyOfNationalTeam) => copyOfNationalTeam.ScoredPointsInGroup)
+                        .ThenBy((copyOfNationalTeam) => copyOfNationalTeam.FIBARanking).ToList();
 
                     foreach (NationalTeam copyOfNationalTeam in copiesOfNationalTeamsInCircle)
                     {
