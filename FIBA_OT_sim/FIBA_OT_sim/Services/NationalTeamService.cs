@@ -46,7 +46,7 @@ namespace FIBA_OT_sim.Services
                 int pointsDifferentialAdditionForGuestTeam = pointsDifferentialAdditionForHomeTeam * -1;
                 foreach (NationalTeam copyOfNationalTeam in copiesOfNationalTeamsInCircle)
                 {
-                    if (copyOfNationalTeam.Name.Equals(match.HomeTeam.Name))
+                    if (copyOfNationalTeam.Equals(match.HomeTeam))
                     {
                         copyOfNationalTeam.ScoredPointsInGroup += homeTeamPoints;
                         copyOfNationalTeam.AllowedPointsInGroup += guestTeamPoints;
@@ -62,7 +62,7 @@ namespace FIBA_OT_sim.Services
                             copyOfNationalTeam.PointsInGroup += 1;
                         }
                     }
-                    else if (copyOfNationalTeam.Name.Equals(match.GuestTeam.Name))
+                    else if (copyOfNationalTeam.Equals(match.GuestTeam))
                     {
                         copyOfNationalTeam.ScoredPointsInGroup += guestTeamPoints;
                         copyOfNationalTeam.AllowedPointsInGroup += homeTeamPoints;

@@ -1,7 +1,8 @@
 ﻿namespace FIBA_OT_sim.Model
 {
-    public class NationalTeam
+    public class NationalTeam : IComparable<NationalTeam>
     {
+        private long id;
         private string name;
         private string abbreviation;
         private int fibaRanking;
@@ -18,6 +19,7 @@
 
         public NationalTeam()
         {
+            id = 0L;
             name = "";
             abbreviation = "";
             fibaRanking = 0;
@@ -33,11 +35,12 @@
             matches = new List<Match>();
         }
 
-        public NationalTeam(string name, string abbreviation, int fibaRanking, int winsInGroup, 
+        public NationalTeam(long id, string name, string abbreviation, int fibaRanking, int winsInGroup, 
             int lossesInGroup, int scoredPointsInGroup, int allowedPointsInGroup, int pointsDifferentialInGroup, 
             int pointsInGroup, int groupRanking, int groupPhaseRanking, StatusOfNationalTeam status, 
             IList<Match> matches)
         {
+            this.id = id;
             this.name = name;
             this.abbreviation = abbreviation;
             this.fibaRanking = fibaRanking;
@@ -55,6 +58,7 @@
 
         public NationalTeam(NationalTeam nationalTeam)
         {
+            id = nationalTeam.id;
             name = nationalTeam.name;
             abbreviation = nationalTeam.abbreviation;
             fibaRanking = nationalTeam.fibaRanking;
@@ -68,6 +72,12 @@
             groupPhaseRanking = nationalTeam.groupPhaseRanking;
             status = nationalTeam.status;
             matches = nationalTeam.matches;
+        }
+
+        public long Id
+        {
+            get { return id; }
+            set { id = value; }
         }
 
         public string Name
@@ -146,6 +156,106 @@
         {
             get { return matches; }
             set { matches = value; }
+        }
+
+        public override int GetHashCode()
+        {
+            const int prime = 43;
+            int result = 1;
+
+            result = prime * result + Name.GetHashCode();
+            result = prime * result + Abbreviation.GetHashCode();
+            result = prime * result + FIBARanking.GetHashCode();
+
+            return result;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (this == obj)
+            {
+                return true;
+            }
+
+            if (obj is not NationalTeam)
+            {
+                return false;
+            }
+
+            NationalTeam other = (NationalTeam) obj;
+
+            if (Id != other.Id)
+            {
+                return false;
+            }
+
+            if (Name != other.Name)
+            {
+                return false;
+            }
+
+            if (Abbreviation != other.Abbreviation)
+            {
+                return false;
+            }
+
+            if (FIBARanking != other.FIBARanking)
+            {
+                return false;
+            }
+            
+            return true;
+        }
+        
+        public int CompareTo(NationalTeam? other)
+        {
+            if (other == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            if (this == other)
+            {
+                return 0;
+            }
+
+            if (Id < other.Id)
+            {
+                return -1;
+            }
+            else if (Id > other.Id)
+            {
+                return 1;
+            }
+
+            if (string.Compare(Name, other.Name) < 0)
+            {
+                return -1;
+            }
+            else if (string.Compare(Name, other.Name) > 0)
+            {
+                return 1;
+            }
+
+            if (string.Compare(Abbreviation, other.Abbreviation) < 0)
+            {
+                return -1;
+            }
+            else if (string.Compare(Abbreviation, other.Abbreviation) > 0)
+            {
+                return 1;
+            }
+
+            if (FIBARanking < other.FIBARanking)
+            {
+                return -1;
+            }
+            else if (FIBARanking > other.FIBARanking)
+            {
+                return 1;
+            }
+
+            return 0;
         }
     }
 }

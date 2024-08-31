@@ -43,37 +43,37 @@ namespace FIBA_OT_sim.Services
 
         private void ScheduleMatchesOfGroup(Group group)
         {
-            Match match1 = new Match(TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
+            Match match1 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
                 group.Teams[0], group.Teams[3], new MatchResult());
             group.Matches.Add(match1);
             group.Teams[0].Matches.Add(match1);
             group.Teams[3].Matches.Add(match1);
             
-            Match match2 = new Match(TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
+            Match match2 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
                 group.Teams[2], group.Teams[1], new MatchResult());
             group.Matches.Add(match2);
             group.Teams[2].Matches.Add(match2);
             group.Teams[1].Matches.Add(match2);
             
-            Match match3 = new Match(TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE, 
+            Match match3 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE, 
                 group.Teams[1], group.Teams[0], new MatchResult());
             group.Matches.Add(match3);
             group.Teams[1].Matches.Add(match3);
             group.Teams[0].Matches.Add(match3);
             
-            Match match4 = new Match(TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE, 
+            Match match4 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE, 
                 group.Teams[3], group.Teams[2], new MatchResult());
             group.Matches.Add(match4);
             group.Teams[3].Matches.Add(match4);
             group.Teams[2].Matches.Add(match4);
             
-            Match match5 = new Match(TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
+            Match match5 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
                 group.Teams[0], group.Teams[2], new MatchResult());
             group.Matches.Add(match5);
             group.Teams[0].Matches.Add(match5);
             group.Teams[2].Matches.Add(match5);
             
-            Match match6 = new Match(TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
+            Match match6 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
                 group.Teams[1], group.Teams[3], new MatchResult());
             group.Matches.Add(match6);
             group.Teams[1].Matches.Add(match6);
@@ -146,22 +146,22 @@ namespace FIBA_OT_sim.Services
             {
                 if (homeTeamHigherRanked)
                 {
-                    match.Result = new MatchResult(85, 85 - fibaRankingDifference);
+                    match.Result = new MatchResult(match.Id, 85, 85 - fibaRankingDifference);
                 }
                 else
                 {
-                    match.Result = new MatchResult(85 - fibaRankingDifference, 85);
+                    match.Result = new MatchResult(match.Id, 85 - fibaRankingDifference, 85);
                 }
             }
             else
             {
                 if (homeTeamHigherRanked)
                 {
-                    match.Result = new MatchResult(85 - fibaRankingDifference, 85);
+                    match.Result = new MatchResult(match.Id, 85 - fibaRankingDifference, 85);
                 }
                 else
                 {
-                    match.Result = new MatchResult(85, 85 - fibaRankingDifference);
+                    match.Result = new MatchResult(match.Id, 85, 85 - fibaRankingDifference);
                 }
             }
             Console.WriteLine("Match                                     result: " 
@@ -230,7 +230,7 @@ namespace FIBA_OT_sim.Services
         {
             Match match = MatchService.FindMatchBetweenTeams(subgroup[0], subgroup[1]);
             NationalTeam nationalTeamThatWonMatch = MatchService.GetNationalTeamThatWonMatch(match);
-            if (nationalTeamThatWonMatch.Name.Equals(subgroup[0].Name))
+            if (nationalTeamThatWonMatch.Equals(subgroup[0]))
             {
                 subgroup[0].GroupRanking = groupRanking;
                 groupRanking++;
@@ -305,7 +305,7 @@ namespace FIBA_OT_sim.Services
                 copyOfNationalTeam.GroupRanking = groupRanking;
                 foreach (NationalTeam originalNationalTeam in subgroup)
                 {
-                    if (originalNationalTeam.Name.Equals(copyOfNationalTeam.Name))
+                    if (originalNationalTeam.Equals(copyOfNationalTeam))
                     {
                         originalNationalTeam.GroupRanking = copyOfNationalTeam.GroupRanking;
 

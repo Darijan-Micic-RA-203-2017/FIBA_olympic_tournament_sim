@@ -19,144 +19,144 @@ namespace FIBA_OT_sim_Tests
         {
             GroupPhaseService groupPhaseService = new GroupPhaseService();
 
-            Group groupA = new Group("A", new List<NationalTeam>(), new List<Match>());
+            Group groupA = new Group(1L, "A", new List<NationalTeam>(), new List<Match>());
 
-            NationalTeam australia = new NationalTeam("Australija", "AUS", 5, 1, 2, 246, 250, -4, 4, 0, 0, 
+            NationalTeam australia = new NationalTeam(1L, "Australija", "AUS", 5, 1, 2, 246, 250, -4, 4, 0, 0, 
                 StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
             groupA.Teams.Add(australia);
-            NationalTeam canada = new NationalTeam("Kanada", "CAN", 7, 3, 0, 267, 247, 20, 6, 0, 0, 
+            NationalTeam canada = new NationalTeam(2L, "Kanada", "CAN", 7, 3, 0, 267, 247, 20, 6, 0, 0, 
                 StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
             groupA.Teams.Add(canada);
-            NationalTeam greece = new NationalTeam("Grčka", "GRE", 14, 1, 2, 233, 241, -8, 4, 0, 0, 
+            NationalTeam greece = new NationalTeam(3L, "Grčka", "GRE", 14, 1, 2, 233, 241, -8, 4, 0, 0, 
                 StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
             groupA.Teams.Add(greece);
-            NationalTeam spain = new NationalTeam("Španija", "ESP", 2, 1, 2, 249, 257, -8, 4, 0, 0, 
+            NationalTeam spain = new NationalTeam(4L, "Španija", "ESP", 2, 1, 2, 249, 257, -8, 4, 0, 0, 
                 StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
             groupA.Teams.Add(spain);
             
-            Match australiaVsSpain = new Match(TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
-                australia, spain, new MatchResult(92, 80));
+            Match australiaVsSpain = new Match(1L, TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
+                australia, spain, new MatchResult(1L, 92, 80));
             groupA.Matches.Add(australiaVsSpain);
             australia.Matches.Add(australiaVsSpain);
             spain.Matches.Add(australiaVsSpain);
-            Match greeceVsCanada = new Match(TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE,
-                greece, canada, new MatchResult(79, 86));
+            Match greeceVsCanada = new Match(2L, TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE,
+                greece, canada, new MatchResult(2L, 79, 86));
             groupA.Matches.Add(greeceVsCanada);
             greece.Matches.Add(greeceVsCanada);
             canada.Matches.Add(greeceVsCanada);
-            Match spainVsGreece = new Match(TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE,
-                spain, greece, new MatchResult(84, 77));
+            Match spainVsGreece = new Match(3L, TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE,
+                spain, greece, new MatchResult(3L, 84, 77));
             groupA.Matches.Add(spainVsGreece);
             spain.Matches.Add(spainVsGreece);
             greece.Matches.Add(spainVsGreece);
-            Match canadaVsAustralia = new Match(TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE, 
-                canada, australia, new MatchResult(93, 83));
+            Match canadaVsAustralia = new Match(4L, TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE, 
+                canada, australia, new MatchResult(4L, 93, 83));
             groupA.Matches.Add(canadaVsAustralia);
             canada.Matches.Add(canadaVsAustralia);
             australia.Matches.Add(canadaVsAustralia);
-            Match australiaVsGreece = new Match(TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
-                australia, greece, new MatchResult(71, 77));
+            Match australiaVsGreece = new Match(5L, TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
+                australia, greece, new MatchResult(5L, 71, 77));
             groupA.Matches.Add(australiaVsGreece);
             australia.Matches.Add(australiaVsGreece);
             greece.Matches.Add(australiaVsGreece);
-            Match canadaVsSpain = new Match(TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
-                canada, spain, new MatchResult(88, 85));
+            Match canadaVsSpain = new Match(6L, TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
+                canada, spain, new MatchResult(6L, 88, 85));
             groupA.Matches.Add(canadaVsSpain);
             canada.Matches.Add(canadaVsSpain);
             spain.Matches.Add(canadaVsSpain);
 
             GroupPhaseRepository.GroupPhase.Groups.Add(groupA);
 
-            Group groupB = new Group("B", new List<NationalTeam>(), new List<Match>());
+            Group groupB = new Group(2L, "B", new List<NationalTeam>(), new List<Match>());
 
-            NationalTeam brazil = new NationalTeam("Brazil", "BRA", 12, 1, 2, 241, 248, -7, 4, 0, 0, 
+            NationalTeam brazil = new NationalTeam(5L, "Brazil", "BRA", 12, 1, 2, 241, 248, -7, 4, 0, 0, 
                 StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
             groupB.Teams.Add(brazil);
-            NationalTeam france = new NationalTeam("Francuska", "FRA", 9, 2, 1, 243, 241, 2, 5, 0, 0, 
+            NationalTeam france = new NationalTeam(6L, "Francuska", "FRA", 9, 2, 1, 243, 241, 2, 5, 0, 0, 
                 StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
             groupB.Teams.Add(france);
-            NationalTeam germany = new NationalTeam("Nemačka", "GER", 3, 3, 0, 268, 221, 47, 6, 0, 0, 
+            NationalTeam germany = new NationalTeam(7L, "Nemačka", "GER", 3, 3, 0, 268, 221, 47, 6, 0, 0, 
                 StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
             groupB.Teams.Add(germany);
-            NationalTeam japan = new NationalTeam("Japan", "JPN", 26, 0, 3, 251, 293, -42, 3, 0, 0, 
+            NationalTeam japan = new NationalTeam(8L, "Japan", "JPN", 26, 0, 3, 251, 293, -42, 3, 0, 0, 
                 StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
             groupB.Teams.Add(japan);
 
-            Match germanyVsJapan = new Match(TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
-                germany, japan, new MatchResult(97, 77));
+            Match germanyVsJapan = new Match(7L, TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
+                germany, japan, new MatchResult(7L, 97, 77));
             groupB.Matches.Add(germanyVsJapan);
             germany.Matches.Add(germanyVsJapan);
             japan.Matches.Add(germanyVsJapan);
-            Match franceVsBrazil = new Match(TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
-                france, brazil, new MatchResult(78, 66));
+            Match franceVsBrazil = new Match(8L, TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
+                france, brazil, new MatchResult(8L, 78, 66));
             groupB.Matches.Add(franceVsBrazil);
             france.Matches.Add(franceVsBrazil);
             brazil.Matches.Add(franceVsBrazil);
-            Match brazilVsGermany = new Match(TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE, 
-                brazil, germany, new MatchResult(73, 86));
+            Match brazilVsGermany = new Match(9L, TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE, 
+                brazil, germany, new MatchResult(9L, 73, 86));
             groupB.Matches.Add(brazilVsGermany);
             brazil.Matches.Add(brazilVsGermany);
             germany.Matches.Add(brazilVsGermany);
-            Match japanVsFrance = new Match(TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE, 
-                japan, france, new MatchResult(90, 94));
+            Match japanVsFrance = new Match(10L, TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE, 
+                japan, france, new MatchResult(10L, 90, 94));
             groupB.Matches.Add(japanVsFrance);
             japan.Matches.Add(japanVsFrance);
             france.Matches.Add(japanVsFrance);
-            Match japanVsBrazil = new Match(TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
-                japan, brazil, new MatchResult(84, 102));
+            Match japanVsBrazil = new Match(11L, TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
+                japan, brazil, new MatchResult(11L, 84, 102));
             groupB.Matches.Add(japanVsBrazil);
             japan.Matches.Add(japanVsBrazil);
             brazil.Matches.Add(japanVsBrazil);
-            Match franceVsGermany = new Match(TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
-                france, germany, new MatchResult(71, 85));
+            Match franceVsGermany = new Match(12L, TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
+                france, germany, new MatchResult(12L, 71, 85));
             groupB.Matches.Add(franceVsGermany);
             france.Matches.Add(franceVsGermany);
             germany.Matches.Add(franceVsGermany);
 
             GroupPhaseRepository.GroupPhase.Groups.Add(groupB);
 
-            Group groupC = new Group("C", new List<NationalTeam>(), new List<Match>());
+            Group groupC = new Group(3L, "C", new List<NationalTeam>(), new List<Match>());
 
-            NationalTeam puertoRico = new NationalTeam("Portoriko", "PUR", 16, 0, 3, 228, 301, -73, 3, 0, 0, 
-                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+            NationalTeam puertoRico = new NationalTeam(9L, "Portoriko", "PUR", 16, 0, 3, 228, 301, -73, 3, 0, 
+                0, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
             groupC.Teams.Add(puertoRico);
-            NationalTeam serbia = new NationalTeam("Srbija", "SRB", 4, 2, 1, 287, 261, 26, 5, 0, 0, 
+            NationalTeam serbia = new NationalTeam(10L, "Srbija", "SRB", 4, 2, 1, 287, 261, 26, 5, 0, 0, 
                 StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
             groupC.Teams.Add(serbia);
-            NationalTeam unitedStatesOfAmerica = new NationalTeam("Sjedinjene Američke Države", "USA", 1, 3, 
-                0, 317, 253, 64, 6, 0, 0, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+            NationalTeam unitedStatesOfAmerica = new NationalTeam(11L, "Sjedinjene Američke Države", "USA", 1, 
+                3, 0, 317, 253, 64, 6, 0, 0, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
             groupC.Teams.Add(unitedStatesOfAmerica);
-            NationalTeam southSudan = new NationalTeam("Južni Sudan", "SSD", 34, 1, 2, 261, 278, -17, 4, 0, 0, 
-                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+            NationalTeam southSudan = new NationalTeam(12L, "Južni Sudan", "SSD", 34, 1, 2, 261, 278, -17, 4, 
+                0, 0, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
             groupC.Teams.Add(southSudan);
 
-            Match southSudanVsPuertoRico = new Match(TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
-                southSudan, puertoRico, new MatchResult(90, 79));
+            Match southSudanVsPuertoRico = new Match(13L, TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
+                southSudan, puertoRico, new MatchResult(13L, 90, 79));
             groupC.Matches.Add(southSudanVsPuertoRico);
             southSudan.Matches.Add(southSudanVsPuertoRico);
             puertoRico.Matches.Add(southSudanVsPuertoRico);
-            Match serbiaVsUnitedStatesOfAmerica = new Match(TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
-                serbia, unitedStatesOfAmerica, new MatchResult(84, 110));
+            Match serbiaVsUnitedStatesOfAmerica = new Match(14L, TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
+                serbia, unitedStatesOfAmerica, new MatchResult(14L, 84, 110));
             groupC.Matches.Add(serbiaVsUnitedStatesOfAmerica);
             serbia.Matches.Add(serbiaVsUnitedStatesOfAmerica);
             unitedStatesOfAmerica.Matches.Add(serbiaVsUnitedStatesOfAmerica);
-            Match puertoRicoVsSerbia = new Match(TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE, 
-                puertoRico, serbia, new MatchResult(66, 107));
+            Match puertoRicoVsSerbia = new Match(15L, TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE, 
+                puertoRico, serbia, new MatchResult(15L, 66, 107));
             groupC.Matches.Add(puertoRicoVsSerbia);
             puertoRico.Matches.Add(puertoRicoVsSerbia);
             serbia.Matches.Add(puertoRicoVsSerbia);
-            Match unitedStatesOfAmericaVsSouthSudan = new Match(TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE, 
-                unitedStatesOfAmerica, southSudan, new MatchResult(103, 86));
+            Match unitedStatesOfAmericaVsSouthSudan = new Match(16L, TournamentPhaseOfMatch.SECOND_ROUND_OF_GROUP_PHASE, 
+                unitedStatesOfAmerica, southSudan, new MatchResult(16L, 103, 86));
             groupC.Matches.Add(unitedStatesOfAmericaVsSouthSudan);
             unitedStatesOfAmerica.Matches.Add(unitedStatesOfAmericaVsSouthSudan);
             southSudan.Matches.Add(unitedStatesOfAmericaVsSouthSudan);
-            Match serbiaVsSouthSudan = new Match(TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
-                serbia, southSudan, new MatchResult(96, 85));
+            Match serbiaVsSouthSudan = new Match(17L, TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
+                serbia, southSudan, new MatchResult(17L, 96, 85));
             groupC.Matches.Add(serbiaVsSouthSudan);
             serbia.Matches.Add(serbiaVsSouthSudan);
             southSudan.Matches.Add(serbiaVsSouthSudan);
-            Match puertoRicoVsUnitedStatesOfAmerica = new Match(TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
-                puertoRico, unitedStatesOfAmerica, new MatchResult(83, 104));
+            Match puertoRicoVsUnitedStatesOfAmerica = new Match(18L, TournamentPhaseOfMatch.THIRD_ROUND_OF_GROUP_PHASE, 
+                puertoRico, unitedStatesOfAmerica, new MatchResult(18L, 83, 104));
             groupC.Matches.Add(puertoRicoVsUnitedStatesOfAmerica);
             puertoRico.Matches.Add(puertoRicoVsUnitedStatesOfAmerica);
             unitedStatesOfAmerica.Matches.Add(puertoRicoVsUnitedStatesOfAmerica);

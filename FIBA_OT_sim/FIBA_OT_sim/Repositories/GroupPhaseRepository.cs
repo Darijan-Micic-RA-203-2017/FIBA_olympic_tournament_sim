@@ -40,7 +40,8 @@ namespace FIBA_OT_sim.Repositories
 
                 foreach (JsonProperty groupProperty in rootElement.EnumerateObject())
                 {
-                    Group group = new Group(groupProperty.Name, new List<NationalTeam>(), new List<Match>());
+                    Group group = new Group(++Program.LastGroupId, groupProperty.Name, 
+                        new List<NationalTeam>(), new List<Match>());
 
                     foreach (JsonElement nationalTeamElement in groupProperty.Value.EnumerateArray())
                     {
@@ -69,10 +70,10 @@ namespace FIBA_OT_sim.Repositories
                         int groupPhaseRanking = 0;
                         StatusOfNationalTeam status = StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE;
 
-                        NationalTeam nationalTeam = new NationalTeam(name, abbreviation, fibaRanking, 
-                            winsInGroup, lossesInGroup, scoredPointsInGroup, allowedPointsInGroup, 
-                            pointsDifferentialInGroup, pointsInGroup, groupRanking, groupPhaseRanking, status, 
-                            new List<Match>());
+                        NationalTeam nationalTeam = new NationalTeam(++Program.LastNationalTeamId, name, 
+                            abbreviation, fibaRanking, winsInGroup, lossesInGroup, scoredPointsInGroup, 
+                            allowedPointsInGroup, pointsDifferentialInGroup, pointsInGroup, groupRanking, 
+                            groupPhaseRanking, status, new List<Match>());
                         group.Teams.Add(nationalTeam);
                     }
 

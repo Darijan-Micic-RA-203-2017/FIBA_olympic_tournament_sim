@@ -1,7 +1,8 @@
 ﻿namespace FIBA_OT_sim.Model
 {
-    public class Match
+    public class Match : IComparable<Match>
     {
+        private long id;
         private TournamentPhaseOfMatch tournamentPhase;
         private NationalTeam homeTeam;
         private NationalTeam guestTeam;
@@ -9,15 +10,17 @@
 
         public Match()
         {
+            id = 0L;
             tournamentPhase = TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE;
             homeTeam = new NationalTeam();
             guestTeam = new NationalTeam();
             result = new MatchResult();
         }
 
-        public Match(TournamentPhaseOfMatch tournamentPhase, NationalTeam homeTeam, NationalTeam guestTeam, 
-            MatchResult result)
+        public Match(long id, TournamentPhaseOfMatch tournamentPhase, NationalTeam homeTeam, 
+            NationalTeam guestTeam, MatchResult result)
         {
+            this.id = id;
             this.tournamentPhase = tournamentPhase;
             this.homeTeam = homeTeam;
             this.guestTeam = guestTeam;
@@ -26,10 +29,17 @@
 
         public Match(Match match)
         {
+            id = match.id;
             tournamentPhase = match.tournamentPhase;
             homeTeam = match.homeTeam;
             guestTeam = match.guestTeam;
             result = match.result;
+        }
+
+        public long Id
+        {
+            get { return id; }
+            set { id = value; }
         }
 
         public TournamentPhaseOfMatch TournamentPhase
@@ -58,8 +68,78 @@
 
         public bool IsMatchBetweenTeams(NationalTeam team1, NationalTeam team2)
         {
-            return (homeTeam.Name.Equals(team1.Name) && guestTeam.Name.Equals(team2.Name)) 
-                || (homeTeam.Name.Equals(team2.Name) && guestTeam.Name.Equals(team1.Name));
+            return (homeTeam.Equals(team1) && guestTeam.Equals(team2)) 
+                || (homeTeam.Equals(team2) && guestTeam.Equals(team1));
+        }
+
+        public override int GetHashCode()
+        {
+            const int prime = 53;
+            int result = 1;
+
+            result = prime * result + TournamentPhase.GetHashCode();
+
+            return result;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (this == obj)
+            {
+                return true;
+            }
+
+            if (obj is not Match aTeam)
+            {
+                return false;
+            }
+
+            Match other = (Match) obj;
+
+            if (Id != other.Id)
+            {
+                return false;
+            }
+
+            if (TournamentPhase != other.TournamentPhase)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public int CompareTo(Match? other)
+        {
+            if (other == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            if (this == other)
+            {
+                return 0;
+            }
+            
+            if (Id < other.Id)
+            {
+                return -1;
+            }
+            else if (Id > other.Id)
+            {
+                return 1;
+            }
+
+            if (TournamentPhase < other.TournamentPhase)
+            {
+                return -1;
+            }
+            else if (TournamentPhase > other.TournamentPhase)
+            {
+                return 1;
+            }
+
+            return 0;
         }
     }
 }
