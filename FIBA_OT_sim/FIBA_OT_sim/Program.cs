@@ -7,6 +7,7 @@ namespace FIBA_OT_sim
         public const int TOTAL_NUMBER_OF_TEAMS = 12;
         public const int NUMBER_OF_GROUPS = 3;
         public const int NUMBER_OF_TEAMS_IN_EACH_GROUP = 4;
+        public const int NUMBER_OF_ROUNDS_IN_EACH_GROUP = 3;
         private static Random randomNumberGenerator = new Random(85);
 
         public static Random RandomNumberGenerator
