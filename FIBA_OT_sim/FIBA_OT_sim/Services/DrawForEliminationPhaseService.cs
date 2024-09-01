@@ -5,10 +5,22 @@ namespace FIBA_OT_sim.Services
     public class DrawForEliminationPhaseService
     {
         private static DrawForEliminationPhase draw;
+        private static Match randomMatchThatIsOneOfFirstTwoQuarterFinals;
+        private static Match otherMatchThatIsOneOfFirstTwoQuarterFinals;
+        private static Match randomMatchThatIsOneOfLastTwoQuarterFinals;
+        private static Match otherMatchThatIsOneOfLastTwoQuarterFinals;
+        private static Match semiFinalsMatch1;
+        private static Match semiFinalsMatch2;
 
         public DrawForEliminationPhaseService()
         {
             draw = new DrawForEliminationPhase();
+            randomMatchThatIsOneOfFirstTwoQuarterFinals = new Match();
+            otherMatchThatIsOneOfFirstTwoQuarterFinals = new Match();
+            randomMatchThatIsOneOfLastTwoQuarterFinals = new Match();
+            otherMatchThatIsOneOfLastTwoQuarterFinals = new Match();
+            semiFinalsMatch1 = new Match();
+            semiFinalsMatch2 = new Match();
         }
 
         public static DrawForEliminationPhase Draw
@@ -17,11 +29,48 @@ namespace FIBA_OT_sim.Services
             set { draw = value; }
         }
 
+        public static Match RandomMatchThatIsOneOfFirstTwoQuarterFinals
+        {
+            get { return randomMatchThatIsOneOfFirstTwoQuarterFinals; }
+            set { randomMatchThatIsOneOfFirstTwoQuarterFinals = value; }
+        }
+
+        public static Match OtherMatchThatIsOneOfFirstTwoQuarterFinals
+        {
+            get { return otherMatchThatIsOneOfFirstTwoQuarterFinals; }
+            set { otherMatchThatIsOneOfFirstTwoQuarterFinals = value; }
+        }
+
+        public static Match RandomMatchThatIsOneOfLastTwoQuarterFinals
+        {
+            get { return randomMatchThatIsOneOfLastTwoQuarterFinals; }
+            set { randomMatchThatIsOneOfLastTwoQuarterFinals = value; }
+        }
+
+        public static Match OtherMatchThatIsOneOfLastTwoQuarterFinals
+        {
+            get { return otherMatchThatIsOneOfLastTwoQuarterFinals; }
+            set { otherMatchThatIsOneOfLastTwoQuarterFinals = value; }
+        }
+
+        public static Match SemiFinalsMatch1
+        {
+            get { return semiFinalsMatch1; }
+            set { semiFinalsMatch1 = value; }
+        }
+
+        public static Match SemiFinalsMatch2
+        {
+            get { return semiFinalsMatch2; }
+            set { semiFinalsMatch2 = value; }
+        }
+
         public void PerformDrawForEliminationPhase()
         {
             PlaceNationalTeamsIntoCorrectPots();
             RandomlyPairNationalTeamsFromPotDAndPotG();
             RandomlyPairNationalTeamsFromPotEAndPotF();
+            RandomlyPairNewlyMadeQuarterFinalsPairs();
         }
 
         public void PlaceNationalTeamsIntoCorrectPots()
@@ -65,7 +114,9 @@ namespace FIBA_OT_sim.Services
                 otherNationalTeamInPotD = draw.PotD[0];
             }
 
+            // REFERENCE: https://www.bytehide.com/blog/random-elements-csharp
             int randomIndexOfNationalTeamInPotG = Program.RandomNumberGenerator.Next(draw.PotG.Count);
+
             NationalTeam randomNationalTeamInPotG = draw.PotG[randomIndexOfNationalTeamInPotG];
             NationalTeam otherNationalTeamInPotG = null;
             if (randomIndexOfNationalTeamInPotG == 0)
@@ -118,7 +169,9 @@ namespace FIBA_OT_sim.Services
                 otherNationalTeamInPotE = draw.PotE[0];
             }
 
+            // REFERENCE: https://www.bytehide.com/blog/random-elements-csharp
             int randomIndexOfNationalTeamInPotF = Program.RandomNumberGenerator.Next(draw.PotF.Count);
+
             NationalTeam randomNationalTeamInPotF = draw.PotF[randomIndexOfNationalTeamInPotF];
             NationalTeam otherNationalTeamInPotF = null;
             if (randomIndexOfNationalTeamInPotF == 0)
@@ -153,6 +206,58 @@ namespace FIBA_OT_sim.Services
 
             EliminationPhaseService.EliminationPhase.QuarterFinals.Add(quarterFinalsMatch3);
             EliminationPhaseService.EliminationPhase.QuarterFinals.Add(quarterFinalsMatch4);
+        }
+
+        public void RandomlyPairNewlyMadeQuarterFinalsPairs()
+        {
+            IList<Match> firstTwoQuarterFinalsPairs = new List<Match>();
+            for (int i = 0; i < 2; i++)
+            {
+                firstTwoQuarterFinalsPairs.Add(EliminationPhaseService.EliminationPhase.QuarterFinals[i]);
+            }
+            IList<Match> lastTwoQuarterFinalsPairs = new List<Match>();
+            for (int i = 2; i < 4; i++)
+            {
+                lastTwoQuarterFinalsPairs.Add(EliminationPhaseService.EliminationPhase.QuarterFinals[i]);
+            }
+
+            // REFERENCE: https://www.bytehide.com/blog/random-elements-csharp
+            int randomIndexOfMatchThatIsOneOfFirstTwoQuarterFinals = 
+                Program.RandomNumberGenerator.Next(firstTwoQuarterFinalsPairs.Count);
+
+            randomMatchThatIsOneOfFirstTwoQuarterFinals = 
+                firstTwoQuarterFinalsPairs[randomIndexOfMatchThatIsOneOfFirstTwoQuarterFinals];
+            if (randomIndexOfMatchThatIsOneOfFirstTwoQuarterFinals == 0)
+            {
+                otherMatchThatIsOneOfFirstTwoQuarterFinals = firstTwoQuarterFinalsPairs[1];
+            }
+            else
+            {
+                otherMatchThatIsOneOfFirstTwoQuarterFinals = firstTwoQuarterFinalsPairs[0];
+            }
+
+            // REFERENCE: https://www.bytehide.com/blog/random-elements-csharp
+            int randomIndexOfMatchThatIsOneOfLastTwoQuarterFinals = 
+                Program.RandomNumberGenerator.Next(lastTwoQuarterFinalsPairs.Count);
+
+            randomMatchThatIsOneOfLastTwoQuarterFinals =
+                lastTwoQuarterFinalsPairs[randomIndexOfMatchThatIsOneOfLastTwoQuarterFinals];
+            if (randomIndexOfMatchThatIsOneOfLastTwoQuarterFinals == 0)
+            {
+                otherMatchThatIsOneOfLastTwoQuarterFinals = lastTwoQuarterFinalsPairs[1];
+            }
+            else
+            {
+                otherMatchThatIsOneOfLastTwoQuarterFinals = lastTwoQuarterFinalsPairs[0];
+            }
+
+            semiFinalsMatch1 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.SEMIFINALS, 
+                new NationalTeam(), new NationalTeam(), new MatchResult());
+            semiFinalsMatch2 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.SEMIFINALS, 
+                new NationalTeam(), new NationalTeam(), new MatchResult());
+
+            EliminationPhaseService.EliminationPhase.SemiFinals.Add(semiFinalsMatch1);
+            EliminationPhaseService.EliminationPhase.SemiFinals.Add(semiFinalsMatch2);
         }
     }
 }
