@@ -7,7 +7,7 @@ namespace FIBA_OT_sim.Services
     {
         public NationalTeamService() { }
 
-        public static void UpdateStatsOfNationalTeamsWhoPlayedInMatch(Match match)
+        public static void UpdateStatsOfNationalTeamsWhoPlayedInGroupMatch(Match match)
         {
             int homeTeamPoints = match.Result.HomeTeamPoints;
             int guestTeamPoints = match.Result.GuestTeamPoints;

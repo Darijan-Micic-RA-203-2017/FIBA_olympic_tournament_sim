@@ -31,7 +31,7 @@ namespace FIBA_OT_sim.Services
                 foreach (Match match in group.Matches)
                 {
                     MatchService.DetermineResultOfMatch(match);
-                    NationalTeamService.UpdateStatsOfNationalTeamsWhoPlayedInMatch(match);
+                    NationalTeamService.UpdateStatsOfNationalTeamsWhoPlayedInGroupMatch(match);
                 }
                 RankNationalTeamsInGroup(group);
             }
