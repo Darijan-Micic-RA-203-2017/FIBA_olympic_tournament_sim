@@ -108,18 +108,28 @@ namespace FIBA_OT_sim.Services
                 quarterFinalsMatch1 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.QUARTERFINALS, 
                     randomNationalTeamInPotD, otherNationalTeamInPotG, 
                     new MatchResult(quarterFinalsMatch1.Id, 0, 0));
+                randomNationalTeamInPotD.Matches.Add(quarterFinalsMatch1);
+                otherNationalTeamInPotG.Matches.Add(quarterFinalsMatch1);
+
                 quarterFinalsMatch2 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.QUARTERFINALS, 
                     otherNationalTeamInPotD, randomNationalTeamInPotG, 
                     new MatchResult(quarterFinalsMatch2.Id, 0, 0));
+                otherNationalTeamInPotD.Matches.Add(quarterFinalsMatch2);
+                randomNationalTeamInPotG.Matches.Add(quarterFinalsMatch2);
             }
             else
             {
                 quarterFinalsMatch1 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.QUARTERFINALS, 
-                    randomNationalTeamInPotD, randomNationalTeamInPotD, 
+                    randomNationalTeamInPotD, randomNationalTeamInPotG, 
                     new MatchResult(quarterFinalsMatch1.Id, 0, 0));
+                randomNationalTeamInPotD.Matches.Add(quarterFinalsMatch1);
+                randomNationalTeamInPotG.Matches.Add(quarterFinalsMatch1);
+
                 quarterFinalsMatch2 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.QUARTERFINALS, 
                     otherNationalTeamInPotD, otherNationalTeamInPotG, 
                     new MatchResult(quarterFinalsMatch2.Id, 0, 0));
+                otherNationalTeamInPotD.Matches.Add(quarterFinalsMatch2);
+                otherNationalTeamInPotG.Matches.Add(quarterFinalsMatch2);
             }
 
             EliminationPhaseService.EliminationPhase.QuarterFinals.Add(quarterFinalsMatch1);
@@ -167,18 +177,28 @@ namespace FIBA_OT_sim.Services
                 quarterFinalsMatch3 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.QUARTERFINALS, 
                     randomNationalTeamInPotE, otherNationalTeamInPotF, 
                     new MatchResult(quarterFinalsMatch3.Id, 0, 0));
+                randomNationalTeamInPotE.Matches.Add(quarterFinalsMatch3);
+                otherNationalTeamInPotF.Matches.Add(quarterFinalsMatch3);
+
                 quarterFinalsMatch4 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.QUARTERFINALS, 
                     otherNationalTeamInPotE, randomNationalTeamInPotF, 
                     new MatchResult(quarterFinalsMatch4.Id, 0, 0));
+                otherNationalTeamInPotE.Matches.Add(quarterFinalsMatch4);
+                randomNationalTeamInPotF.Matches.Add(quarterFinalsMatch4);
             }
             else
             {
                 quarterFinalsMatch3 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.QUARTERFINALS, 
-                    randomNationalTeamInPotE, randomNationalTeamInPotE, 
+                    randomNationalTeamInPotE, randomNationalTeamInPotF, 
                     new MatchResult(quarterFinalsMatch3.Id, 0, 0));
+                randomNationalTeamInPotE.Matches.Add(quarterFinalsMatch3);
+                randomNationalTeamInPotF.Matches.Add(quarterFinalsMatch3);
+
                 quarterFinalsMatch4 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.QUARTERFINALS, 
                     otherNationalTeamInPotE, otherNationalTeamInPotF, 
                     new MatchResult(quarterFinalsMatch4.Id, 0, 0));
+                otherNationalTeamInPotE.Matches.Add(quarterFinalsMatch4);
+                otherNationalTeamInPotF.Matches.Add(quarterFinalsMatch4);
             }
 
             EliminationPhaseService.EliminationPhase.QuarterFinals.Add(quarterFinalsMatch3);
