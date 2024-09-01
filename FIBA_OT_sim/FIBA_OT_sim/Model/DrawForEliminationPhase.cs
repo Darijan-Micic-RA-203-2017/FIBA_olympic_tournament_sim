@@ -2,58 +2,37 @@
 {
     public class DrawForEliminationPhase
     {
-        private IList<NationalTeam> potD;
-        private IList<NationalTeam> potE;
-        private IList<NationalTeam> potF;
-        private IList<NationalTeam> potG;
+        private IList<PotInDrawForEliminationPhase> pots;
 
         public DrawForEliminationPhase()
         {
-            potD = new List<NationalTeam>();
-            potE = new List<NationalTeam>();
-            potF = new List<NationalTeam>();
-            potG = new List<NationalTeam>();
+            pots = new List<PotInDrawForEliminationPhase>();
         }
 
-        public DrawForEliminationPhase(IList<NationalTeam> potD, IList<NationalTeam> potE, 
-            IList<NationalTeam> potF, IList<NationalTeam> potG)
+        public DrawForEliminationPhase(IList<PotInDrawForEliminationPhase> pots)
         {
-            this.potD = potD;
-            this.potE = potE;
-            this.potF = potF;
-            this.potG = potG;
+            this.pots = pots;
         }
 
         public DrawForEliminationPhase(DrawForEliminationPhase drawForEliminationPhase)
         {
-            potD = drawForEliminationPhase.potD;
-            potE = drawForEliminationPhase.potE;
-            potF = drawForEliminationPhase.potF;
-            potG = drawForEliminationPhase.potG;
+            pots = drawForEliminationPhase.pots;
         }
 
-        public IList<NationalTeam> PotD
+        public IList<PotInDrawForEliminationPhase> Pots
         {
-            get { return potD; }
-            set { potD = value; }
+            get { return pots; }
+            set { pots = value; }
         }
 
-        public IList<NationalTeam> PotE
+        public PotInDrawForEliminationPhase GetPotNamed(string name)
         {
-            get { return potE; }
-            set { potE = value; }
-        }
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return null;
+            }
 
-        public IList<NationalTeam> PotF
-        {
-            get { return potF; }
-            set { potF = value; }
-        }
-
-        public IList<NationalTeam> PotG
-        {
-            get { return potG; }
-            set { potG = value; }
+            return pots.First((pot) => pot.Name.Equals(name));
         }
     }
 }

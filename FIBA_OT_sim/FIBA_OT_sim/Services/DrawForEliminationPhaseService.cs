@@ -67,10 +67,19 @@ namespace FIBA_OT_sim.Services
 
         public void PerformDrawForEliminationPhase()
         {
+            CreatePots();
             PlaceNationalTeamsIntoCorrectPots();
             RandomlyPairNationalTeamsFromPotDAndPotG();
             RandomlyPairNationalTeamsFromPotEAndPotF();
             RandomlyPairNewlyMadeQuarterFinalsPairs();
+        }
+
+        public void CreatePots()
+        {
+            draw.Pots.Add(new PotInDrawForEliminationPhase("D", new List<NationalTeam>()));
+            draw.Pots.Add(new PotInDrawForEliminationPhase("E", new List<NationalTeam>()));
+            draw.Pots.Add(new PotInDrawForEliminationPhase("F", new List<NationalTeam>()));
+            draw.Pots.Add(new PotInDrawForEliminationPhase("G", new List<NationalTeam>()));
         }
 
         public void PlaceNationalTeamsIntoCorrectPots()
@@ -81,19 +90,19 @@ namespace FIBA_OT_sim.Services
             {
                 if (nationalTeam.GroupPhaseRanking <= 2)
                 {
-                    draw.PotD.Add(nationalTeam);
+                    draw.GetPotNamed("D").NationalTeams.Add(nationalTeam);
                 }
                 else if (nationalTeam.GroupPhaseRanking <= 4)
                 {
-                    draw.PotE.Add(nationalTeam);
+                    draw.GetPotNamed("E").NationalTeams.Add(nationalTeam);
                 }
                 else if (nationalTeam.GroupPhaseRanking <= 6)
                 {
-                    draw.PotF.Add(nationalTeam);
+                    draw.GetPotNamed("F").NationalTeams.Add(nationalTeam);
                 }
                 else
                 {
-                    draw.PotG.Add(nationalTeam);
+                    draw.GetPotNamed("G").NationalTeams.Add(nationalTeam);
                 }
             }
         }
@@ -101,31 +110,35 @@ namespace FIBA_OT_sim.Services
         public void RandomlyPairNationalTeamsFromPotDAndPotG()
         {
             // REFERENCE: https://www.bytehide.com/blog/random-elements-csharp
-            int randomIndexOfNationalTeamInPotD = Program.RandomNumberGenerator.Next(draw.PotD.Count);
+            int randomIndexOfNationalTeamInPotD = 
+                Program.RandomNumberGenerator.Next(draw.GetPotNamed("D").NationalTeams.Count);
 
-            NationalTeam randomNationalTeamInPotD = draw.PotD[randomIndexOfNationalTeamInPotD];
+            NationalTeam randomNationalTeamInPotD = 
+                draw.GetPotNamed("D").NationalTeams[randomIndexOfNationalTeamInPotD];
             NationalTeam otherNationalTeamInPotD = null;
             if (randomIndexOfNationalTeamInPotD == 0)
             {
-                otherNationalTeamInPotD = draw.PotD[1];
+                otherNationalTeamInPotD = draw.GetPotNamed("D").NationalTeams[1];
             }
             else
             {
-                otherNationalTeamInPotD = draw.PotD[0];
+                otherNationalTeamInPotD = draw.GetPotNamed("D").NationalTeams[0];
             }
 
             // REFERENCE: https://www.bytehide.com/blog/random-elements-csharp
-            int randomIndexOfNationalTeamInPotG = Program.RandomNumberGenerator.Next(draw.PotG.Count);
+            int randomIndexOfNationalTeamInPotG = 
+                Program.RandomNumberGenerator.Next(draw.GetPotNamed("G").NationalTeams.Count);
 
-            NationalTeam randomNationalTeamInPotG = draw.PotG[randomIndexOfNationalTeamInPotG];
+            NationalTeam randomNationalTeamInPotG = 
+                draw.GetPotNamed("G").NationalTeams[randomIndexOfNationalTeamInPotG];
             NationalTeam otherNationalTeamInPotG = null;
             if (randomIndexOfNationalTeamInPotG == 0)
             {
-                otherNationalTeamInPotG = draw.PotG[1];
+                otherNationalTeamInPotG = draw.GetPotNamed("G").NationalTeams[1];
             }
             else
             {
-                otherNationalTeamInPotG = draw.PotG[0];
+                otherNationalTeamInPotG = draw.GetPotNamed("G").NationalTeams[0];
             }
 
             Match quarterFinalsMatch1 = null;
@@ -156,31 +169,35 @@ namespace FIBA_OT_sim.Services
         public void RandomlyPairNationalTeamsFromPotEAndPotF()
         {
             // REFERENCE: https://www.bytehide.com/blog/random-elements-csharp
-            int randomIndexOfNationalTeamInPotE = Program.RandomNumberGenerator.Next(draw.PotE.Count);
+            int randomIndexOfNationalTeamInPotE = 
+                Program.RandomNumberGenerator.Next(draw.GetPotNamed("E").NationalTeams.Count);
 
-            NationalTeam randomNationalTeamInPotE = draw.PotE[randomIndexOfNationalTeamInPotE];
+            NationalTeam randomNationalTeamInPotE = 
+                draw.GetPotNamed("E").NationalTeams[randomIndexOfNationalTeamInPotE];
             NationalTeam otherNationalTeamInPotE = null;
             if (randomIndexOfNationalTeamInPotE == 0)
             {
-                otherNationalTeamInPotE = draw.PotE[1];
+                otherNationalTeamInPotE = draw.GetPotNamed("E").NationalTeams[1];
             }
             else
             {
-                otherNationalTeamInPotE = draw.PotE[0];
+                otherNationalTeamInPotE = draw.GetPotNamed("E").NationalTeams[0];
             }
 
             // REFERENCE: https://www.bytehide.com/blog/random-elements-csharp
-            int randomIndexOfNationalTeamInPotF = Program.RandomNumberGenerator.Next(draw.PotF.Count);
+            int randomIndexOfNationalTeamInPotF = 
+                Program.RandomNumberGenerator.Next(draw.GetPotNamed("F").NationalTeams.Count);
 
-            NationalTeam randomNationalTeamInPotF = draw.PotF[randomIndexOfNationalTeamInPotF];
+            NationalTeam randomNationalTeamInPotF = 
+                draw.GetPotNamed("F").NationalTeams[randomIndexOfNationalTeamInPotF];
             NationalTeam otherNationalTeamInPotF = null;
             if (randomIndexOfNationalTeamInPotF == 0)
             {
-                otherNationalTeamInPotF = draw.PotF[1];
+                otherNationalTeamInPotF = draw.GetPotNamed("F").NationalTeams[1];
             }
             else
             {
-                otherNationalTeamInPotF = draw.PotF[0];
+                otherNationalTeamInPotF = draw.GetPotNamed("F").NationalTeams[0];
             }
 
             Match quarterFinalsMatch3 = null;

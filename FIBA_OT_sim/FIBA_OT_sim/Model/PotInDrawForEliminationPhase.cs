@@ -2,21 +2,31 @@
 {
     public class PotInDrawForEliminationPhase
     {
+        private string name;
         private IList<NationalTeam> nationalTeams;
 
         public PotInDrawForEliminationPhase()
         {
+            name = "";
             nationalTeams = new List<NationalTeam>();
         }
 
-        public PotInDrawForEliminationPhase(IList<NationalTeam> nationalTeams)
+        public PotInDrawForEliminationPhase(string name, IList<NationalTeam> nationalTeams)
         {
+            this.name = name;
             this.nationalTeams = nationalTeams;
         }
 
         public PotInDrawForEliminationPhase(PotInDrawForEliminationPhase pot)
         {
+            name = pot.name;
             nationalTeams = pot.nationalTeams;
+        }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
         }
 
         public IList<NationalTeam> NationalTeams
