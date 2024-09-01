@@ -121,5 +121,25 @@ namespace FIBA_OT_sim.Services
                 }
             }
         }
+
+        public static IList<NationalTeam> GetNationalTeamsQualifiedToEliminationPhase()
+        {
+            IList<NationalTeam> nationalTeamsQualifiedToEliminationPhase = new List<NationalTeam>();
+            foreach (Group group in GroupPhaseRepository.GroupPhase.Groups)
+            {
+                foreach (NationalTeam nationalTeam in group.Teams)
+                {
+                    if (nationalTeam.Status != StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE 
+                        && nationalTeam.Status != StatusOfNationalTeam.ELIMINATED_IN_GROUP_PHASE)
+                    {
+                        nationalTeamsQualifiedToEliminationPhase.Add(nationalTeam);
+                    }
+                }
+            }
+            nationalTeamsQualifiedToEliminationPhase = nationalTeamsQualifiedToEliminationPhase
+                .OrderBy((nationalTeam) => nationalTeam.GroupPhaseRanking).ToList();
+
+            return nationalTeamsQualifiedToEliminationPhase;
+        }
     }
 }

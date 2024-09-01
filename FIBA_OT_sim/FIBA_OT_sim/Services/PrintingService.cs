@@ -81,22 +81,11 @@ namespace FIBA_OT_sim.Services
 
         private static void PrintNationalTeamsQualifiedToEliminationPhase()
         {
-            IList<NationalTeam> nationalTeamsThatQualifiedForEliminationPhase = new List<NationalTeam>();
-            foreach (Group group in GroupPhaseRepository.GroupPhase.Groups)
-            {
-                foreach (NationalTeam nationalTeam in group.Teams)
-                {
-                    if (nationalTeam.Status == StatusOfNationalTeam.COMPETING_IN_QUARTERFINALS)
-                    {
-                        nationalTeamsThatQualifiedForEliminationPhase.Add(nationalTeam);
-                    }
-                }
-            }
-            nationalTeamsThatQualifiedForEliminationPhase = nationalTeamsThatQualifiedForEliminationPhase
-                .OrderBy((nationalTeam) => nationalTeam.GroupPhaseRanking).ToList();
-
+            IList<NationalTeam> nationalTeamsQualifiedToEliminationPhase = 
+                NationalTeamService.GetNationalTeamsQualifiedToEliminationPhase();
+            
             Console.WriteLine("Nacionalni timovi koji su se plasirali u eliminacionu fazu:");
-            foreach (NationalTeam nationalTeam in nationalTeamsThatQualifiedForEliminationPhase)
+            foreach (NationalTeam nationalTeam in nationalTeamsQualifiedToEliminationPhase)
             {
                 StringBuilder nationalTeamDataBuilder = new StringBuilder("    ")
                             .Append(nationalTeam.GroupPhaseRanking).Append(". ").Append(nationalTeam.Name);
