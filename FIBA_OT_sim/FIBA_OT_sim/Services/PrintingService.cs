@@ -92,5 +92,29 @@ namespace FIBA_OT_sim.Services
                 Console.WriteLine(nationalTeamDataBuilder.ToString());
             }
         }
+
+        public static void PrintDrawForEliminationPhase()
+        {
+            PrintPotsInDraw();
+        }
+
+        private static void PrintPotsInDraw()
+        {
+            Console.WriteLine("\nŠeširi:");
+            foreach (PotInDrawForEliminationPhase pot in DrawForEliminationPhaseService.Draw.Pots)
+            {
+                StringBuilder potNameBuilder = new StringBuilder("    Šešir ").Append(pot.Name).Append(':');
+                Console.WriteLine(potNameBuilder.ToString());
+
+                foreach (NationalTeam nationalTeam in pot.NationalTeams)
+                {
+                    StringBuilder nationalTeamNameBuilder = new StringBuilder("        ")
+                        .Append(nationalTeam.Name);
+                    Console.WriteLine(nationalTeamNameBuilder.ToString());
+                }
+
+                Console.WriteLine();
+            }
+        }
     }
 }
