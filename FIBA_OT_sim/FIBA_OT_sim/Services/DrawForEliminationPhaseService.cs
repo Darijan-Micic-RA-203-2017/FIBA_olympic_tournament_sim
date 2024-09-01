@@ -5,22 +5,12 @@ namespace FIBA_OT_sim.Services
     public class DrawForEliminationPhaseService
     {
         private static DrawForEliminationPhase draw;
-        private static Match randomMatchThatIsOneOfFirstTwoQuarterFinals;
-        private static Match otherMatchThatIsOneOfFirstTwoQuarterFinals;
-        private static Match randomMatchThatIsOneOfLastTwoQuarterFinals;
-        private static Match otherMatchThatIsOneOfLastTwoQuarterFinals;
-        private static Match semiFinalsMatch1;
-        private static Match semiFinalsMatch2;
+        private static IList<Match> variantsOfPossibleSemiFinalsMatches;
 
         public DrawForEliminationPhaseService()
         {
             draw = new DrawForEliminationPhase();
-            randomMatchThatIsOneOfFirstTwoQuarterFinals = new Match();
-            otherMatchThatIsOneOfFirstTwoQuarterFinals = new Match();
-            randomMatchThatIsOneOfLastTwoQuarterFinals = new Match();
-            otherMatchThatIsOneOfLastTwoQuarterFinals = new Match();
-            semiFinalsMatch1 = new Match();
-            semiFinalsMatch2 = new Match();
+            variantsOfPossibleSemiFinalsMatches = new List<Match>();
         }
 
         public static DrawForEliminationPhase Draw
@@ -29,40 +19,10 @@ namespace FIBA_OT_sim.Services
             set { draw = value; }
         }
 
-        public static Match RandomMatchThatIsOneOfFirstTwoQuarterFinals
+        public static IList<Match> VariantsOfPossibleSemiFinalsMatches
         {
-            get { return randomMatchThatIsOneOfFirstTwoQuarterFinals; }
-            set { randomMatchThatIsOneOfFirstTwoQuarterFinals = value; }
-        }
-
-        public static Match OtherMatchThatIsOneOfFirstTwoQuarterFinals
-        {
-            get { return otherMatchThatIsOneOfFirstTwoQuarterFinals; }
-            set { otherMatchThatIsOneOfFirstTwoQuarterFinals = value; }
-        }
-
-        public static Match RandomMatchThatIsOneOfLastTwoQuarterFinals
-        {
-            get { return randomMatchThatIsOneOfLastTwoQuarterFinals; }
-            set { randomMatchThatIsOneOfLastTwoQuarterFinals = value; }
-        }
-
-        public static Match OtherMatchThatIsOneOfLastTwoQuarterFinals
-        {
-            get { return otherMatchThatIsOneOfLastTwoQuarterFinals; }
-            set { otherMatchThatIsOneOfLastTwoQuarterFinals = value; }
-        }
-
-        public static Match SemiFinalsMatch1
-        {
-            get { return semiFinalsMatch1; }
-            set { semiFinalsMatch1 = value; }
-        }
-
-        public static Match SemiFinalsMatch2
-        {
-            get { return semiFinalsMatch2; }
-            set { semiFinalsMatch2 = value; }
+            get { return variantsOfPossibleSemiFinalsMatches; }
+            set { variantsOfPossibleSemiFinalsMatches = value; }
         }
 
         public void PerformDrawForEliminationPhase()
@@ -242,8 +202,9 @@ namespace FIBA_OT_sim.Services
             int randomIndexOfMatchThatIsOneOfFirstTwoQuarterFinals = 
                 Program.RandomNumberGenerator.Next(firstTwoQuarterFinalsPairs.Count);
 
-            randomMatchThatIsOneOfFirstTwoQuarterFinals = 
+            Match randomMatchThatIsOneOfFirstTwoQuarterFinals = 
                 firstTwoQuarterFinalsPairs[randomIndexOfMatchThatIsOneOfFirstTwoQuarterFinals];
+            Match otherMatchThatIsOneOfFirstTwoQuarterFinals = null;
             if (randomIndexOfMatchThatIsOneOfFirstTwoQuarterFinals == 0)
             {
                 otherMatchThatIsOneOfFirstTwoQuarterFinals = firstTwoQuarterFinalsPairs[1];
@@ -257,8 +218,9 @@ namespace FIBA_OT_sim.Services
             int randomIndexOfMatchThatIsOneOfLastTwoQuarterFinals = 
                 Program.RandomNumberGenerator.Next(lastTwoQuarterFinalsPairs.Count);
 
-            randomMatchThatIsOneOfLastTwoQuarterFinals =
+            Match randomMatchThatIsOneOfLastTwoQuarterFinals = 
                 lastTwoQuarterFinalsPairs[randomIndexOfMatchThatIsOneOfLastTwoQuarterFinals];
+            Match otherMatchThatIsOneOfLastTwoQuarterFinals = null;
             if (randomIndexOfMatchThatIsOneOfLastTwoQuarterFinals == 0)
             {
                 otherMatchThatIsOneOfLastTwoQuarterFinals = lastTwoQuarterFinalsPairs[1];
@@ -267,14 +229,40 @@ namespace FIBA_OT_sim.Services
             {
                 otherMatchThatIsOneOfLastTwoQuarterFinals = lastTwoQuarterFinalsPairs[0];
             }
+            
+            Match variant1OfPossibleFirstSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
+                randomMatchThatIsOneOfFirstTwoQuarterFinals.HomeTeam, 
+                randomMatchThatIsOneOfLastTwoQuarterFinals.HomeTeam, new MatchResult());
+            variantsOfPossibleSemiFinalsMatches.Add(variant1OfPossibleFirstSemiFinalsMatch);
+            Match variant2OfPossibleFirstSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
+                randomMatchThatIsOneOfFirstTwoQuarterFinals.HomeTeam, 
+                randomMatchThatIsOneOfLastTwoQuarterFinals.GuestTeam, new MatchResult());
+            variantsOfPossibleSemiFinalsMatches.Add(variant2OfPossibleFirstSemiFinalsMatch);
+            Match variant3OfPossibleFirstSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
+                randomMatchThatIsOneOfFirstTwoQuarterFinals.GuestTeam, 
+                randomMatchThatIsOneOfLastTwoQuarterFinals.HomeTeam, new MatchResult());
+            variantsOfPossibleSemiFinalsMatches.Add(variant3OfPossibleFirstSemiFinalsMatch);
+            Match variant4OfPossibleFirstSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
+                randomMatchThatIsOneOfFirstTwoQuarterFinals.GuestTeam, 
+                randomMatchThatIsOneOfLastTwoQuarterFinals.GuestTeam, new MatchResult());
+            variantsOfPossibleSemiFinalsMatches.Add(variant4OfPossibleFirstSemiFinalsMatch);
 
-            semiFinalsMatch1 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.SEMIFINALS, 
-                new NationalTeam(), new NationalTeam(), new MatchResult());
-            semiFinalsMatch2 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.SEMIFINALS, 
-                new NationalTeam(), new NationalTeam(), new MatchResult());
-
-            EliminationPhaseService.EliminationPhase.SemiFinals.Add(semiFinalsMatch1);
-            EliminationPhaseService.EliminationPhase.SemiFinals.Add(semiFinalsMatch2);
+            Match variant1OfPossibleSecondSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
+                otherMatchThatIsOneOfFirstTwoQuarterFinals.HomeTeam, 
+                otherMatchThatIsOneOfLastTwoQuarterFinals.HomeTeam, new MatchResult());
+            variantsOfPossibleSemiFinalsMatches.Add(variant1OfPossibleSecondSemiFinalsMatch);
+            Match variant2OfPossibleSecondSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
+                otherMatchThatIsOneOfFirstTwoQuarterFinals.HomeTeam, 
+                otherMatchThatIsOneOfLastTwoQuarterFinals.GuestTeam, new MatchResult());
+            variantsOfPossibleSemiFinalsMatches.Add(variant2OfPossibleSecondSemiFinalsMatch);
+            Match variant3OfPossibleSecondSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
+                otherMatchThatIsOneOfFirstTwoQuarterFinals.GuestTeam, 
+                otherMatchThatIsOneOfLastTwoQuarterFinals.HomeTeam, new MatchResult());
+            variantsOfPossibleSemiFinalsMatches.Add(variant3OfPossibleSecondSemiFinalsMatch);
+            Match variant4OfPossibleSecondSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
+                otherMatchThatIsOneOfFirstTwoQuarterFinals.GuestTeam, 
+                otherMatchThatIsOneOfLastTwoQuarterFinals.GuestTeam, new MatchResult());
+            variantsOfPossibleSemiFinalsMatches.Add(variant4OfPossibleSecondSemiFinalsMatch);
         }
     }
 }
