@@ -1,4 +1,5 @@
 ﻿using FIBA_OT_sim.Model;
+using FIBA_OT_sim.Repositories;
 
 namespace FIBA_OT_sim.Services
 {
@@ -86,10 +87,39 @@ namespace FIBA_OT_sim.Services
             IList<NationalTeam> nationalTeamsInCircle)
         {
             return nationalTeamsInCircle
-                .OrderByDescending((copyOfNationalTeam) => copyOfNationalTeam.PointsDifferentialInGroup)
-                .ThenByDescending((copyOfNationalTeam) => copyOfNationalTeam.ScoredPointsInGroup)
-                .ThenBy((copyOfNationalTeam) => copyOfNationalTeam.FIBARanking)
+                .OrderByDescending((nationalTeam) => nationalTeam.PointsDifferentialInGroup)
+                .ThenByDescending((nationalTeam) => nationalTeam.ScoredPointsInGroup)
+                .ThenBy((nationalTeam) => nationalTeam.FIBARanking)
                 .ToList();
+        }
+
+        public static IList<NationalTeam> SortNationalTeamsWithSameGroupRankingByFIBARules(
+            IList<NationalTeam> nationalTeamsWithSameGroupRanking)
+        {
+            return nationalTeamsWithSameGroupRanking
+                .OrderByDescending((nationalTeam) => nationalTeam.PointsInGroup)
+                .ThenByDescending((nationalTeam) => nationalTeam.PointsDifferentialInGroup)
+                .ThenByDescending((nationalTeam) => nationalTeam.ScoredPointsInGroup)
+                .ThenBy((nationalTeam) => nationalTeam.FIBARanking)
+                .ToList();
+        }
+
+        public static void ChangeStatusesOfAllNationalTeamsAfterGroupPhase()
+        {
+            foreach (Group group in GroupPhaseRepository.GroupPhase.Groups)
+            {
+                foreach (NationalTeam nationalTeam in group.Teams)
+                {
+                    if (nationalTeam.GroupPhaseRanking <= 8)
+                    {
+                        nationalTeam.Status = StatusOfNationalTeam.COMPETING_IN_QUARTERFINALS;
+                    }
+                    else
+                    {
+                        nationalTeam.Status = StatusOfNationalTeam.ELIMINATED_IN_GROUP_PHASE;
+                    }
+                }
+            }
         }
     }
 }

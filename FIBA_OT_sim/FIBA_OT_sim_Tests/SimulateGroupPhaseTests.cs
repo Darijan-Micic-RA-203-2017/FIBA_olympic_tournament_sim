@@ -166,33 +166,46 @@ namespace FIBA_OT_sim_Tests
             groupPhaseService.RankNationalTeamsInGroup(groupA);
             groupPhaseService.RankNationalTeamsInGroup(groupB);
             groupPhaseService.RankNationalTeamsInGroup(groupC);
+            groupPhaseService.RankNationalTeamsInGroupPhase();
 
             Assert.AreEqual("Kanada", groupA.Teams[0].Name);
             Assert.AreEqual(1, groupA.Teams[0].GroupRanking);
+            Assert.AreEqual(3, groupA.Teams[0].GroupPhaseRanking);
             Assert.AreEqual("Australija", groupA.Teams[1].Name);
             Assert.AreEqual(2, groupA.Teams[1].GroupRanking);
+            Assert.AreEqual(6, groupA.Teams[1].GroupPhaseRanking);
             Assert.AreEqual("Grčka", groupA.Teams[2].Name);
             Assert.AreEqual(3, groupA.Teams[2].GroupRanking);
+            Assert.AreEqual(8, groupA.Teams[2].GroupPhaseRanking);
             Assert.AreEqual("Španija", groupA.Teams[3].Name);
             Assert.AreEqual(4, groupA.Teams[3].GroupRanking);
+            Assert.AreEqual(10, groupA.Teams[3].GroupPhaseRanking);
 
             Assert.AreEqual("Nemačka", groupB.Teams[0].Name);
             Assert.AreEqual(1, groupB.Teams[0].GroupRanking);
+            Assert.AreEqual(2, groupB.Teams[0].GroupPhaseRanking);
             Assert.AreEqual("Francuska", groupB.Teams[1].Name);
             Assert.AreEqual(2, groupB.Teams[1].GroupRanking);
+            Assert.AreEqual(5, groupB.Teams[1].GroupPhaseRanking);
             Assert.AreEqual("Brazil", groupB.Teams[2].Name);
             Assert.AreEqual(3, groupB.Teams[2].GroupRanking);
+            Assert.AreEqual(7, groupB.Teams[2].GroupPhaseRanking);
             Assert.AreEqual("Japan", groupB.Teams[3].Name);
             Assert.AreEqual(4, groupB.Teams[3].GroupRanking);
+            Assert.AreEqual(11, groupB.Teams[3].GroupPhaseRanking);
 
             Assert.AreEqual("Sjedinjene Američke Države", groupC.Teams[0].Name);
             Assert.AreEqual(1, groupC.Teams[0].GroupRanking);
+            Assert.AreEqual(1, groupC.Teams[0].GroupPhaseRanking);
             Assert.AreEqual("Srbija", groupC.Teams[1].Name);
             Assert.AreEqual(2, groupC.Teams[1].GroupRanking);
+            Assert.AreEqual(4, groupC.Teams[1].GroupPhaseRanking);
             Assert.AreEqual("Južni Sudan", groupC.Teams[2].Name);
             Assert.AreEqual(3, groupC.Teams[2].GroupRanking);
+            Assert.AreEqual(9, groupC.Teams[2].GroupPhaseRanking);
             Assert.AreEqual("Portoriko", groupC.Teams[3].Name);
             Assert.AreEqual(4, groupC.Teams[3].GroupRanking);
+            Assert.AreEqual(12, groupC.Teams[3].GroupPhaseRanking);
         }
     }
 }

@@ -39,6 +39,8 @@ namespace FIBA_OT_sim.Services
             }
 
             PrintingService.PrintGroupPhase();
+
+            RankNationalTeamsInGroupPhase();
         }
 
         private void ScheduleMatchesOfGroup(Group group)
@@ -256,8 +258,8 @@ namespace FIBA_OT_sim.Services
                 copiesOfNationalTeamsInCircle);
             copiesOfNationalTeamsInCircle = NationalTeamService.SortNationalTeamsInCircleByFIBARules(
                 copiesOfNationalTeamsInCircle);
-            groupRanking = AssignGroupRankingsToOriginalNationalTeams(subgroup, copiesOfNationalTeamsInCircle, 
-                groupRanking);
+            groupRanking = AssignGroupRankingsToOriginalNationalTeamsInSubgroup(subgroup, 
+                copiesOfNationalTeamsInCircle, groupRanking);
             
             return groupRanking;
         }
@@ -297,7 +299,7 @@ namespace FIBA_OT_sim.Services
             return copiesOfNationalTeamsInCircle;
         }
         
-        private int AssignGroupRankingsToOriginalNationalTeams(IList<NationalTeam> subgroup, 
+        private int AssignGroupRankingsToOriginalNationalTeamsInSubgroup(IList<NationalTeam> subgroup, 
             IList<NationalTeam> copiesOfNationalTeamsInCircle, int groupRanking)
         {
             foreach (NationalTeam copyOfNationalTeam in copiesOfNationalTeamsInCircle)
@@ -317,6 +319,47 @@ namespace FIBA_OT_sim.Services
             }
 
             return groupRanking;
+        }
+
+        public void RankNationalTeamsInGroupPhase()
+        {
+            IList<List<NationalTeam>> subgroupsWithSameGroupRanking = new List<List<NationalTeam>>();
+            for (int groupRanking = 1; groupRanking <= GroupPhaseRepository.GroupPhase.Groups[0].Teams.Count; 
+                groupRanking++)
+            {
+                subgroupsWithSameGroupRanking.Add(FindTeamsWithSameGroupRanking(groupRanking));
+
+                IList<NationalTeam> latestAddedSubgroup = 
+                    subgroupsWithSameGroupRanking[subgroupsWithSameGroupRanking.Count - 1];
+                latestAddedSubgroup = 
+                    NationalTeamService.SortNationalTeamsWithSameGroupRankingByFIBARules(latestAddedSubgroup);
+                AssignGroupPhaseRankingsToNationalTeamsInSubgroup(latestAddedSubgroup, groupRanking);
+            }
+
+            NationalTeamService.ChangeStatusesOfAllNationalTeamsAfterGroupPhase();
+        }
+
+        private List<NationalTeam> FindTeamsWithSameGroupRanking(int groupRanking)
+        {
+            List<NationalTeam> nationalTeamsWithSameGroupRanking = new List<NationalTeam>();
+            foreach (Group group in GroupPhaseRepository.GroupPhase.Groups)
+            {
+                nationalTeamsWithSameGroupRanking.Add(group.Teams[groupRanking - 1]);
+            }
+
+            return nationalTeamsWithSameGroupRanking;
+        }
+
+        private void AssignGroupPhaseRankingsToNationalTeamsInSubgroup(IList<NationalTeam> subgroup, 
+            int groupRanking)
+        {
+            int minGroupPhaseRankingInThisSubgroup = subgroup.Count * groupRanking - (subgroup.Count - 1);
+            int groupPhaseRanking = minGroupPhaseRankingInThisSubgroup;
+            foreach (NationalTeam nationalTeam in subgroup)
+            {
+                nationalTeam.GroupPhaseRanking = groupPhaseRanking;
+                groupPhaseRanking++;
+            }
         }
     }
 }
