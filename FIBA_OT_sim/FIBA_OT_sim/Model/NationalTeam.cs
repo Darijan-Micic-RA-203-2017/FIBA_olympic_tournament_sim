@@ -6,6 +6,7 @@
         private string name;
         private string abbreviation;
         private int fibaRanking;
+        private string groupName;
         private int winsInGroup;
         private int lossesInGroup;
         private int scoredPointsInGroup;
@@ -23,6 +24,7 @@
             name = "";
             abbreviation = "";
             fibaRanking = 0;
+            groupName = "";
             winsInGroup = 0;
             lossesInGroup = 0;
             scoredPointsInGroup = 0;
@@ -35,15 +37,16 @@
             matches = new List<Match>();
         }
 
-        public NationalTeam(long id, string name, string abbreviation, int fibaRanking, int winsInGroup, 
-            int lossesInGroup, int scoredPointsInGroup, int allowedPointsInGroup, int pointsDifferentialInGroup, 
-            int pointsInGroup, int groupRanking, int groupPhaseRanking, StatusOfNationalTeam status, 
-            IList<Match> matches)
+        public NationalTeam(long id, string name, string abbreviation, int fibaRanking, string groupName, 
+            int winsInGroup, int lossesInGroup, int scoredPointsInGroup, int allowedPointsInGroup, 
+            int pointsDifferentialInGroup, int pointsInGroup, int groupRanking, int groupPhaseRanking, 
+            StatusOfNationalTeam status, IList<Match> matches)
         {
             this.id = id;
             this.name = name;
             this.abbreviation = abbreviation;
             this.fibaRanking = fibaRanking;
+            this.groupName = groupName;
             this.winsInGroup = winsInGroup;
             this.lossesInGroup = lossesInGroup;
             this.scoredPointsInGroup = scoredPointsInGroup;
@@ -62,6 +65,7 @@
             name = nationalTeam.name;
             abbreviation = nationalTeam.abbreviation;
             fibaRanking = nationalTeam.fibaRanking;
+            groupName = nationalTeam.groupName;
             winsInGroup = nationalTeam.winsInGroup;
             lossesInGroup = nationalTeam.lossesInGroup;
             scoredPointsInGroup = nationalTeam.scoredPointsInGroup;
@@ -96,6 +100,12 @@
         {
             get { return fibaRanking; }
             set { fibaRanking = value; }
+        }
+
+        public string GroupName
+        {
+            get { return groupName; }
+            set { groupName = value; }
         }
 
         public int WinsInGroup
@@ -166,6 +176,7 @@
             result = prime * result + Name.GetHashCode();
             result = prime * result + Abbreviation.GetHashCode();
             result = prime * result + FIBARanking.GetHashCode();
+            result = prime * result + GroupName.GetHashCode();
 
             return result;
         }
@@ -203,7 +214,12 @@
             {
                 return false;
             }
-            
+
+            if (GroupName != other.GroupName)
+            {
+                return false;
+            }
+
             return true;
         }
         
@@ -251,6 +267,15 @@
                 return -1;
             }
             else if (FIBARanking > other.FIBARanking)
+            {
+                return 1;
+            }
+
+            if (string.Compare(GroupName, other.GroupName) < 0)
+            {
+                return -1;
+            }
+            else if (string.Compare(GroupName, other.GroupName) > 0)
             {
                 return 1;
             }

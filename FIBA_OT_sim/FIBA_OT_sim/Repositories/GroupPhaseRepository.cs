@@ -71,9 +71,9 @@ namespace FIBA_OT_sim.Repositories
                         StatusOfNationalTeam status = StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE;
 
                         NationalTeam nationalTeam = new NationalTeam(++Program.LastNationalTeamId, name, 
-                            abbreviation, fibaRanking, winsInGroup, lossesInGroup, scoredPointsInGroup, 
-                            allowedPointsInGroup, pointsDifferentialInGroup, pointsInGroup, groupRanking, 
-                            groupPhaseRanking, status, new List<Match>());
+                            abbreviation, fibaRanking, group.Name, winsInGroup, lossesInGroup, 
+                            scoredPointsInGroup, allowedPointsInGroup, pointsDifferentialInGroup, 
+                            pointsInGroup, groupRanking, groupPhaseRanking, status, new List<Match>());
                         group.Teams.Add(nationalTeam);
                     }
 
