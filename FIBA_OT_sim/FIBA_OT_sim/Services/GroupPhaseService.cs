@@ -28,19 +28,15 @@ namespace FIBA_OT_sim.Services
             foreach (Group group in GroupPhaseRepository.GroupPhase.Groups)
             {
                 ScheduleMatchesOfGroup(group);
-
                 foreach (Match match in group.Matches)
                 {
                     DetermineResultOfGroupPhaseMatch(match);
                     NationalTeamService.UpdateStatsOfNationalTeamsWhoPlayedInMatch(match);
                 }
-
                 RankNationalTeamsInGroup(group);
             }
-
-            PrintingService.PrintGroupPhase();
-
             RankNationalTeamsInGroupPhase();
+            PrintingService.PrintGroupPhase();
         }
 
         private void ScheduleMatchesOfGroup(Group group)
