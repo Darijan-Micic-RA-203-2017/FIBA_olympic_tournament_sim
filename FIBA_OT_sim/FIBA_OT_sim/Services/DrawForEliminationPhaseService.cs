@@ -212,81 +212,91 @@ namespace FIBA_OT_sim.Services
 
         public void RandomlyPairNewlyMadeQuarterFinalsPairs()
         {
-            IList<Match> firstTwoQuarterFinalsPairs = new List<Match>();
+            IList<Match> qfPairsBetweenPotDAndPotG = new List<Match>();
             for (int i = 0; i < 2; i++)
             {
-                firstTwoQuarterFinalsPairs.Add(EliminationPhaseService.EliminationPhase.QuarterFinals[i]);
+                qfPairsBetweenPotDAndPotG.Add(EliminationPhaseService.EliminationPhase.QuarterFinals[i]);
             }
-            IList<Match> lastTwoQuarterFinalsPairs = new List<Match>();
+            IList<Match> qfPairsBetweenPotEAndPotF = new List<Match>();
             for (int i = 2; i < 4; i++)
             {
-                lastTwoQuarterFinalsPairs.Add(EliminationPhaseService.EliminationPhase.QuarterFinals[i]);
+                qfPairsBetweenPotEAndPotF.Add(EliminationPhaseService.EliminationPhase.QuarterFinals[i]);
             }
 
             // REFERENCE: https://www.bytehide.com/blog/random-elements-csharp
-            int randomIndexOfMatchThatIsOneOfFirstTwoQuarterFinals = 
-                Program.RandomNumberGenerator.Next(firstTwoQuarterFinalsPairs.Count);
+            int randomIndexOfQFMatchBetweenPotDAndPotG = 
+                Program.RandomNumberGenerator.Next(qfPairsBetweenPotDAndPotG.Count);
 
-            Match randomMatchThatIsOneOfFirstTwoQuarterFinals = 
-                firstTwoQuarterFinalsPairs[randomIndexOfMatchThatIsOneOfFirstTwoQuarterFinals];
-            Match otherMatchThatIsOneOfFirstTwoQuarterFinals = new Match();
-            if (randomIndexOfMatchThatIsOneOfFirstTwoQuarterFinals == 0)
+            Match randomQFMatchBetweenPotDAndPotG = 
+                qfPairsBetweenPotDAndPotG[randomIndexOfQFMatchBetweenPotDAndPotG];
+            Match otherQFMatchBetweenPotDAndPotG = new Match();
+            if (randomIndexOfQFMatchBetweenPotDAndPotG == 0)
             {
-                otherMatchThatIsOneOfFirstTwoQuarterFinals = firstTwoQuarterFinalsPairs[1];
+                otherQFMatchBetweenPotDAndPotG = qfPairsBetweenPotDAndPotG[1];
             }
             else
             {
-                otherMatchThatIsOneOfFirstTwoQuarterFinals = firstTwoQuarterFinalsPairs[0];
+                otherQFMatchBetweenPotDAndPotG = qfPairsBetweenPotDAndPotG[0];
             }
 
             // REFERENCE: https://www.bytehide.com/blog/random-elements-csharp
-            int randomIndexOfMatchThatIsOneOfLastTwoQuarterFinals = 
-                Program.RandomNumberGenerator.Next(lastTwoQuarterFinalsPairs.Count);
+            int randomIndexOfQFMatchBetweenPotEAndPotF = 
+                Program.RandomNumberGenerator.Next(qfPairsBetweenPotEAndPotF.Count);
 
-            Match randomMatchThatIsOneOfLastTwoQuarterFinals = 
-                lastTwoQuarterFinalsPairs[randomIndexOfMatchThatIsOneOfLastTwoQuarterFinals];
-            Match otherMatchThatIsOneOfLastTwoQuarterFinals = new Match();
-            if (randomIndexOfMatchThatIsOneOfLastTwoQuarterFinals == 0)
+            Match randomQFMatchBetweenPotEAndPotF = 
+                qfPairsBetweenPotEAndPotF[randomIndexOfQFMatchBetweenPotEAndPotF];
+            Match otherQFMatchBetweenPotEAndPotF = new Match();
+            if (randomIndexOfQFMatchBetweenPotEAndPotF == 0)
             {
-                otherMatchThatIsOneOfLastTwoQuarterFinals = lastTwoQuarterFinalsPairs[1];
+                otherQFMatchBetweenPotEAndPotF = qfPairsBetweenPotEAndPotF[1];
             }
             else
             {
-                otherMatchThatIsOneOfLastTwoQuarterFinals = lastTwoQuarterFinalsPairs[0];
+                otherQFMatchBetweenPotEAndPotF = qfPairsBetweenPotEAndPotF[0];
             }
             
+            randomQFMatchBetweenPotDAndPotG.HomeTeam.FacesWinnerInSemifinals = randomQFMatchBetweenPotEAndPotF;
+            randomQFMatchBetweenPotDAndPotG.GuestTeam.FacesWinnerInSemifinals = randomQFMatchBetweenPotEAndPotF;
+            randomQFMatchBetweenPotEAndPotF.HomeTeam.FacesWinnerInSemifinals = randomQFMatchBetweenPotDAndPotG;
+            randomQFMatchBetweenPotEAndPotF.GuestTeam.FacesWinnerInSemifinals = randomQFMatchBetweenPotDAndPotG;
+
+            otherQFMatchBetweenPotDAndPotG.HomeTeam.FacesWinnerInSemifinals = otherQFMatchBetweenPotEAndPotF;
+            otherQFMatchBetweenPotDAndPotG.GuestTeam.FacesWinnerInSemifinals = otherQFMatchBetweenPotEAndPotF;
+            otherQFMatchBetweenPotEAndPotF.HomeTeam.FacesWinnerInSemifinals = otherQFMatchBetweenPotDAndPotG;
+            otherQFMatchBetweenPotEAndPotF.GuestTeam.FacesWinnerInSemifinals = otherQFMatchBetweenPotDAndPotG;
+            
             Match variant1OfPossibleFirstSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
-                randomMatchThatIsOneOfFirstTwoQuarterFinals.HomeTeam, 
-                randomMatchThatIsOneOfLastTwoQuarterFinals.HomeTeam, new MatchResult());
+                randomQFMatchBetweenPotDAndPotG.HomeTeam, 
+                randomQFMatchBetweenPotEAndPotF.HomeTeam, new MatchResult());
             variantsOfPossibleSemiFinalsMatches.Add(variant1OfPossibleFirstSemiFinalsMatch);
             Match variant2OfPossibleFirstSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
-                randomMatchThatIsOneOfFirstTwoQuarterFinals.HomeTeam, 
-                randomMatchThatIsOneOfLastTwoQuarterFinals.GuestTeam, new MatchResult());
+                randomQFMatchBetweenPotDAndPotG.HomeTeam, 
+                randomQFMatchBetweenPotEAndPotF.GuestTeam, new MatchResult());
             variantsOfPossibleSemiFinalsMatches.Add(variant2OfPossibleFirstSemiFinalsMatch);
             Match variant3OfPossibleFirstSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
-                randomMatchThatIsOneOfFirstTwoQuarterFinals.GuestTeam, 
-                randomMatchThatIsOneOfLastTwoQuarterFinals.HomeTeam, new MatchResult());
+                randomQFMatchBetweenPotDAndPotG.GuestTeam, 
+                randomQFMatchBetweenPotEAndPotF.HomeTeam, new MatchResult());
             variantsOfPossibleSemiFinalsMatches.Add(variant3OfPossibleFirstSemiFinalsMatch);
             Match variant4OfPossibleFirstSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
-                randomMatchThatIsOneOfFirstTwoQuarterFinals.GuestTeam, 
-                randomMatchThatIsOneOfLastTwoQuarterFinals.GuestTeam, new MatchResult());
+                randomQFMatchBetweenPotDAndPotG.GuestTeam, 
+                randomQFMatchBetweenPotEAndPotF.GuestTeam, new MatchResult());
             variantsOfPossibleSemiFinalsMatches.Add(variant4OfPossibleFirstSemiFinalsMatch);
 
             Match variant1OfPossibleSecondSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
-                otherMatchThatIsOneOfFirstTwoQuarterFinals.HomeTeam, 
-                otherMatchThatIsOneOfLastTwoQuarterFinals.HomeTeam, new MatchResult());
+                otherQFMatchBetweenPotDAndPotG.HomeTeam, 
+                otherQFMatchBetweenPotEAndPotF.HomeTeam, new MatchResult());
             variantsOfPossibleSemiFinalsMatches.Add(variant1OfPossibleSecondSemiFinalsMatch);
             Match variant2OfPossibleSecondSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
-                otherMatchThatIsOneOfFirstTwoQuarterFinals.HomeTeam, 
-                otherMatchThatIsOneOfLastTwoQuarterFinals.GuestTeam, new MatchResult());
+                otherQFMatchBetweenPotDAndPotG.HomeTeam, 
+                otherQFMatchBetweenPotEAndPotF.GuestTeam, new MatchResult());
             variantsOfPossibleSemiFinalsMatches.Add(variant2OfPossibleSecondSemiFinalsMatch);
             Match variant3OfPossibleSecondSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
-                otherMatchThatIsOneOfFirstTwoQuarterFinals.GuestTeam, 
-                otherMatchThatIsOneOfLastTwoQuarterFinals.HomeTeam, new MatchResult());
+                otherQFMatchBetweenPotDAndPotG.GuestTeam, 
+                otherQFMatchBetweenPotEAndPotF.HomeTeam, new MatchResult());
             variantsOfPossibleSemiFinalsMatches.Add(variant3OfPossibleSecondSemiFinalsMatch);
             Match variant4OfPossibleSecondSemiFinalsMatch = new Match(0L, TournamentPhaseOfMatch.SEMIFINALS, 
-                otherMatchThatIsOneOfFirstTwoQuarterFinals.GuestTeam, 
-                otherMatchThatIsOneOfLastTwoQuarterFinals.GuestTeam, new MatchResult());
+                otherQFMatchBetweenPotDAndPotG.GuestTeam, 
+                otherQFMatchBetweenPotEAndPotF.GuestTeam, new MatchResult());
             variantsOfPossibleSemiFinalsMatches.Add(variant4OfPossibleSecondSemiFinalsMatch);
         }
     }

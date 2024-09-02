@@ -17,6 +17,7 @@
         private int groupPhaseRanking;
         private StatusOfNationalTeam status;
         private SideOfBracket sideOfBracket;
+        private Match? facesWinnerInSemifinals;
         private IList<Match> matches;
 
         public NationalTeam()
@@ -36,13 +37,15 @@
             groupPhaseRanking = 0;
             status = StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE;
             sideOfBracket = SideOfBracket.NO_SIDE;
+            facesWinnerInSemifinals = null;
             matches = new List<Match>();
         }
 
         public NationalTeam(long id, string name, string abbreviation, int fibaRanking, string groupName, 
             int winsInGroup, int lossesInGroup, int scoredPointsInGroup, int allowedPointsInGroup, 
             int pointsDifferentialInGroup, int pointsInGroup, int groupRanking, int groupPhaseRanking, 
-            StatusOfNationalTeam status, SideOfBracket sideOfBracket, IList<Match> matches)
+            StatusOfNationalTeam status, SideOfBracket sideOfBracket, Match? facesWinnerInSemifinals, 
+            IList<Match> matches)
         {
             this.id = id;
             this.name = name;
@@ -59,6 +62,7 @@
             this.groupPhaseRanking = groupPhaseRanking;
             this.status = status;
             this.sideOfBracket = sideOfBracket;
+            this.facesWinnerInSemifinals = facesWinnerInSemifinals;
             this.matches = matches;
         }
 
@@ -79,6 +83,7 @@
             groupPhaseRanking = nationalTeam.groupPhaseRanking;
             status = nationalTeam.status;
             sideOfBracket = nationalTeam.sideOfBracket;
+            facesWinnerInSemifinals = nationalTeam.facesWinnerInSemifinals;
             matches = nationalTeam.matches;
         }
 
@@ -170,6 +175,12 @@
         {
             get { return sideOfBracket; }
             set { sideOfBracket = value; }
+        }
+
+        public Match FacesWinnerInSemifinals
+        {
+            get { return facesWinnerInSemifinals; }
+            set { facesWinnerInSemifinals = value; }
         }
 
         public IList<Match> Matches

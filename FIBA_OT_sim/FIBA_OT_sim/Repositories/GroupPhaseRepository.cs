@@ -69,11 +69,14 @@ namespace FIBA_OT_sim.Repositories
                         int groupRanking = 0;
                         int groupPhaseRanking = 0;
                         StatusOfNationalTeam status = StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE;
+                        SideOfBracket sideOfBracket = SideOfBracket.NO_SIDE;
+                        Match? facesWinnerInSemifinals = null;
 
                         NationalTeam nationalTeam = new NationalTeam(++Program.LastNationalTeamId, name, 
                             abbreviation, fibaRanking, group.Name, winsInGroup, lossesInGroup, 
                             scoredPointsInGroup, allowedPointsInGroup, pointsDifferentialInGroup, 
-                            pointsInGroup, groupRanking, groupPhaseRanking, status, new List<Match>());
+                            pointsInGroup, groupRanking, groupPhaseRanking, status, sideOfBracket, 
+                            facesWinnerInSemifinals, new List<Match>());
                         group.Teams.Add(nationalTeam);
                     }
 
