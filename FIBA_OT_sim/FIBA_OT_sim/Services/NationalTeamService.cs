@@ -152,5 +152,22 @@ namespace FIBA_OT_sim.Services
                 MatchService.GetNationalTeamThatLostMatch(quarterFinalsMatch);
             nationalTeamThatLostQuarterFinalsMatch.Status = StatusOfNationalTeam.ELIMINATED_IN_QUARTERFINALS;
         }
+
+        public static IList<NationalTeam> GetNationalTeamsQualifiedToSemiFinals()
+        {
+            IList<NationalTeam> nationalTeamsQualifiedToSemiFinals = new List<NationalTeam>();
+            foreach (Group group in GroupPhaseRepository.GroupPhase.Groups)
+            {
+                foreach (NationalTeam nationalTeam in group.Teams)
+                {
+                    if (nationalTeam.Status == StatusOfNationalTeam.COMPETING_IN_SEMIFINALS)
+                    {
+                        nationalTeamsQualifiedToSemiFinals.Add(nationalTeam);
+                    }
+                }
+            }
+
+            return nationalTeamsQualifiedToSemiFinals;
+        }
     }
 }
