@@ -149,6 +149,7 @@ namespace FIBA_OT_sim.Services
         {
             PrintQuarterFinals();
             PrintSemiFinals();
+            PrintThirdPlaceMatch();
         }
 
         private static void PrintQuarterFinals()
@@ -167,6 +168,12 @@ namespace FIBA_OT_sim.Services
             {
                 PrintEliminationPhaseMatch(semiFinal);
             }
+        }
+
+        private static void PrintThirdPlaceMatch()
+        {
+            Console.WriteLine("\nUtakmica za 3. mesto:");
+            PrintEliminationPhaseMatch(EliminationPhaseService.EliminationPhase.ThirdPlaceMatch);
         }
 
         private static void PrintEliminationPhaseMatch(Match eliminationPhaseMatch)

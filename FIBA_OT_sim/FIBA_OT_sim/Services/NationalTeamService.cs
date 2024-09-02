@@ -180,5 +180,29 @@ namespace FIBA_OT_sim.Services
                 MatchService.GetNationalTeamThatLostMatch(semiFinalsMatch);
             nationalTeamThatLostSemiFinalsMatch.Status = StatusOfNationalTeam.COMPETING_IN_THIRD_PLACE_MATCH;
         }
+
+        public static IList<NationalTeam> GetNationalTeamsSetToCompeteInThirdPlaceMatch()
+        {
+            IList<NationalTeam> nationalTeamsSetToCompeteInThirdPlaceMatch = new List<NationalTeam>();
+            foreach (Match semiFinalsMatch in EliminationPhaseService.EliminationPhase.SemiFinals)
+            {
+                NationalTeam teamThatLostInSemiFinals = 
+                    MatchService.GetNationalTeamThatLostMatch(semiFinalsMatch);
+                nationalTeamsSetToCompeteInThirdPlaceMatch.Add(teamThatLostInSemiFinals);
+            }
+
+            return nationalTeamsSetToCompeteInThirdPlaceMatch;
+        }
+
+        public static void ChangeStatusesOfNationalTeamsAfterThirdPlaceMatch(Match thirdPlaceMatch)
+        {
+            NationalTeam nationalTeamThatWonThirdPlaceMatch =
+                MatchService.GetNationalTeamThatWonMatch(thirdPlaceMatch);
+            nationalTeamThatWonThirdPlaceMatch.Status = StatusOfNationalTeam.WON_BRONZE_MEDAL;
+
+            NationalTeam nationalTeamThatLostThirdPlaceMatch =
+                MatchService.GetNationalTeamThatLostMatch(thirdPlaceMatch);
+            nationalTeamThatLostThirdPlaceMatch.Status = StatusOfNationalTeam.LOST_IN_THIRD_PLACE_MATCH;
+        }
     }
 }
