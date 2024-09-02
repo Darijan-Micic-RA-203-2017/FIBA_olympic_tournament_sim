@@ -138,7 +138,12 @@ namespace FIBA_OT_sim.Services
 
         private int RankNationalTeamsInSubgroupOfTwoTeams(IList<NationalTeam> subgroup, int groupRanking)
         {
-            Match match = MatchService.FindMatchBetweenTeams(subgroup[0], subgroup[1]);
+            Match? match = MatchService.FindMatchBetweenTeams(subgroup[0], subgroup[1]);
+            if (match == null)
+            {
+                return groupRanking;
+            }
+
             NationalTeam nationalTeamThatWonMatch = MatchService.GetNationalTeamThatWonMatch(match);
             if (nationalTeamThatWonMatch.Equals(subgroup[0]))
             {
@@ -179,8 +184,13 @@ namespace FIBA_OT_sim.Services
             {
                 for (int j = i + 1; j < subgroup.Count; j++)
                 {
-                    Match matchBetweenTwoTeamsInCircle =
+                    Match? matchBetweenTwoTeamsInCircle = 
                         MatchService.FindMatchBetweenTeams(subgroup[i], subgroup[j]);
+                    if (matchBetweenTwoTeamsInCircle == null)
+                    {
+                        return matchesBetweenTeamsInCircle;
+                    }
+
                     matchesBetweenTeamsInCircle.Add(matchBetweenTwoTeamsInCircle);
                 }
             }

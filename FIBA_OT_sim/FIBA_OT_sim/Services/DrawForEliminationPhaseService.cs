@@ -32,6 +32,7 @@ namespace FIBA_OT_sim.Services
             RandomlyPairNationalTeamsFromPotDAndPotG();
             RandomlyPairNationalTeamsFromPotEAndPotF();
             RandomlyPairNewlyMadeQuarterFinalsPairs();
+            PrintingService.PrintDrawForEliminationPhase();
         }
 
         public void CreatePots()
@@ -75,7 +76,7 @@ namespace FIBA_OT_sim.Services
 
             NationalTeam randomNationalTeamInPotD = 
                 draw.GetPotNamed("D").NationalTeams[randomIndexOfNationalTeamInPotD];
-            NationalTeam otherNationalTeamInPotD = null;
+            NationalTeam otherNationalTeamInPotD = new NationalTeam();
             if (randomIndexOfNationalTeamInPotD == 0)
             {
                 otherNationalTeamInPotD = draw.GetPotNamed("D").NationalTeams[1];
@@ -91,7 +92,7 @@ namespace FIBA_OT_sim.Services
 
             NationalTeam randomNationalTeamInPotG = 
                 draw.GetPotNamed("G").NationalTeams[randomIndexOfNationalTeamInPotG];
-            NationalTeam otherNationalTeamInPotG = null;
+            NationalTeam otherNationalTeamInPotG = new NationalTeam();
             if (randomIndexOfNationalTeamInPotG == 0)
             {
                 otherNationalTeamInPotG = draw.GetPotNamed("G").NationalTeams[1];
@@ -101,8 +102,8 @@ namespace FIBA_OT_sim.Services
                 otherNationalTeamInPotG = draw.GetPotNamed("G").NationalTeams[0];
             }
 
-            Match quarterFinalsMatch1 = null;
-            Match quarterFinalsMatch2 = null;
+            Match quarterFinalsMatch1 = new Match();
+            Match quarterFinalsMatch2 = new Match();
             if (randomNationalTeamInPotD.GroupName.Equals(randomNationalTeamInPotG.GroupName))
             {
                 quarterFinalsMatch1 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.QUARTERFINALS, 
@@ -144,7 +145,7 @@ namespace FIBA_OT_sim.Services
 
             NationalTeam randomNationalTeamInPotE = 
                 draw.GetPotNamed("E").NationalTeams[randomIndexOfNationalTeamInPotE];
-            NationalTeam otherNationalTeamInPotE = null;
+            NationalTeam otherNationalTeamInPotE = new NationalTeam();
             if (randomIndexOfNationalTeamInPotE == 0)
             {
                 otherNationalTeamInPotE = draw.GetPotNamed("E").NationalTeams[1];
@@ -160,7 +161,7 @@ namespace FIBA_OT_sim.Services
 
             NationalTeam randomNationalTeamInPotF = 
                 draw.GetPotNamed("F").NationalTeams[randomIndexOfNationalTeamInPotF];
-            NationalTeam otherNationalTeamInPotF = null;
+            NationalTeam otherNationalTeamInPotF = new NationalTeam();
             if (randomIndexOfNationalTeamInPotF == 0)
             {
                 otherNationalTeamInPotF = draw.GetPotNamed("F").NationalTeams[1];
@@ -170,8 +171,8 @@ namespace FIBA_OT_sim.Services
                 otherNationalTeamInPotF = draw.GetPotNamed("F").NationalTeams[0];
             }
 
-            Match quarterFinalsMatch3 = null;
-            Match quarterFinalsMatch4 = null;
+            Match quarterFinalsMatch3 = new Match();
+            Match quarterFinalsMatch4 = new Match();
             if (randomNationalTeamInPotE.GroupName.Equals(randomNationalTeamInPotF.GroupName))
             {
                 quarterFinalsMatch3 = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.QUARTERFINALS, 
@@ -224,7 +225,7 @@ namespace FIBA_OT_sim.Services
 
             Match randomMatchThatIsOneOfFirstTwoQuarterFinals = 
                 firstTwoQuarterFinalsPairs[randomIndexOfMatchThatIsOneOfFirstTwoQuarterFinals];
-            Match otherMatchThatIsOneOfFirstTwoQuarterFinals = null;
+            Match otherMatchThatIsOneOfFirstTwoQuarterFinals = new Match();
             if (randomIndexOfMatchThatIsOneOfFirstTwoQuarterFinals == 0)
             {
                 otherMatchThatIsOneOfFirstTwoQuarterFinals = firstTwoQuarterFinalsPairs[1];
@@ -240,7 +241,7 @@ namespace FIBA_OT_sim.Services
 
             Match randomMatchThatIsOneOfLastTwoQuarterFinals = 
                 lastTwoQuarterFinalsPairs[randomIndexOfMatchThatIsOneOfLastTwoQuarterFinals];
-            Match otherMatchThatIsOneOfLastTwoQuarterFinals = null;
+            Match otherMatchThatIsOneOfLastTwoQuarterFinals = new Match();
             if (randomIndexOfMatchThatIsOneOfLastTwoQuarterFinals == 0)
             {
                 otherMatchThatIsOneOfLastTwoQuarterFinals = lastTwoQuarterFinalsPairs[1];

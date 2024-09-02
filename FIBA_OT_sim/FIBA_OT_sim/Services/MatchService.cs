@@ -96,7 +96,7 @@ namespace FIBA_OT_sim.Services
 
         public static NationalTeam GetNationalTeamThatWonMatch(Match match)
         {
-            NationalTeam nationalTeamThatWonMatch = null;
+            NationalTeam nationalTeamThatWonMatch = new NationalTeam();
             if (match.Result.HomeTeamPoints - match.Result.GuestTeamPoints > 0)
             {
                 nationalTeamThatWonMatch = match.HomeTeam;
@@ -111,7 +111,7 @@ namespace FIBA_OT_sim.Services
 
         public static NationalTeam GetNationalTeamThatLostMatch(Match match)
         {
-            NationalTeam nationalTeamThatLostMatch = null;
+            NationalTeam nationalTeamThatLostMatch = new NationalTeam();
             if (match.Result.HomeTeamPoints - match.Result.GuestTeamPoints < 0)
             {
                 nationalTeamThatLostMatch = match.HomeTeam;
@@ -124,7 +124,7 @@ namespace FIBA_OT_sim.Services
             return nationalTeamThatLostMatch;
         }
 
-        public static Match FindMatchBetweenTeams(NationalTeam team1, NationalTeam team2)
+        public static Match? FindMatchBetweenTeams(NationalTeam team1, NationalTeam team2)
         {
             foreach (Match match in team1.Matches)
             {
