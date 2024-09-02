@@ -47,7 +47,7 @@
 
         public override int GetHashCode()
         {
-            const int prime = 47;
+            const int prime = 53;
             int result = 1;
 
             result = prime * result + HomeTeamPoints.GetHashCode();

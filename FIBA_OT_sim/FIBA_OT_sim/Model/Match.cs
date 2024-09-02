@@ -82,7 +82,7 @@
 
         public override int GetHashCode()
         {
-            const int prime = 53;
+            const int prime = 47;
             int result = 1;
 
             result = prime * result + TournamentPhase.GetHashCode();

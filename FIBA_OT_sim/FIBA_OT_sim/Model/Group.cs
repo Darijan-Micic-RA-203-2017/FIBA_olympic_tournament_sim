@@ -84,7 +84,7 @@
                 return false;
             }
 
-            if (Name != other.Name)
+            if (!Name.Equals(other.Name))
             {
                 return false;
             }

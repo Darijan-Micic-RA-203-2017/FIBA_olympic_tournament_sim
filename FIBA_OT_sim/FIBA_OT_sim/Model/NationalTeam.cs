@@ -221,12 +221,12 @@
                 return false;
             }
 
-            if (Name != other.Name)
+            if (!Name.Equals(other.Name))
             {
                 return false;
             }
 
-            if (Abbreviation != other.Abbreviation)
+            if (!Abbreviation.Equals(other.Abbreviation))
             {
                 return false;
             }
@@ -236,7 +236,7 @@
                 return false;
             }
 
-            if (GroupName != other.GroupName)
+            if (!GroupName.Equals(other.GroupName))
             {
                 return false;
             }

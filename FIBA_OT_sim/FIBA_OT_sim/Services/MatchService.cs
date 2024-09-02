@@ -9,9 +9,7 @@ namespace FIBA_OT_sim.Services
         public static void DetermineResultOfMatch(Match match)
         {
             int fibaRankingOfHomeTeam = match.HomeTeam.FIBARanking;
-            Console.WriteLine("Home team                           FIBA ranking: " + fibaRankingOfHomeTeam);
             int fibaRankingOfGuestTeam = match.GuestTeam.FIBARanking;
-            Console.WriteLine("Guest team                          FIBA ranking: " + fibaRankingOfGuestTeam);
             bool homeTeamHigherRanked = false;
             int fibaRankingDifference = fibaRankingOfHomeTeam - fibaRankingOfGuestTeam;
             if (fibaRankingDifference < 0)
@@ -19,8 +17,6 @@ namespace FIBA_OT_sim.Services
                 fibaRankingDifference *= -1;
                 homeTeamHigherRanked = true;
             }
-            Console.WriteLine("Is home team                       higher ranked: " + homeTeamHigherRanked);
-            Console.WriteLine("FIBA ranking                          difference: " + fibaRankingDifference);
 
             double winProbabilityOfTeamWithHigherFIBARanking = 0.0;
             if (fibaRankingDifference == 1)
@@ -63,11 +59,8 @@ namespace FIBA_OT_sim.Services
             {
                 winProbabilityOfTeamWithHigherFIBARanking = 0.95;
             }
-            Console.WriteLine("Win probability of team with higher FIBA ranking: "
-                + winProbabilityOfTeamWithHigherFIBARanking);
 
             double randomProbability = Program.RandomNumberGenerator.NextDouble();
-            Console.WriteLine("Randomly generated                   probability: " + randomProbability);
             if (randomProbability.CompareTo(winProbabilityOfTeamWithHigherFIBARanking) <= 0)
             {
                 if (homeTeamHigherRanked)
@@ -90,8 +83,6 @@ namespace FIBA_OT_sim.Services
                     match.Result = new MatchResult(match.Id, 85, 85 - fibaRankingDifference);
                 }
             }
-            Console.WriteLine("Match                                     result: "
-                + match.Result.HomeTeamPoints + ":" + match.Result.GuestTeamPoints + "\n");
         }
 
         public static NationalTeam GetNationalTeamThatWonMatch(Match match)
