@@ -169,5 +169,16 @@ namespace FIBA_OT_sim.Services
 
             return nationalTeamsQualifiedToSemiFinals;
         }
+
+        public static void ChangeStatusesOfNationalTeamsAfterSemiFinalsMatch(Match semiFinalsMatch)
+        {
+            NationalTeam nationalTeamThatWonSemiFinalsMatch = 
+                MatchService.GetNationalTeamThatWonMatch(semiFinalsMatch);
+            nationalTeamThatWonSemiFinalsMatch.Status = StatusOfNationalTeam.COMPETING_IN_FINALS;
+
+            NationalTeam nationalTeamThatLostSemiFinalsMatch = 
+                MatchService.GetNationalTeamThatLostMatch(semiFinalsMatch);
+            nationalTeamThatLostSemiFinalsMatch.Status = StatusOfNationalTeam.COMPETING_IN_THIRD_PLACE_MATCH;
+        }
     }
 }

@@ -148,6 +148,7 @@ namespace FIBA_OT_sim.Services
         public static void PrintEliminationPhase()
         {
             PrintQuarterFinals();
+            PrintSemiFinals();
         }
 
         private static void PrintQuarterFinals()
@@ -156,6 +157,15 @@ namespace FIBA_OT_sim.Services
             foreach (Match quarterFinal in EliminationPhaseService.EliminationPhase.QuarterFinals)
             {
                 PrintEliminationPhaseMatch(quarterFinal);
+            }
+        }
+
+        private static void PrintSemiFinals()
+        {
+            Console.WriteLine("\nPolufinale:");
+            foreach (Match semiFinal in EliminationPhaseService.EliminationPhase.SemiFinals)
+            {
+                PrintEliminationPhaseMatch(semiFinal);
             }
         }
 
