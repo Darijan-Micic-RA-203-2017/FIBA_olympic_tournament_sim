@@ -42,6 +42,7 @@ namespace FIBA_OT_sim
             EliminationPhaseService eliminationPhaseService = new EliminationPhaseService();
             DrawForEliminationPhaseService drawForEliminationPhaseService = new DrawForEliminationPhaseService();
             drawForEliminationPhaseService.PerformDrawForEliminationPhase();
+            eliminationPhaseService.SimulateEliminationPhase();
         }
     }
 }

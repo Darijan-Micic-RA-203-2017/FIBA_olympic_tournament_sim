@@ -123,8 +123,7 @@ namespace FIBA_OT_sim.Services
             Console.WriteLine("Kostur eliminacione faze:");
 
             Console.WriteLine("    Parovi četvrtfinala:");
-            IList<Match> quarters = EliminationPhaseService.EliminationPhase.QuarterFinals;
-            foreach (Match quarterFinal in quarters)
+            foreach (Match quarterFinal in EliminationPhaseService.EliminationPhase.QuarterFinals)
             {
                 StringBuilder matchDataBuilder = new StringBuilder("        ");
                 matchDataBuilder.Append(quarterFinal.HomeTeam.Name).Append(" - ");
@@ -144,6 +143,20 @@ namespace FIBA_OT_sim.Services
             possibleSemifinalsDataBuilder.Append(possibleSemis[6].GuestTeam.Name).Append(" / ");
             possibleSemifinalsDataBuilder.Append(possibleSemis[7].GuestTeam.Name).Append('\n');
             Console.WriteLine(possibleSemifinalsDataBuilder.ToString());
+        }
+
+        public static void PrintQuarterFinals()
+        {
+            Console.WriteLine("Četvrtfinale:");
+            foreach (Match quarterFinal in EliminationPhaseService.EliminationPhase.QuarterFinals)
+            {
+                StringBuilder matchDataBuilder = new StringBuilder("    ");
+                matchDataBuilder.Append(quarterFinal.HomeTeam.Name).Append(" - ");
+                matchDataBuilder.Append(quarterFinal.GuestTeam.Name).Append(" (");
+                matchDataBuilder.Append(quarterFinal.Result.HomeTeamPoints).Append(':');
+                matchDataBuilder.Append(quarterFinal.Result.GuestTeamPoints).Append(')');
+                Console.WriteLine(matchDataBuilder.ToString());
+            }
         }
     }
 }

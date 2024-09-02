@@ -16,5 +16,20 @@ namespace FIBA_OT_sim.Services
             get { return eliminationPhase; }
             set { eliminationPhase = value; }
         }
+
+        public void SimulateEliminationPhase()
+        {
+            SimulateQuarterFinals();
+        }
+
+        public void SimulateQuarterFinals()
+        {
+            foreach (Match quarterFinal in eliminationPhase.QuarterFinals)
+            {
+                MatchService.DetermineResultOfMatch(quarterFinal);
+                NationalTeamService.ChangeStatusesOfNationalTeamsAfterQuarterFinalsMatch(quarterFinal);
+            }
+            PrintingService.PrintQuarterFinals();
+        }
     }
 }

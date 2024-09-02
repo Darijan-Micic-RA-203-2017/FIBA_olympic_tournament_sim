@@ -7,32 +7,32 @@ namespace FIBA_OT_sim.Services
     {
         public NationalTeamService() { }
 
-        public static void UpdateStatsOfNationalTeamsWhoPlayedInGroupMatch(Match match)
+        public static void UpdateStatsOfNationalTeamsWhoPlayedInGroupMatch(Match groupMatch)
         {
-            int homeTeamPoints = match.Result.HomeTeamPoints;
-            int guestTeamPoints = match.Result.GuestTeamPoints;
+            int homeTeamPoints = groupMatch.Result.HomeTeamPoints;
+            int guestTeamPoints = groupMatch.Result.GuestTeamPoints;
             int pointsDifferentialAdditionForHomeTeam = homeTeamPoints - guestTeamPoints;
             int pointsDifferentialAdditionForGuestTeam = pointsDifferentialAdditionForHomeTeam * -1;
 
-            match.HomeTeam.ScoredPointsInGroup += homeTeamPoints;
-            match.HomeTeam.AllowedPointsInGroup += guestTeamPoints;
-            match.HomeTeam.PointsDifferentialInGroup += pointsDifferentialAdditionForHomeTeam;
-            match.GuestTeam.ScoredPointsInGroup += guestTeamPoints;
-            match.GuestTeam.AllowedPointsInGroup += homeTeamPoints;
-            match.GuestTeam.PointsDifferentialInGroup += pointsDifferentialAdditionForGuestTeam;
+            groupMatch.HomeTeam.ScoredPointsInGroup += homeTeamPoints;
+            groupMatch.HomeTeam.AllowedPointsInGroup += guestTeamPoints;
+            groupMatch.HomeTeam.PointsDifferentialInGroup += pointsDifferentialAdditionForHomeTeam;
+            groupMatch.GuestTeam.ScoredPointsInGroup += guestTeamPoints;
+            groupMatch.GuestTeam.AllowedPointsInGroup += homeTeamPoints;
+            groupMatch.GuestTeam.PointsDifferentialInGroup += pointsDifferentialAdditionForGuestTeam;
             if (pointsDifferentialAdditionForHomeTeam > 0)
             {
-                match.HomeTeam.WinsInGroup += 1;
-                match.HomeTeam.PointsInGroup += 2;
-                match.GuestTeam.LossesInGroup += 1;
-                match.GuestTeam.PointsInGroup += 1;
+                groupMatch.HomeTeam.WinsInGroup += 1;
+                groupMatch.HomeTeam.PointsInGroup += 2;
+                groupMatch.GuestTeam.LossesInGroup += 1;
+                groupMatch.GuestTeam.PointsInGroup += 1;
             }
             else
             {
-                match.HomeTeam.LossesInGroup += 1;
-                match.HomeTeam.PointsInGroup += 1;
-                match.GuestTeam.WinsInGroup += 1;
-                match.GuestTeam.PointsInGroup += 2;
+                groupMatch.HomeTeam.LossesInGroup += 1;
+                groupMatch.HomeTeam.PointsInGroup += 1;
+                groupMatch.GuestTeam.WinsInGroup += 1;
+                groupMatch.GuestTeam.PointsInGroup += 2;
             }
         }
 
@@ -140,6 +140,17 @@ namespace FIBA_OT_sim.Services
                 .OrderBy((nationalTeam) => nationalTeam.GroupPhaseRanking).ToList();
 
             return nationalTeamsQualifiedToEliminationPhase;
+        }
+
+        public static void ChangeStatusesOfNationalTeamsAfterQuarterFinalsMatch(Match quarterFinalsMatch)
+        {
+            NationalTeam nationalTeamThatWonQuarterFinalsMatch = 
+                MatchService.GetNationalTeamThatWonMatch(quarterFinalsMatch);
+            nationalTeamThatWonQuarterFinalsMatch.Status = StatusOfNationalTeam.COMPETING_IN_SEMIFINALS;
+
+            NationalTeam nationalTeamThatLostQuarterFinalsMatch = 
+                MatchService.GetNationalTeamThatLostMatch(quarterFinalsMatch);
+            nationalTeamThatLostQuarterFinalsMatch.Status = StatusOfNationalTeam.ELIMINATED_IN_QUARTERFINALS;
         }
     }
 }
