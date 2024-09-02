@@ -95,10 +95,11 @@ namespace FIBA_OT_sim.Services
 
         public static void PrintDrawForEliminationPhase()
         {
-            PrintPotsInDraw();
+            PrintPotsInDrawForEliminationPhase();
+            PrintBracketOfEliminationPhase();
         }
 
-        private static void PrintPotsInDraw()
+        private static void PrintPotsInDrawForEliminationPhase()
         {
             Console.WriteLine("\nŠeširi:");
             foreach (PotInDrawForEliminationPhase pot in DrawForEliminationPhaseService.Draw.Pots)
@@ -115,6 +116,34 @@ namespace FIBA_OT_sim.Services
 
                 Console.WriteLine();
             }
+        }
+
+        private static void PrintBracketOfEliminationPhase()
+        {
+            Console.WriteLine("Kostur eliminacione faze:");
+
+            Console.WriteLine("    Parovi četvrtfinala:");
+            IList<Match> quarters = EliminationPhaseService.EliminationPhase.QuarterFinals;
+            foreach (Match quarterFinal in quarters)
+            {
+                StringBuilder matchDataBuilder = new StringBuilder("        ");
+                matchDataBuilder.Append(quarterFinal.HomeTeam.Name).Append(" - ");
+                matchDataBuilder.Append(quarterFinal.GuestTeam.Name);
+                Console.WriteLine(matchDataBuilder.ToString());
+            }
+
+            Console.WriteLine("\n    Parovi polufinala:");
+            IList<Match> possibleSemis = DrawForEliminationPhaseService.VariantsOfPossibleSemiFinalsMatches;
+            StringBuilder possibleSemifinalsDataBuilder = new StringBuilder("        ");
+            possibleSemifinalsDataBuilder.Append(possibleSemis[0].HomeTeam.Name).Append(" / ");
+            possibleSemifinalsDataBuilder.Append(possibleSemis[2].HomeTeam.Name).Append(" - ");
+            possibleSemifinalsDataBuilder.Append(possibleSemis[2].GuestTeam.Name).Append(" / ");
+            possibleSemifinalsDataBuilder.Append(possibleSemis[3].GuestTeam.Name).Append("\n        ");
+            possibleSemifinalsDataBuilder.Append(possibleSemis[4].HomeTeam.Name).Append(" / ");
+            possibleSemifinalsDataBuilder.Append(possibleSemis[6].HomeTeam.Name).Append(" - ");
+            possibleSemifinalsDataBuilder.Append(possibleSemis[6].GuestTeam.Name).Append(" / ");
+            possibleSemifinalsDataBuilder.Append(possibleSemis[7].GuestTeam.Name).Append('\n');
+            Console.WriteLine(possibleSemifinalsDataBuilder.ToString());
         }
     }
 }
