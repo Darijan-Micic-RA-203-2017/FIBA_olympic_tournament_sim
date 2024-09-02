@@ -136,6 +136,7 @@ namespace FIBA_OT_sim.Services
                     }
                 }
             }
+
             nationalTeamsQualifiedToEliminationPhase = nationalTeamsQualifiedToEliminationPhase
                 .OrderBy((nationalTeam) => nationalTeam.GroupPhaseRanking).ToList();
 
@@ -188,7 +189,6 @@ namespace FIBA_OT_sim.Services
             {
                 NationalTeam teamThatLostInSemiFinals = 
                     MatchService.GetNationalTeamThatLostMatch(semiFinalsMatch);
-                teamThatLostInSemiFinals.Status = StatusOfNationalTeam.COMPETING_IN_THIRD_PLACE_MATCH;
 
                 nationalTeamsSetToCompeteInThirdPlaceMatch.Add(teamThatLostInSemiFinals);
             }
@@ -214,7 +214,6 @@ namespace FIBA_OT_sim.Services
             {
                 NationalTeam teamThatWonInSemiFinals = 
                     MatchService.GetNationalTeamThatWonMatch(semiFinalsMatch);
-                teamThatWonInSemiFinals.Status = StatusOfNationalTeam.COMPETING_IN_FINAL;
 
                 nationalTeamsSetToCompeteInFinal.Add(teamThatWonInSemiFinals);
             }
@@ -229,6 +228,28 @@ namespace FIBA_OT_sim.Services
 
             NationalTeam nationalTeamThatLostInFinal = MatchService.GetNationalTeamThatLostMatch(final);
             nationalTeamThatLostInFinal.Status = StatusOfNationalTeam.GOT_SILVER_MEDAL;
+        }
+
+        public static IList<NationalTeam> GetNationalTeamsThatWonMedals()
+        {
+            IList<NationalTeam> nationalTeamsThatWonMedals = new List<NationalTeam>();
+            foreach (Group group in GroupPhaseRepository.GroupPhase.Groups)
+            {
+                foreach (NationalTeam nationalTeam in group.Teams)
+                {
+                    if (nationalTeam.Status == StatusOfNationalTeam.WON_GOLD_MEDAL 
+                        || nationalTeam.Status == StatusOfNationalTeam.GOT_SILVER_MEDAL 
+                        || nationalTeam.Status == StatusOfNationalTeam.WON_BRONZE_MEDAL)
+                    {
+                        nationalTeamsThatWonMedals.Add(nationalTeam);
+                    }
+                }
+            }
+
+            nationalTeamsThatWonMedals = nationalTeamsThatWonMedals
+                .OrderByDescending((nationalTeam) => nationalTeam.Status).ToList();
+
+            return nationalTeamsThatWonMedals;
         }
     }
 }

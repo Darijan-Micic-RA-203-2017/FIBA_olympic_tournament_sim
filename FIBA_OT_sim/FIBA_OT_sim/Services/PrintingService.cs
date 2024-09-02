@@ -151,6 +151,7 @@ namespace FIBA_OT_sim.Services
             PrintSemiFinals();
             PrintThirdPlaceMatch();
             PrintFinal();
+            PrintNationalTeamsThatWonMedals();
         }
 
         private static void PrintQuarterFinals()
@@ -191,6 +192,23 @@ namespace FIBA_OT_sim.Services
             eliminationPhaseMatchDataBuilder.Append(eliminationPhaseMatch.Result.HomeTeamPoints).Append(':');
             eliminationPhaseMatchDataBuilder.Append(eliminationPhaseMatch.Result.GuestTeamPoints).Append(')');
             Console.WriteLine(eliminationPhaseMatchDataBuilder.ToString());
+        }
+
+        private static void PrintNationalTeamsThatWonMedals()
+        {
+            IList<NationalTeam> nationalTeamsThatWonMedals = 
+                NationalTeamService.GetNationalTeamsThatWonMedals();
+
+            Console.WriteLine("\nMedalje:");
+            int placeInCompetition = 1;
+            foreach (NationalTeam nationalTeam in nationalTeamsThatWonMedals)
+            {
+                StringBuilder nationalTeamDataBuilder = new StringBuilder("    ").Append(placeInCompetition)
+                    .Append(". ").Append(nationalTeam.Name);
+                Console.WriteLine(nationalTeamDataBuilder.ToString());
+
+                placeInCompetition++;
+            }
         }
     }
 }
