@@ -20,6 +20,7 @@ namespace FIBA_OT_sim.Services
         public void SimulateEliminationPhase()
         {
             SimulateQuarterFinals();
+            PrintingService.PrintEliminationPhase();
         }
 
         public void SimulateQuarterFinals()
@@ -29,7 +30,6 @@ namespace FIBA_OT_sim.Services
                 MatchService.DetermineResultOfMatch(quarterFinal);
                 NationalTeamService.ChangeStatusesOfNationalTeamsAfterQuarterFinalsMatch(quarterFinal);
             }
-            PrintingService.PrintQuarterFinals();
         }
     }
 }

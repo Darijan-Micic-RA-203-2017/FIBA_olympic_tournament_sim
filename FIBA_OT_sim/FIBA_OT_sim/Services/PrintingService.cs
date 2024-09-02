@@ -145,18 +145,28 @@ namespace FIBA_OT_sim.Services
             Console.WriteLine(possibleSemifinalsDataBuilder.ToString());
         }
 
-        public static void PrintQuarterFinals()
+        public static void PrintEliminationPhase()
+        {
+            PrintQuarterFinals();
+        }
+
+        private static void PrintQuarterFinals()
         {
             Console.WriteLine("Četvrtfinale:");
             foreach (Match quarterFinal in EliminationPhaseService.EliminationPhase.QuarterFinals)
             {
-                StringBuilder matchDataBuilder = new StringBuilder("    ");
-                matchDataBuilder.Append(quarterFinal.HomeTeam.Name).Append(" - ");
-                matchDataBuilder.Append(quarterFinal.GuestTeam.Name).Append(" (");
-                matchDataBuilder.Append(quarterFinal.Result.HomeTeamPoints).Append(':');
-                matchDataBuilder.Append(quarterFinal.Result.GuestTeamPoints).Append(')');
-                Console.WriteLine(matchDataBuilder.ToString());
+                PrintEliminationPhaseMatch(quarterFinal);
             }
+        }
+
+        private static void PrintEliminationPhaseMatch(Match eliminationPhaseMatch)
+        {
+            StringBuilder eliminationPhaseMatchDataBuilder = new StringBuilder("    ");
+            eliminationPhaseMatchDataBuilder.Append(eliminationPhaseMatch.HomeTeam.Name).Append(" - ");
+            eliminationPhaseMatchDataBuilder.Append(eliminationPhaseMatch.GuestTeam.Name).Append(" (");
+            eliminationPhaseMatchDataBuilder.Append(eliminationPhaseMatch.Result.HomeTeamPoints).Append(':');
+            eliminationPhaseMatchDataBuilder.Append(eliminationPhaseMatch.Result.GuestTeamPoints).Append(')');
+            Console.WriteLine(eliminationPhaseMatchDataBuilder.ToString());
         }
     }
 }
