@@ -174,7 +174,7 @@ namespace FIBA_OT_sim.Services
         {
             NationalTeam nationalTeamThatWonSemiFinalsMatch = 
                 MatchService.GetNationalTeamThatWonMatch(semiFinalsMatch);
-            nationalTeamThatWonSemiFinalsMatch.Status = StatusOfNationalTeam.COMPETING_IN_FINALS;
+            nationalTeamThatWonSemiFinalsMatch.Status = StatusOfNationalTeam.COMPETING_IN_FINAL;
 
             NationalTeam nationalTeamThatLostSemiFinalsMatch = 
                 MatchService.GetNationalTeamThatLostMatch(semiFinalsMatch);
@@ -188,6 +188,8 @@ namespace FIBA_OT_sim.Services
             {
                 NationalTeam teamThatLostInSemiFinals = 
                     MatchService.GetNationalTeamThatLostMatch(semiFinalsMatch);
+                teamThatLostInSemiFinals.Status = StatusOfNationalTeam.COMPETING_IN_THIRD_PLACE_MATCH;
+
                 nationalTeamsSetToCompeteInThirdPlaceMatch.Add(teamThatLostInSemiFinals);
             }
 
@@ -200,9 +202,33 @@ namespace FIBA_OT_sim.Services
                 MatchService.GetNationalTeamThatWonMatch(thirdPlaceMatch);
             nationalTeamThatWonThirdPlaceMatch.Status = StatusOfNationalTeam.WON_BRONZE_MEDAL;
 
-            NationalTeam nationalTeamThatLostThirdPlaceMatch =
+            NationalTeam nationalTeamThatLostThirdPlaceMatch = 
                 MatchService.GetNationalTeamThatLostMatch(thirdPlaceMatch);
             nationalTeamThatLostThirdPlaceMatch.Status = StatusOfNationalTeam.LOST_IN_THIRD_PLACE_MATCH;
+        }
+
+        public static IList<NationalTeam> GetNationalTeamsSetToCompeteInFinal()
+        {
+            IList<NationalTeam> nationalTeamsSetToCompeteInFinal = new List<NationalTeam>();
+            foreach (Match semiFinalsMatch in EliminationPhaseService.EliminationPhase.SemiFinals)
+            {
+                NationalTeam teamThatWonInSemiFinals = 
+                    MatchService.GetNationalTeamThatWonMatch(semiFinalsMatch);
+                teamThatWonInSemiFinals.Status = StatusOfNationalTeam.COMPETING_IN_FINAL;
+
+                nationalTeamsSetToCompeteInFinal.Add(teamThatWonInSemiFinals);
+            }
+
+            return nationalTeamsSetToCompeteInFinal;
+        }
+
+        public static void ChangeStatusesOfNationalTeamsAfterFinal(Match final)
+        {
+            NationalTeam nationalTeamThatWonInFinal = MatchService.GetNationalTeamThatWonMatch(final);
+            nationalTeamThatWonInFinal.Status = StatusOfNationalTeam.WON_GOLD_MEDAL;
+
+            NationalTeam nationalTeamThatLostInFinal = MatchService.GetNationalTeamThatLostMatch(final);
+            nationalTeamThatLostInFinal.Status = StatusOfNationalTeam.GOT_SILVER_MEDAL;
         }
     }
 }

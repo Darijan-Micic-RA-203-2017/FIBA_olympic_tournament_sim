@@ -22,6 +22,7 @@ namespace FIBA_OT_sim.Services
             SimulateQuarterFinals();
             SimulateSemiFinals();
             SimulateThirdPlaceMatch();
+            SimulateFinal();
             PrintingService.PrintEliminationPhase();
         }
 
@@ -104,6 +105,32 @@ namespace FIBA_OT_sim.Services
                 eliminationPhase.ThirdPlaceMatch = new Match(++Program.LastMatchId, 
                     TournamentPhaseOfMatch.THIRD_PLACE_MATCH, nationalTeamsSetToCompeteInThirdPlaceMatch[1], 
                     nationalTeamsSetToCompeteInThirdPlaceMatch[0], new MatchResult(Program.LastMatchId, 0, 0));
+            }
+        }
+
+        public void SimulateFinal()
+        {
+            CreateFinal();
+            MatchService.DetermineResultOfMatch(eliminationPhase.Final);
+            NationalTeamService.ChangeStatusesOfNationalTeamsAfterFinal(eliminationPhase.Final);
+        }
+
+        private void CreateFinal()
+        {
+            IList<NationalTeam> nationalTeamsSetToCompeteInFinal = 
+                NationalTeamService.GetNationalTeamsSetToCompeteInFinal();
+
+            if (nationalTeamsSetToCompeteInFinal[0].SideOfBracket == SideOfBracket.POTS_D_AND_G_SIDE_OF_BRACKET)
+            {
+                eliminationPhase.Final = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.FINAL, 
+                    nationalTeamsSetToCompeteInFinal[0], nationalTeamsSetToCompeteInFinal[1], 
+                    new MatchResult(Program.LastMatchId, 0, 0));
+            }
+            else
+            {
+                eliminationPhase.Final = new Match(++Program.LastMatchId, TournamentPhaseOfMatch.FINAL, 
+                    nationalTeamsSetToCompeteInFinal[1], nationalTeamsSetToCompeteInFinal[0], 
+                    new MatchResult(Program.LastMatchId, 0, 0));
             }
         }
     }
