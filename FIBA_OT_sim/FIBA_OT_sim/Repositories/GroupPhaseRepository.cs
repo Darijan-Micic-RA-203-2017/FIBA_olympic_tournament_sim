@@ -7,10 +7,13 @@ namespace FIBA_OT_sim.Repositories
     {
         private static GroupPhase groupPhase;
 
-        public GroupPhaseRepository()
+        // REFERENCE: https://www.csharptutorial.net/csharp-tutorial/csharp-static-constructor/
+        static GroupPhaseRepository()
         {
             groupPhase = new GroupPhase();
         }
+
+        public GroupPhaseRepository() { }
 
         public static GroupPhase GroupPhase
         {

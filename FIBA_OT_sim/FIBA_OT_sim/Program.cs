@@ -9,6 +9,8 @@ namespace FIBA_OT_sim
         private static long lastMatchId = 0L;
         private static Random randomNumberGenerator = new Random(85);
 
+        public Program() { }
+
         public static long LastGroupId
         {
             get { return lastGroupId; }

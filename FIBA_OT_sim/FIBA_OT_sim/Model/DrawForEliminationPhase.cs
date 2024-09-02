@@ -25,7 +25,7 @@
             set { pots = value; }
         }
 
-        public PotInDrawForEliminationPhase GetPotNamed(string name)
+        public PotInDrawForEliminationPhase? GetPotWithName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {

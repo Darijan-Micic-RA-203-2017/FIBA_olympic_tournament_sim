@@ -6,10 +6,13 @@ namespace FIBA_OT_sim.Services
     {
         private static EliminationPhase eliminationPhase;
 
-        public EliminationPhaseService()
+        // REFERENCE: https://www.csharptutorial.net/csharp-tutorial/csharp-static-constructor/
+        static EliminationPhaseService()
         {
             eliminationPhase = new EliminationPhase();
         }
+
+        public EliminationPhaseService() { }
 
         public static EliminationPhase EliminationPhase
         {
@@ -58,6 +61,10 @@ namespace FIBA_OT_sim.Services
                     break;
                 }
 
+                if (teamQualifiedToSemis.FacesWinnerInSemifinals == null)
+                {
+                    return;
+                }
                 NationalTeam winnerOfQFMatchOnOppositeSideOfBracket = 
                     MatchService.GetNationalTeamThatWonMatch(teamQualifiedToSemis.FacesWinnerInSemifinals);
 

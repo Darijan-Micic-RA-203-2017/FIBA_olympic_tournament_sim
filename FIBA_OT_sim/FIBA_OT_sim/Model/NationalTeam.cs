@@ -177,7 +177,7 @@
             set { sideOfBracket = value; }
         }
 
-        public Match FacesWinnerInSemifinals
+        public Match? FacesWinnerInSemifinals
         {
             get { return facesWinnerInSemifinals; }
             set { facesWinnerInSemifinals = value; }
