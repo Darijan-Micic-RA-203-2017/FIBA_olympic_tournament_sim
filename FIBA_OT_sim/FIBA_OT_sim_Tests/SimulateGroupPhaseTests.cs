@@ -22,16 +22,16 @@ namespace FIBA_OT_sim_Tests
             Group groupA = new Group(1L, "A", new List<NationalTeam>(), new List<Match>());
 
             NationalTeam australia = new NationalTeam(1L, "Australija", "AUS", 5, "A", 1, 2, 246, 250, -4, 4, 
-                0, 0, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+                0, 0, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, SideOfBracket.NO_SIDE, new List<Match>());
             groupA.Teams.Add(australia);
             NationalTeam canada = new NationalTeam(2L, "Kanada", "CAN", 7, "A", 3, 0, 267, 247, 20, 6, 0, 0, 
-                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, SideOfBracket.NO_SIDE, new List<Match>());
             groupA.Teams.Add(canada);
             NationalTeam greece = new NationalTeam(3L, "Grčka", "GRE", 14, "A", 1, 2, 233, 241, -8, 4, 0, 0, 
-                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, SideOfBracket.NO_SIDE, new List<Match>());
             groupA.Teams.Add(greece);
             NationalTeam spain = new NationalTeam(4L, "Španija", "ESP", 2, "A", 1, 2, 249, 257, -8, 4, 0, 0, 
-                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, SideOfBracket.NO_SIDE, new List<Match>());
             groupA.Teams.Add(spain);
             
             Match australiaVsSpain = new Match(1L, TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
@@ -70,16 +70,16 @@ namespace FIBA_OT_sim_Tests
             Group groupB = new Group(2L, "B", new List<NationalTeam>(), new List<Match>());
 
             NationalTeam brazil = new NationalTeam(5L, "Brazil", "BRA", 12, "B", 1, 2, 241, 248, -7, 4, 0, 0, 
-                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, SideOfBracket.NO_SIDE, new List<Match>());
             groupB.Teams.Add(brazil);
             NationalTeam france = new NationalTeam(6L, "Francuska", "FRA", 9, "B", 2, 1, 243, 241, 2, 5, 0, 0, 
-                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, SideOfBracket.NO_SIDE, new List<Match>());
             groupB.Teams.Add(france);
             NationalTeam germany = new NationalTeam(7L, "Nemačka", "GER", 3, "B", 3, 0, 268, 221, 47, 6, 0, 0, 
-                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, SideOfBracket.NO_SIDE, new List<Match>());
             groupB.Teams.Add(germany);
             NationalTeam japan = new NationalTeam(8L, "Japan", "JPN", 26, "B", 0, 3, 251, 293, -42, 3, 0, 0, 
-                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, SideOfBracket.NO_SIDE, new List<Match>());
             groupB.Teams.Add(japan);
 
             Match germanyVsJapan = new Match(7L, TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 
@@ -118,16 +118,17 @@ namespace FIBA_OT_sim_Tests
             Group groupC = new Group(3L, "C", new List<NationalTeam>(), new List<Match>());
 
             NationalTeam puertoRico = new NationalTeam(9L, "Portoriko", "PUR", 16, "C", 0, 3, 228, 301, -73, 
-                3, 0, 0, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+                3, 0, 0, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, SideOfBracket.NO_SIDE, new List<Match>());
             groupC.Teams.Add(puertoRico);
             NationalTeam serbia = new NationalTeam(10L, "Srbija", "SRB", 4, "C", 2, 1, 287, 261, 26, 5, 0, 0, 
-                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+                StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, SideOfBracket.NO_SIDE, new List<Match>());
             groupC.Teams.Add(serbia);
             NationalTeam unitedStatesOfAmerica = new NationalTeam(11L, "Sjedinjene Američke Države", "USA", 1, 
-                "C", 3, 0, 317, 253, 64, 6, 0, 0, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+                "C", 3, 0, 317, 253, 64, 6, 0, 0, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, 
+                SideOfBracket.NO_SIDE, new List<Match>());
             groupC.Teams.Add(unitedStatesOfAmerica);
             NationalTeam southSudan = new NationalTeam(12L, "Južni Sudan", "SSD", 34, "C", 1, 2, 261, 278, -17, 
-                4, 0, 0, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, new List<Match>());
+                4, 0, 0, StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE, SideOfBracket.NO_SIDE, new List<Match>());
             groupC.Teams.Add(southSudan);
 
             Match southSudanVsPuertoRico = new Match(13L, TournamentPhaseOfMatch.FIRST_ROUND_OF_GROUP_PHASE, 

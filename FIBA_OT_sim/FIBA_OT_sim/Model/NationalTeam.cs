@@ -16,6 +16,7 @@
         private int groupRanking;
         private int groupPhaseRanking;
         private StatusOfNationalTeam status;
+        private SideOfBracket sideOfBracket;
         private IList<Match> matches;
 
         public NationalTeam()
@@ -34,13 +35,14 @@
             groupRanking = 0;
             groupPhaseRanking = 0;
             status = StatusOfNationalTeam.COMPETING_IN_GROUP_PHASE;
+            sideOfBracket = SideOfBracket.NO_SIDE;
             matches = new List<Match>();
         }
 
         public NationalTeam(long id, string name, string abbreviation, int fibaRanking, string groupName, 
             int winsInGroup, int lossesInGroup, int scoredPointsInGroup, int allowedPointsInGroup, 
             int pointsDifferentialInGroup, int pointsInGroup, int groupRanking, int groupPhaseRanking, 
-            StatusOfNationalTeam status, IList<Match> matches)
+            StatusOfNationalTeam status, SideOfBracket sideOfBracket, IList<Match> matches)
         {
             this.id = id;
             this.name = name;
@@ -56,6 +58,7 @@
             this.groupRanking = groupRanking;
             this.groupPhaseRanking = groupPhaseRanking;
             this.status = status;
+            this.sideOfBracket = sideOfBracket;
             this.matches = matches;
         }
 
@@ -75,6 +78,7 @@
             groupRanking = nationalTeam.groupRanking;
             groupPhaseRanking = nationalTeam.groupPhaseRanking;
             status = nationalTeam.status;
+            sideOfBracket = nationalTeam.sideOfBracket;
             matches = nationalTeam.matches;
         }
 
@@ -160,6 +164,12 @@
         {
             get { return status; }
             set { status = value; }
+        }
+
+        public SideOfBracket SideOfBracket
+        {
+            get { return sideOfBracket; }
+            set { sideOfBracket = value; }
         }
 
         public IList<Match> Matches

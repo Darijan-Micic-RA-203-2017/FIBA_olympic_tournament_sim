@@ -51,18 +51,22 @@ namespace FIBA_OT_sim.Services
             {
                 if (nationalTeam.GroupPhaseRanking <= 2)
                 {
+                    nationalTeam.SideOfBracket = SideOfBracket.POTS_D_AND_G_SIDE_OF_BRACKET;
                     draw.GetPotNamed("D").NationalTeams.Add(nationalTeam);
                 }
                 else if (nationalTeam.GroupPhaseRanking <= 4)
                 {
+                    nationalTeam.SideOfBracket = SideOfBracket.POTS_E_AND_F_SIDE_OF_BRACKET;
                     draw.GetPotNamed("E").NationalTeams.Add(nationalTeam);
                 }
                 else if (nationalTeam.GroupPhaseRanking <= 6)
                 {
+                    nationalTeam.SideOfBracket = SideOfBracket.POTS_E_AND_F_SIDE_OF_BRACKET;
                     draw.GetPotNamed("F").NationalTeams.Add(nationalTeam);
                 }
                 else
                 {
+                    nationalTeam.SideOfBracket = SideOfBracket.POTS_D_AND_G_SIDE_OF_BRACKET;
                     draw.GetPotNamed("G").NationalTeams.Add(nationalTeam);
                 }
             }
