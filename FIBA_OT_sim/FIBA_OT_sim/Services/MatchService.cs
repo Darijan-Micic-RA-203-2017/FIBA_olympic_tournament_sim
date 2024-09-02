@@ -124,11 +124,12 @@ namespace FIBA_OT_sim.Services
             return nationalTeamThatLostMatch;
         }
 
-        public static Match? FindMatchBetweenTeams(NationalTeam team1, NationalTeam team2)
+        public static Match? FindMatchBetweenTeams(NationalTeam team1, NationalTeam team2, 
+            bool isHomeGuestSlottingImportant)
         {
             foreach (Match match in team1.Matches)
             {
-                if (match.IsMatchBetweenTeams(team1, team2))
+                if (match.IsMatchBetweenTeams(team1, team2, isHomeGuestSlottingImportant))
                 {
                     return match;
                 }

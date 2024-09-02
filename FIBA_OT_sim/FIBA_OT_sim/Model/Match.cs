@@ -66,10 +66,18 @@
             set { result = value; }
         }
 
-        public bool IsMatchBetweenTeams(NationalTeam team1, NationalTeam team2)
+        public bool IsMatchBetweenTeams(NationalTeam team1, NationalTeam team2, 
+            bool isHomeGuestSlottingImportant)
         {
-            return (homeTeam.Equals(team1) && guestTeam.Equals(team2)) 
-                || (homeTeam.Equals(team2) && guestTeam.Equals(team1));
+            if (isHomeGuestSlottingImportant)
+            {
+                return homeTeam.Equals(team1) && guestTeam.Equals(team2);
+            }
+            else
+            {
+                return (homeTeam.Equals(team1) && guestTeam.Equals(team2)) 
+                    || (homeTeam.Equals(team2) && guestTeam.Equals(team1));
+            }
         }
 
         public override int GetHashCode()

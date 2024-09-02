@@ -138,7 +138,7 @@ namespace FIBA_OT_sim.Services
 
         private int RankNationalTeamsInSubgroupOfTwoTeams(IList<NationalTeam> subgroup, int groupRanking)
         {
-            Match? match = MatchService.FindMatchBetweenTeams(subgroup[0], subgroup[1]);
+            Match? match = MatchService.FindMatchBetweenTeams(subgroup[0], subgroup[1], false);
             if (match == null)
             {
                 return groupRanking;
@@ -185,7 +185,7 @@ namespace FIBA_OT_sim.Services
                 for (int j = i + 1; j < subgroup.Count; j++)
                 {
                     Match? matchBetweenTwoTeamsInCircle = 
-                        MatchService.FindMatchBetweenTeams(subgroup[i], subgroup[j]);
+                        MatchService.FindMatchBetweenTeams(subgroup[i], subgroup[j], false);
                     if (matchBetweenTwoTeamsInCircle == null)
                     {
                         return matchesBetweenTeamsInCircle;
